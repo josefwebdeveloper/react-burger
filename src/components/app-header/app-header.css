@@ -1,0 +1,34 @@
+
+header {
+    background-color: var(--interface-modal-bg);
+}
+
+.container {
+    height: 88px;
+    margin: 0 320px;
+    display: flex;
+}
+
+.navbar-menu {
+    display: flex;
+    flex: 1;
+    align-items: center;
+}
+
+.navbar__item {
+
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+}
+.navbar-menu.logo {
+   justify-content: center;
+}
+.navbar-menu.profile{
+    justify-content: flex-end;
+}
+
+.navbar-item:hover {
+    color: #ddd; /* Lighter text when hovering */
+}
