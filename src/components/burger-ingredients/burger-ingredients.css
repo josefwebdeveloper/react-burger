@@ -1,0 +1,7 @@
+.scrollable {
+    flex: 1;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    margin: 5px;
+    padding: 5px;
+}

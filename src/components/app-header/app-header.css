@@ -1,12 +1,12 @@
-
-header {
+.burger-header-container{
+    padding: 16px 0;
     background-color: var(--interface-modal-bg);
 }
-
-.container {
-    height: 88px;
-    margin: 0 320px;
+.burger-header {
+    width: 100%;
+    height: 56px;
     display: flex;
+
 }
 
 .navbar-menu {
@@ -20,7 +20,10 @@ header {
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: white;
+}
+.navbar__item:hover {
+    cursor: pointer;
+    color: #ddd; /* Lighter text when hovering */
 }
 .navbar-menu.logo {
    justify-content: center;
@@ -29,6 +32,3 @@ header {
     justify-content: flex-end;
 }
 
-.navbar-item:hover {
-    color: #ddd; /* Lighter text when hovering */
-}
