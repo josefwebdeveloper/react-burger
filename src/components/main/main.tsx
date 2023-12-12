@@ -1,17 +1,17 @@
-import './main.css';
+import  styles from './main.module.css';
 import {BurgerIngredients} from "../burger-ingredients/burger-ingredients";
 import {BurgerConstructor} from "../burger-constructor/burger-constructor";
 import {mockData} from "../../utils/data";
 import React from "react";
-
+import classnames from 'classnames';
 export const Main = () => {
-    const [data, setData] = React.useState(mockData);
+    const [burgerData, setData] = React.useState(mockData);
 
     return (
-        <main className='burger-main container'>
-            <div className="row">
-                <BurgerConstructor data={data} />
-                <BurgerIngredients data={data}/>
+        <main className={classnames(styles['burger-main'] , 'container')}>
+            <div className={styles.row}>
+                <BurgerIngredients burgerData={burgerData}/>
+                <BurgerConstructor burgerData={burgerData} />
             </div>
         </main>
     );

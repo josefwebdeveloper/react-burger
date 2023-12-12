@@ -1,0 +1,12 @@
+.ingredient-container{
+    border:1px solid #fff;
+    width: 47%;
+}
+.ingredient-price{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ingredient-name{
+    min-height: 48px;
+}

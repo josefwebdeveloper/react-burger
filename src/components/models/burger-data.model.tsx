@@ -12,3 +12,16 @@ export interface Burger {
     image_large: string
     __v: number
 }
+export interface BurgersProps {
+    burgerData: Burger[];
+}
+export interface IngredientProps {
+    ingredient: Burger;
+}
+
+
+export const burgerTypes = [
+    {name: 'Булки', type: 'bun'},
+    {name: 'Соусы', type: 'sauce'},
+    {name: 'Начинки', type: 'main'},
+]
