@@ -1,26 +1,26 @@
 import styles from './burger-group.module.css';
 import React, {useEffect, useRef, useState} from "react";
-import {Burger, BurgersProps, burgerTypes} from "../../../models/burger-data.model";
+import {IngredientModel, IngredientsProps, ingredientsTypes} from "../../../models/burger-data.model";
 import classNames from "classnames";
 import {getHeightFromDivToBottom} from "../../../utils/utils";
 import {Ingredient} from "./ingredient/ingredient";
 
-interface BurgerGroupProps  {
+interface IngredientsGroupProps  {
     bunRef: React.RefObject<HTMLDivElement>;
     sauceRef: React.RefObject<HTMLDivElement>;
     mainRef: React.RefObject<HTMLDivElement>;
-    burgerData: Burger[];
+    IngredientsData: IngredientModel[];
 
 }
 
-export const BurgerGroup: React.FC<BurgerGroupProps> = ({bunRef, sauceRef, mainRef, burgerData}) => {
+export const BurgerGroup: React.FC<IngredientsGroupProps> = ({bunRef, sauceRef, mainRef, IngredientsData}) => {
     const [height, setHeight] = React.useState(600);
     const containerRef = useRef<HTMLDivElement>(null);
 
 
-    const bun = burgerData.filter((item) => item.type === burgerTypes[0].type);
-    const sauce = burgerData.filter((item) => item.type === burgerTypes[1].type);
-    const main = burgerData.filter((item) => item.type === burgerTypes[2].type);
+    const bun = IngredientsData.filter((item) => item.type === ingredientsTypes[0].type);
+    const sauce = IngredientsData.filter((item) => item.type === ingredientsTypes[1].type);
+    const main = IngredientsData.filter((item) => item.type === ingredientsTypes[2].type);
 
     useEffect(() => {
         if (containerRef.current) {
@@ -34,19 +34,19 @@ export const BurgerGroup: React.FC<BurgerGroupProps> = ({bunRef, sauceRef, mainR
         <div ref={containerRef} style={{'height': height}}
              className={classNames(styles['burger-group-container'], 'custom-scroll')}>
             <div ref={bunRef}
-                 className={classNames(styles['group-name'], 'text', 'text_type_main-medium')}>{burgerTypes[0].name}</div>
+                 className={classNames(styles['group-name'], 'text', 'text_type_main-medium')}>{ingredientsTypes[0].name}</div>
             <div className={classNames(styles['ingredients-container'])}>
                 {bun.map((item) => <Ingredient key={item._id} ingredient={item}/>)}
             </div>
 
             <div ref={sauceRef}
-                 className={classNames(styles['group-name'], 'text', 'text_type_main-medium')}>{burgerTypes[1].name}</div>
+                 className={classNames(styles['group-name'], 'text', 'text_type_main-medium')}>{ingredientsTypes[1].name}</div>
             <div className={classNames(styles['ingredients-container'])}>
                 {sauce.map((item) => <Ingredient key={item._id} ingredient={item}/>)}
             </div>
 
             <div ref={mainRef}
-                 className={classNames(styles['group-name'], 'text', 'text_type_main-medium')}>{burgerTypes[2].name}</div>
+                 className={classNames(styles['group-name'], 'text', 'text_type_main-medium')}>{ingredientsTypes[2].name}</div>
             <div className={classNames(styles['ingredients-container'])}>
                 {main.map((item) => <Ingredient key={item._id} ingredient={item}/>)}
             </div>

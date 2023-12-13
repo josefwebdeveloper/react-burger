@@ -1,15 +1,15 @@
 import styles from './burger-ingredients.module.css';
-import {BurgersProps, burgerTypes} from "../../models/burger-data.model";
+import {IngredientsProps, ingredientsTypes} from "../../models/burger-data.model";
 import React, { useRef} from "react";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/tab";
 import {BurgerGroup} from "./burger-group/burger-group";
 import classNames from "classnames";
 
 
-export const BurgerIngredients: React.FC<BurgersProps> = ({burgerData}) => {
+export const BurgerIngredients: React.FC<IngredientsProps> = ({ingredientsData}) => {
 
-    const [currentTab, setCurrent] = React.useState(burgerTypes[0].type);
-    const [burgerList, setBurgerList] = React.useState(burgerData);
+    const [currentTab, setCurrent] = React.useState(ingredientsTypes[0].type);
+    const [burgerList, setBurgerList] = React.useState(ingredientsData);
     const bunRef = useRef<HTMLDivElement>(null);
     const sauceRef = useRef<HTMLDivElement>(null);
     const mainRef = useRef<HTMLDivElement>(null);
@@ -17,13 +17,13 @@ export const BurgerIngredients: React.FC<BurgersProps> = ({burgerData}) => {
     const onTabClick = (current: string) => {
         setCurrent(current)
         switch (current) {
-            case burgerTypes[0].type:
+            case ingredientsTypes[0].type:
                 scrollToElement(bunRef)
                 break;
-            case burgerTypes[1].type:
+            case ingredientsTypes[1].type:
                 scrollToElement(sauceRef)
                 break;
-            case burgerTypes[2].type:
+            case ingredientsTypes[2].type:
                 scrollToElement(mainRef)
                 break;
         }
@@ -42,13 +42,13 @@ export const BurgerIngredients: React.FC<BurgersProps> = ({burgerData}) => {
 
             <div className={classNames(styles['burger-ingredients-header'], 'text', 'text_type_main-large')}>Соберите бургер</div>
             <div className={styles['burger-tabs']}>
-                {burgerTypes.map((tab, index) => (
+                {ingredientsTypes.map((tab, index) => (
                     <Tab value={tab.type} key={index} active={currentTab === tab.type}
                          onClick={onTabClick}>{tab.name}</Tab>
                 ))}
 
             </div>
-            <BurgerGroup bunRef={bunRef} sauceRef={sauceRef} mainRef={mainRef} burgerData={burgerList}/>
+            <BurgerGroup bunRef={bunRef} sauceRef={sauceRef} mainRef={mainRef} IngredientsData={burgerList}/>
 
         </section>
     );

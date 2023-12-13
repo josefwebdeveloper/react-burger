@@ -1,4 +1,4 @@
-export interface Burger {
+export interface IngredientModel {
     _id: string
     name: string
     type: string
@@ -12,15 +12,15 @@ export interface Burger {
     image_large: string
     __v: number
 }
-export interface BurgersProps {
-    burgerData: Burger[];
+export interface IngredientsProps {
+    ingredientsData: IngredientModel[];
 }
 export interface IngredientProps {
-    ingredient: Burger;
+    ingredient: IngredientModel;
 }
 
 
-export const burgerTypes = [
+export const ingredientsTypes = [
     {name: 'Булки', type: 'bun'},
     {name: 'Соусы', type: 'sauce'},
     {name: 'Начинки', type: 'main'},

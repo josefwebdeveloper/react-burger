@@ -10,8 +10,8 @@ export const Main = () => {
     return (
         <main className={classnames(styles['burger-main'] , 'container')}>
             <div className={styles.row}>
-                <BurgerIngredients burgerData={burgerData}/>
-                <BurgerConstructor burgerData={burgerData} />
+                <BurgerIngredients ingredientsData={burgerData}/>
+                <BurgerConstructor ingredientsData={burgerData} />
             </div>
         </main>
     );

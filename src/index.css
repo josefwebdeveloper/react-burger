@@ -22,6 +22,9 @@ ul, li {
     max-width: var(--container-width);
     margin: 0 auto;
 }
+.constructor-element{
+    flex-grow: 0 !important;
+}
 @media screen and (max-width: 768px) {
     .container {
     }
