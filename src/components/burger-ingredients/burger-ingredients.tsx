@@ -1,6 +1,6 @@
 import './burger-ingredients.module.css';
 import {BurgersProps, burgerTypes} from "../models/burger-data.model";
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/tab";
 import {BurgerGroup} from "./burger-group/burger-group";
 
@@ -8,14 +8,13 @@ import {BurgerGroup} from "./burger-group/burger-group";
 export const BurgerIngredients: React.FC<BurgersProps> = ({burgerData}) => {
 
     console.log(burgerData)
-    const [current, setCurrent] = React.useState(burgerTypes[0].type);
+    const [currentTab, setCurrent] = React.useState(burgerTypes[0].type);
     const [burgerList, setburgerList] = React.useState(burgerData);
     const bunRef = useRef<HTMLDivElement>(null);
     const sauceRef = useRef<HTMLDivElement>(null);
     const mainRef = useRef<HTMLDivElement>(null);
-    useEffect(() => {
-    },[current])
-    const onTabClick=(current:string)=>{
+
+    const onTabClick = (current: string) => {
         setCurrent(current)
         switch (current) {
             case burgerTypes[0].type:
@@ -30,7 +29,7 @@ export const BurgerIngredients: React.FC<BurgersProps> = ({burgerData}) => {
         }
 
     };
-    const scrollToElement = (refElement:any) => {
+    const scrollToElement = (refElement: any) => {
         if (refElement.current) {
             refElement.current.scrollIntoView({
                 behavior: 'smooth',
@@ -44,7 +43,7 @@ export const BurgerIngredients: React.FC<BurgersProps> = ({burgerData}) => {
             <div className='burger-constructor-header text text_type_main-large'>Соберите бургер</div>
             <div className='burger-tabs'>
                 {burgerTypes.map((tab, index) => (
-                    <Tab value={tab.type}   key={index} active={current === tab.type}
+                    <Tab value={tab.type} key={index} active={currentTab === tab.type}
                          onClick={onTabClick}>{tab.name}</Tab>
                 ))}
 
