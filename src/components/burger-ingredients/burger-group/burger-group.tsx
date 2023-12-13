@@ -1,14 +1,16 @@
 import styles from './burger-group.module.css';
 import React, {useEffect, useRef, useState} from "react";
-import {BurgersProps, burgerTypes} from "../../models/burger-data.model";
+import {Burger, BurgersProps, burgerTypes} from "../../../models/burger-data.model";
 import classNames from "classnames";
 import {getHeightFromDivToBottom} from "../../../utils/utils";
 import {Ingredient} from "./ingredient/ingredient";
 
-interface BurgerGroupProps extends BurgersProps {
+interface BurgerGroupProps  {
     bunRef: React.RefObject<HTMLDivElement>;
     sauceRef: React.RefObject<HTMLDivElement>;
     mainRef: React.RefObject<HTMLDivElement>;
+    burgerData: Burger[];
+
 }
 
 export const BurgerGroup: React.FC<BurgerGroupProps> = ({bunRef, sauceRef, mainRef, burgerData}) => {

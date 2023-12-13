@@ -1,6 +1,6 @@
 import styles from './ingredient.module.css';
 import classNames from 'classnames';
-import { IngredientProps} from "../../../models/burger-data.model";
+import { IngredientProps} from "../../../../models/burger-data.model";
 import React from "react";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 

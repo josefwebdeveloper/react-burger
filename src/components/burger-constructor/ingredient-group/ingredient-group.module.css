@@ -1,0 +1,7 @@
+.ingredient-group-container {
+  display: flex;
+    border: 1px solid #ddd;
+    /*height: 500px;*/
+    width: 100%;
+  overflow: scroll;
+}

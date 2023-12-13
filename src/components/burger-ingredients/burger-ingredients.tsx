@@ -1,15 +1,15 @@
-import './burger-ingredients.module.css';
-import {BurgersProps, burgerTypes} from "../models/burger-data.model";
-import React, {useEffect, useRef, useState} from "react";
+import styles from './burger-ingredients.module.css';
+import {BurgersProps, burgerTypes} from "../../models/burger-data.model";
+import React, { useRef} from "react";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/tab";
 import {BurgerGroup} from "./burger-group/burger-group";
+import classNames from "classnames";
 
 
 export const BurgerIngredients: React.FC<BurgersProps> = ({burgerData}) => {
 
-    console.log(burgerData)
     const [currentTab, setCurrent] = React.useState(burgerTypes[0].type);
-    const [burgerList, setburgerList] = React.useState(burgerData);
+    const [burgerList, setBurgerList] = React.useState(burgerData);
     const bunRef = useRef<HTMLDivElement>(null);
     const sauceRef = useRef<HTMLDivElement>(null);
     const mainRef = useRef<HTMLDivElement>(null);
@@ -38,10 +38,10 @@ export const BurgerIngredients: React.FC<BurgersProps> = ({burgerData}) => {
         }
     }
     return (
-        <section className="burger-constructor ">
+        <section className={classNames(styles['burger-ingredients'])}>
 
-            <div className='burger-constructor-header text text_type_main-large'>Соберите бургер</div>
-            <div className='burger-tabs'>
+            <div className={classNames(styles['burger-ingredients-header'], 'text', 'text_type_main-large')}>Соберите бургер</div>
+            <div className={styles['burger-tabs']}>
                 {burgerTypes.map((tab, index) => (
                     <Tab value={tab.type} key={index} active={currentTab === tab.type}
                          onClick={onTabClick}>{tab.name}</Tab>
