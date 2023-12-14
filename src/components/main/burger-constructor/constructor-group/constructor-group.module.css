@@ -9,3 +9,8 @@
    display: flex;
     align-items: center;
 }
+.ingredient-element-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

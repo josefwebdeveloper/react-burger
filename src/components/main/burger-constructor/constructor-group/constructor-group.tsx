@@ -41,7 +41,7 @@ const getType = (index: number, length: number) => {
 }
 const View: React.FC<ConstructorGroupProps> = ({burgerData}) => {
     return (
-        <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
+        <div className={classNames(styles['ingredient-element-container'])} >
             {burgerData.length > 0 ? burgerData.map((ingredient, index) => {
                     return (
                         <div key={index} className={classNames(styles["ingredient-element"])}>
