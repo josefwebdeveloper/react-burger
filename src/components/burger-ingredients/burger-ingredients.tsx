@@ -47,8 +47,10 @@ export const BurgerIngredients: React.FC<IngredientsProps> = ({ingredientsData})
                          onClick={onTabClick}>{tab.name}</Tab>
                 ))}
 
-            </div>
+            </div>{ burgerList &&
             <BurgerGroup bunRef={bunRef} sauceRef={sauceRef} mainRef={mainRef} IngredientsData={burgerList}/>
+        }
+
 
         </section>
     );
