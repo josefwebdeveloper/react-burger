@@ -1,4 +1,4 @@
-import styles from './burger-group.module.css';
+import styles from './ingredients-group.module.css';
 import React, {useEffect, useRef, useState} from "react";
 import {IngredientModel, ingredientsTypes} from "../../../../models/burger-data.model";
 import classNames from "classnames";
@@ -13,7 +13,7 @@ interface IngredientsGroupProps {
 
 }
 
-export const BurgerGroup: React.FC<IngredientsGroupProps> = ({bunRef, sauceRef, mainRef, IngredientsData}) => {
+export const IngredientsGroup: React.FC<IngredientsGroupProps> = ({bunRef, sauceRef, mainRef, IngredientsData}) => {
     const [height, setHeight] = React.useState(600);
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -32,7 +32,7 @@ export const BurgerGroup: React.FC<IngredientsGroupProps> = ({bunRef, sauceRef, 
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     return (
         <div ref={containerRef} style={{'height': height}}
-             className={classNames(styles['burger-group-container'], 'custom-scroll')}>
+             className={classNames(styles['ingredients-group-container'], 'custom-scroll')}>
             <div ref={bunRef}
                  className={classNames(styles['group-name'], 'text', 'text_type_main-medium')}>{ingredientsTypes[0].name}</div>
             <div className={classNames(styles['ingredients-container'])}>

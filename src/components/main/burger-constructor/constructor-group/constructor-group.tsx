@@ -1,15 +1,15 @@
-import styles from './ingredient-group.module.css';
+import styles from './constructor-group.module.css';
 import classNames from "classnames";
 import React, {useEffect, useRef} from "react";
 import {getHeightFromDivToBottom} from "../../../../utils/utils";
 import {IngredientModel} from "../../../../models/burger-data.model";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
-interface BurgerGroupProps {
+interface ConstructorGroupProps {
     burgerData: IngredientModel[];
 }
 
-export const IngredientGroup: React.FC<BurgerGroupProps> = ({burgerData}) => {
+export const ConstructorGroup: React.FC<ConstructorGroupProps> = ({burgerData}) => {
     const [height, setHeight] = React.useState(600);
     const containerRef = useRef<HTMLDivElement>(null);
     console.log(burgerData)
@@ -24,7 +24,7 @@ export const IngredientGroup: React.FC<BurgerGroupProps> = ({burgerData}) => {
     const content = burgerData ? <View burgerData={burgerData}/> : null
     return (
         <section ref={containerRef} style={{'height': height}}
-                 className={classNames(styles['ingredient-group-container'], 'custom-scroll')}>
+                 className={classNames(styles['constructor-group-container'], 'custom-scroll')}>
 
             {content}
         </section>
@@ -40,7 +40,7 @@ const getType = (index: number, length: number) => {
             return undefined
     }
 }
-const View: React.FC<BurgerGroupProps> = ({burgerData}) => {
+const View: React.FC<ConstructorGroupProps> = ({burgerData}) => {
     return (
         <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
             {burgerData.length > 0 ? burgerData.map((ingredient, index) => {

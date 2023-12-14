@@ -3,7 +3,7 @@ import {IngredientModel, IngredientsProps} from "../../../models/burger-data.mod
 import React, {useEffect} from "react";
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/tab';
 import classNames from "classnames";
-import {IngredientGroup} from "./ingredient-group/ingredient-group";
+import {ConstructorGroup} from "./constructor-group/constructor-group";
 import {ConstructorFooter} from "./constructor-footer/constructor-footer";
 import {Spinner} from "../../spinner/Spinner";
 
@@ -44,7 +44,7 @@ export const BurgerConstructor: React.FC<IngredientsProps> = ({ingredientsData})
         <section className={classNames(styles['burger-constructor'])}>
             {burgerData.length > 0 ? (
                 <>
-                    <IngredientGroup burgerData={burgerData}/>
+                    <ConstructorGroup burgerData={burgerData}/>
                     <ConstructorFooter/>
                 </>
             ): (

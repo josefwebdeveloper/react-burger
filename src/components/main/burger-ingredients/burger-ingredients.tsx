@@ -2,7 +2,7 @@ import styles from './burger-ingredients.module.css';
 import {IngredientsProps, ingredientsTypes} from "../../../models/burger-data.model";
 import React, { useRef} from "react";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/tab";
-import {BurgerGroup} from "./burger-group/burger-group";
+import {IngredientsGroup} from "./ingredients-group/ingredients-group";
 import classNames from "classnames";
 
 
@@ -48,7 +48,7 @@ export const BurgerIngredients: React.FC<IngredientsProps> = ({ingredientsData})
                 ))}
 
             </div>{ burgerList &&
-            <BurgerGroup bunRef={bunRef} sauceRef={sauceRef} mainRef={mainRef} IngredientsData={burgerList}/>
+            <IngredientsGroup bunRef={bunRef} sauceRef={sauceRef} mainRef={mainRef} IngredientsData={burgerList}/>
         }
 
 
