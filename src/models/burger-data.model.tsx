@@ -13,7 +13,7 @@ export interface IngredientModel {
     __v: number
 }
 export interface IngredientsProps {
-    ingredientsData: IngredientModel[];
+    ingredientsData: IngredientModel[],
 }
 export interface IngredientProps {
     ingredient: IngredientModel;

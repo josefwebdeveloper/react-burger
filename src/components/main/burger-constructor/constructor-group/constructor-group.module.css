@@ -1,7 +1,11 @@
 .constructor-group-container {
     display: flex;
-    border: 1px solid #ddd;
+    /*border: 1px solid #ddd;*/
     width: 100%;
     overflow-y: auto;
     padding: 0 16px;
+}
+.ingredient-element {
+   display: flex;
+    align-items: center;
 }

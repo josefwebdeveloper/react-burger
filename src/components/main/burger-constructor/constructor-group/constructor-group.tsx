@@ -45,9 +45,9 @@ const View: React.FC<ConstructorGroupProps> = ({burgerData}) => {
         <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
             {burgerData.length > 0 ? burgerData.map((ingredient, index) => {
                     return (
-                        <div key={index} className="ingredient-element">
+                        <div key={index} className={classNames(styles["ingredient-element"])}>
                             <span style={ingredient.type === 'bun' ? {visibility: "hidden"} : {visibility: "visible"}}
-                                  className='mr-2'><DragIcon type="primary"/>
+                                  className={classNames('flex-align-center', 'mr-2')}><DragIcon type="primary"/>
                             </span>
                             <ConstructorElement
                                 type={getType(index, burgerData.length)}

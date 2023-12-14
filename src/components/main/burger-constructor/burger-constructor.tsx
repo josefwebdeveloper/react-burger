@@ -1,7 +1,6 @@
 import styles from './burger-constructor.module.css';
 import {IngredientModel, IngredientsProps} from "../../../models/burger-data.model";
 import React, {useEffect} from "react";
-import {Tab} from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/tab';
 import classNames from "classnames";
 import {ConstructorGroup} from "./constructor-group/constructor-group";
 import {ConstructorFooter} from "./constructor-footer/constructor-footer";
@@ -32,22 +31,30 @@ export const BurgerConstructor: React.FC<IngredientsProps> = ({ingredientsData})
         return filteredData;
     }
     useEffect(() => {
-        // modify ingredientsData remome all items with type === 'bun', exept first , and add it to the end of array
+        //TODO(remove that later) modify ingredientsData remome all items with type === 'bun', exept first , and add it to the end of array
+
         const burgerData = getMockBurger();
 
 
         setBurgerData(burgerData);
 
     }, [])
+    const amount = burgerData.reduce((acc, item) => {
+        return acc + item.price;
+    }, 0);
+    const onSubmitOrder = () => {
+        alert('Order submitted')
+    }
+
 
     return (
         <section className={classNames(styles['burger-constructor'])}>
             {burgerData.length > 0 ? (
                 <>
                     <ConstructorGroup burgerData={burgerData}/>
-                    <ConstructorFooter/>
+                    <ConstructorFooter amount={amount} onSubmitOrder={onSubmitOrder}/>
                 </>
-            ): (
+            ) : (
                 <div><Spinner/></div>
             )}
 

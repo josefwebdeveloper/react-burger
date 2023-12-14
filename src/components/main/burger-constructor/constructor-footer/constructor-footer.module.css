@@ -1,5 +1,16 @@
 .constructor-footer {
-    /*position: fixed;*/
-    /*bottom: 0;*/
+    height: 156px;
+    padding: 40px 16px 0 16px;
 
+}
+.content{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.amount{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 40px;
 }
