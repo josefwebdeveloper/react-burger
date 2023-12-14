@@ -34,7 +34,7 @@ const getType = (index: number, length: number) => {
     switch (index) {
         case 0:
             return 'top'
-        case length-1:
+        case length - 1:
             return 'bottom'
         default:
             return undefined
@@ -46,9 +46,11 @@ const View: React.FC<ConstructorGroupProps> = ({burgerData}) => {
             {burgerData.length > 0 ? burgerData.map((ingredient, index) => {
                     return (
                         <div key={index} className="ingredient-element">
-                            <span className='mr-2'><DragIcon type="primary"/></span>
+                            <span style={ingredient.type === 'bun' ? {visibility: "hidden"} : {visibility: "visible"}}
+                                  className='mr-2'><DragIcon type="primary"/>
+                            </span>
                             <ConstructorElement
-                                type={getType(index,burgerData.length)}
+                                type={getType(index, burgerData.length)}
                                 isLocked={ingredient.type === 'bun'}
                                 text={ingredient.name}
                                 price={ingredient.price}
