@@ -2,66 +2,80 @@ import styles from './constructor-group.module.css';
 import classNames from "classnames";
 import React, {useEffect, useRef} from "react";
 import {getHeightFromDivToBottom} from "../../../../utils/utils";
-import {IngredientModel} from "../../../../models/burger-data.model";
+import {IngredientModel, ingredientsTypes} from "../../../../models/burger-data.model";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
 interface ConstructorGroupProps {
     burgerData: IngredientModel[];
 }
 
+interface ViewProps {
+    burgerData: IngredientModel[];
+    allIngredients: IngredientModel[];
+    bun: IngredientModel[];
+}
+
 export const ConstructorGroup: React.FC<ConstructorGroupProps> = ({burgerData}) => {
-    const [height, setHeight] = React.useState(600);
-    const containerRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        if (containerRef.current) {
+    const bun = burgerData.filter((item) => item.type === ingredientsTypes[0].type);
+    const allIngredients = burgerData.filter((item) => item.type !== ingredientsTypes[0].type);
 
-            const heightFromDivToBottom = getHeightFromDivToBottom(containerRef) - 136;
-            setHeight(heightFromDivToBottom);
-        }
-    }, []);
-    const content = burgerData ? <View burgerData={burgerData}/> : null
+    const content = burgerData ?
+        <View  burgerData={burgerData} allIngredients={allIngredients} bun={bun} /> : null
     return (
-        <section ref={containerRef} style={{'height': height}}
-                 className={classNames(styles['constructor-group-container'], 'custom-scroll')}>
+        <section
+                 className={classNames(styles['constructor-group-container'])}>
 
             {content}
         </section>
     );
 };
-const getType = (index: number, length: number) => {
-    switch (index) {
-        case 0:
-            return 'top'
-        case length - 1:
-            return 'bottom'
-        default:
-            return undefined
-    }
-}
-const View: React.FC<ConstructorGroupProps> = ({burgerData}) => {
+const View: React.FC<ViewProps> = ({burgerData,
+                                       allIngredients, bun}) => {
     return (
-        <div className={classNames(styles['ingredient-element-container'])} >
-            {burgerData.length > 0 ? burgerData.map((ingredient, index) => {
-                    return (
-                        <div key={index} className={classNames(styles["ingredient-element"])}>
+        <div className={classNames(styles['ingredient-element-container'])}>
+
+            <div className={classNames(styles["ingredient-element"],styles["bun"])}>
+                <ConstructorElement
+                    type={'top'}
+                    isLocked={true}
+                    text={`${bun[0].name}  (верх)`}
+                    price={bun[0].price}
+                    thumbnail={bun[0].image}
+                />
+            </div>
+            <div
+                className={classNames(styles['scroll-container'], 'custom-scroll')}>
+                {allIngredients.length >0 ? allIngredients.map((ingredient, index) => {
+                        return (
+
+                            <div key={index} className={classNames(styles["ingredient-element"])}>
                             <span style={ingredient.type === 'bun' ? {visibility: "hidden"} : {visibility: "visible"}}
                                   className={classNames('flex-align-center', 'mr-2')}><DragIcon type="primary"/>
                             </span>
-                            <ConstructorElement
-                                type={getType(index, burgerData.length)}
-                                isLocked={ingredient.type === 'bun'}
-                                text={ingredient.name}
-                                price={ingredient.price}
-                                thumbnail={ingredient.image}
-                            />
-                        </div>
-                    )
-                }) :
-                (
-                    <NoIngredients/>
-                )}
+                                <ConstructorElement
+                                    isLocked={false}
+                                    text={ingredient.name}
+                                    price={ingredient.price}
+                                    thumbnail={ingredient.image}
+                                />
+                            </div>
 
+                        )
+                    }) :
+                    (
+                        <NoIngredients/>
+                    )}
+            </div>
+            <div className={classNames(styles["ingredient-element"],styles["bun"])}>
+                <ConstructorElement
+                    type={'bottom'}
+                    isLocked={true}
+                    text={`${bun[0].name} (низ)`}
+                    price={bun[0].price}
+                    thumbnail={bun[0].image}
+                />
+            </div>
         </div>
     )
 }

@@ -1,8 +1,6 @@
 .constructor-group-container {
     display: flex;
-    /*border: 1px solid #ddd;*/
     width: 100%;
-    overflow-y: auto;
     padding: 0 16px;
 }
 .ingredient-element {
@@ -12,5 +10,15 @@
 .ingredient-element-container{
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 16px;
+}
+.scroll-container {
+    overflow-y: auto;
+    height: 370px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.bun{
+    margin-left: 34px;
 }
