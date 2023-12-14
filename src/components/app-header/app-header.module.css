@@ -23,7 +23,6 @@
 }
 .navbar__item:hover {
     cursor: pointer;
-    color: #ddd; /* Lighter text when hovering */
 }
 .navbar-menu.logo {
    justify-content: center;

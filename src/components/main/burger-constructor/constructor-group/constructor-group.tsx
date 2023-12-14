@@ -12,7 +12,6 @@ interface ConstructorGroupProps {
 export const ConstructorGroup: React.FC<ConstructorGroupProps> = ({burgerData}) => {
     const [height, setHeight] = React.useState(600);
     const containerRef = useRef<HTMLDivElement>(null);
-    console.log(burgerData)
 
     useEffect(() => {
         if (containerRef.current) {

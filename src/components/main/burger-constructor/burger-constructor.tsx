@@ -26,7 +26,6 @@ export const BurgerConstructor: React.FC<IngredientsProps> = ({ingredientsData})
         if (firstBun) {
             filteredData.push(firstBun);
         }
-        console.log(filteredData)
 
         return filteredData;
     }
