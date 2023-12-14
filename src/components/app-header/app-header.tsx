@@ -28,21 +28,7 @@ export const AppHeader = () => {
                                 type={el.active ? 'primary' : 'secondary'}/></span>
                             {el.name}{el.active}
                         </li>)}
-                        {/*<li onMouseEnter={handleMouseEnter}*/}
-                        {/*    onMouseLeave={handleMouseLeave}*/}
-                        {/*    onClick={() => onActiveMenuChange(menu[0])}*/}
-                        {/*    className={`${styles['navbar__item']} ${menu[0].active ? null : 'text_color_inactive'}text text_type_main-default mr-7`}>*/}
-                        {/*    <span className={`mr-2`}><BurgerIcon*/}
-                        {/*        type={menu[0].active ? 'primary' : 'secondary'}/></span>*/}
-                        {/*    {menu[0].name}*/}
-                        {/*</li>*/}
-                        {/*<li onMouseEnter={handleMouseEnter}*/}
-                        {/*    onMouseLeave={handleMouseLeave}*/}
-                        {/*    onClick={() => onActiveMenuChange(menu[1])}*/}
-                        {/*    className={`${styles['navbar__item']} ${menu[1].active? null:'text_color_inactive'} text text_type_main-default`}>*/}
-                        {/*    <span className='mr-2'><ListIcon type={menu[1].active? 'primary':'secondary'}/></span>*/}
-                        {/*    {menu[1].name}*/}
-                        {/*</li>*/}
+                      
                     </ul>
                 </div>
                 <div className={`${styles['navbar-menu']} ${styles.logo}`}>
