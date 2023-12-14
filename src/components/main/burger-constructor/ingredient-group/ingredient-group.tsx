@@ -1,8 +1,8 @@
 import styles from './ingredient-group.module.css';
 import classNames from "classnames";
 import React, {useEffect, useRef} from "react";
-import {getHeightFromDivToBottom} from "../../../utils/utils";
-import {IngredientModel} from "../../../models/burger-data.model";
+import {getHeightFromDivToBottom} from "../../../../utils/utils";
+import {IngredientModel} from "../../../../models/burger-data.model";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
 interface BurgerGroupProps {

@@ -1,5 +1,5 @@
 import styles from './burger-ingredients.module.css';
-import {IngredientsProps, ingredientsTypes} from "../../models/burger-data.model";
+import {IngredientsProps, ingredientsTypes} from "../../../models/burger-data.model";
 import React, { useRef} from "react";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/tab";
 import {BurgerGroup} from "./burger-group/burger-group";

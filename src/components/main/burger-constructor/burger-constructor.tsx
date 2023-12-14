@@ -1,11 +1,11 @@
 import styles from './burger-constructor.module.css';
-import {IngredientModel, IngredientsProps} from "../../models/burger-data.model";
+import {IngredientModel, IngredientsProps} from "../../../models/burger-data.model";
 import React, {useEffect} from "react";
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/tab';
 import classNames from "classnames";
 import {IngredientGroup} from "./ingredient-group/ingredient-group";
 import {ConstructorFooter} from "./constructor-footer/constructor-footer";
-import {Spinner} from "../spinner/Spinner";
+import {Spinner} from "../../spinner/Spinner";
 
 
 export const BurgerConstructor: React.FC<IngredientsProps> = ({ingredientsData}) => {
