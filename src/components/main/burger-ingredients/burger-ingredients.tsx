@@ -7,13 +7,16 @@ import classNames from "classnames";
 
 
 export const BurgerIngredients: React.FC<IngredientsProps> = ({ingredientsData}) => {
-
     const [currentTab, setCurrent] = React.useState(ingredientsTypes[0].type);
     const [burgerList, setBurgerList] = React.useState(ingredientsData);
     const bunRef = useRef<HTMLDivElement>(null);
     const sauceRef = useRef<HTMLDivElement>(null);
     const mainRef = useRef<HTMLDivElement>(null);
-
+    React.useEffect(() => {
+        if (ingredientsData.length > 0) {
+            setBurgerList(ingredientsData);
+        }
+    }, [ingredientsData]);
     const onTabClick = (current: string) => {
         setCurrent(current)
         switch (current) {
@@ -48,7 +51,7 @@ export const BurgerIngredients: React.FC<IngredientsProps> = ({ingredientsData})
                 ))}
 
             </div>{ burgerList &&
-            <IngredientsGroup bunRef={bunRef} sauceRef={sauceRef} mainRef={mainRef} IngredientsData={burgerList}/>
+            <IngredientsGroup bunRef={bunRef} sauceRef={sauceRef} mainRef={mainRef} ingredientsData={burgerList}/>
         }
 
 

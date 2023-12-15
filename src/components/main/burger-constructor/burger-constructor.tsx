@@ -9,11 +9,11 @@ import {Spinner} from "../../spinner/Spinner";
 
 export const BurgerConstructor: React.FC<IngredientsProps> = ({ingredientsData}) => {
     const [burgerData, setBurgerData] = React.useState<IngredientModel[]>([]);
-    const getMockBurger = () => {
+    const rearangeIngriduentData = (data:IngredientModel[]) => {
         let firstBun!: IngredientModel;
         const filteredData: IngredientModel[] = [];
 
-        ingredientsData.forEach(item => {
+        data.forEach(item => {
             if (item.type === 'bun') {
                 if (!firstBun) {
                     filteredData.push(item);
@@ -32,12 +32,12 @@ export const BurgerConstructor: React.FC<IngredientsProps> = ({ingredientsData})
     useEffect(() => {
         //TODO(remove that later) modify ingredientsData remome all items with type === 'bun', exept first , and add it to the end of array
 
-        const burgerData = getMockBurger();
+        const burgerData = rearangeIngriduentData(ingredientsData);
 
 
         setBurgerData(burgerData);
 
-    }, [])
+    }, [ingredientsData])
     const amount = burgerData.reduce((acc, item) => {
         return acc + item.price;
     }, 0);

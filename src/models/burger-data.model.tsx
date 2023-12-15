@@ -12,6 +12,10 @@ export interface IngredientModel {
     image_large: string
     __v: number
 }
+export interface getIngredientsResponse  {
+    success: boolean,
+    data: IngredientModel[]
+}
 export interface IngredientsProps {
     ingredientsData: IngredientModel[],
 }

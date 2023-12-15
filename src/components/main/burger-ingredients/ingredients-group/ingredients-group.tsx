@@ -9,18 +9,16 @@ interface IngredientsGroupProps {
     bunRef: React.RefObject<HTMLDivElement>;
     sauceRef: React.RefObject<HTMLDivElement>;
     mainRef: React.RefObject<HTMLDivElement>;
-    IngredientsData: IngredientModel[];
+    ingredientsData: IngredientModel[];
 
 }
 
-export const IngredientsGroup: React.FC<IngredientsGroupProps> = ({bunRef, sauceRef, mainRef, IngredientsData}) => {
+export const IngredientsGroup: React.FC<IngredientsGroupProps> = ({bunRef, sauceRef, mainRef, ingredientsData}) => {
     const [height, setHeight] = React.useState(600);
     const containerRef = useRef<HTMLDivElement>(null);
-
-
-    const bun = IngredientsData.filter((item) => item.type === ingredientsTypes[0].type);
-    const sauce = IngredientsData.filter((item) => item.type === ingredientsTypes[1].type);
-    const main = IngredientsData.filter((item) => item.type === ingredientsTypes[2].type);
+    const bun = ingredientsData.filter((item) => item.type === ingredientsTypes[0].type);
+    const sauce = ingredientsData.filter((item) => item.type === ingredientsTypes[1].type);
+    const main = ingredientsData.filter((item) => item.type === ingredientsTypes[2].type);
 
     useEffect(() => {
         if (containerRef.current) {
