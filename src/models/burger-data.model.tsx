@@ -21,6 +21,7 @@ export interface IngredientsProps {
 }
 export interface IngredientProps {
     ingredient: IngredientModel;
+    onOpenModal: (ingredient:IngredientModel) => void;
 }
 
 

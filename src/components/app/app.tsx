@@ -33,19 +33,16 @@ function App() {
     }, []);
   return (
       <div className={styles.app}>
-          <div>
-              <button onClick={() => setModalOpen(true)}>Открыть модальное окно</button>
+          <AppHeader/>
+          <Main ingredientsData={ingredientsData}/>
               <Modal
-                  title="Детали ингредиента"
+                  title="smth"
                   isOpen={isModalOpen}
                   onClose={() => setModalOpen(false)}
               >
                   {/* Содержимое модального окна */}
                   something
               </Modal>
-          </div>
-          <AppHeader/>
-          <Main ingredientsData={ingredientsData}/>
       </div>
   );
 }

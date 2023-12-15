@@ -4,6 +4,8 @@ import {IngredientModel, ingredientsTypes} from "../../../../models/burger-data.
 import classNames from "classnames";
 import {getHeightFromDivToBottom} from "../../../../utils/utils";
 import {Ingredient} from "./ingredient/ingredient";
+import Modal from "../../../modal/modal";
+import {IngredientDetails} from "../../../ingredient-details/ingredient-details";
 
 interface IngredientsGroupProps {
     bunRef: React.RefObject<HTMLDivElement>;
@@ -19,6 +21,8 @@ export const IngredientsGroup: React.FC<IngredientsGroupProps> = ({bunRef, sauce
     const bun = ingredientsData.filter((item) => item.type === ingredientsTypes[0].type);
     const sauce = ingredientsData.filter((item) => item.type === ingredientsTypes[1].type);
     const main = ingredientsData.filter((item) => item.type === ingredientsTypes[2].type);
+    const [isModalOpen, setModalOpen] = useState(false);
+    const [selectedIngredient, setIngredient] = useState<IngredientModel |null >(null);
 
     useEffect(() => {
         if (containerRef.current) {
@@ -27,6 +31,11 @@ export const IngredientsGroup: React.FC<IngredientsGroupProps> = ({bunRef, sauce
             setHeight(heightFromDivToBottom);
         }
     }, []);
+    const onOpenModal = (selectedIngredient:IngredientModel | null) => {
+        console.log(selectedIngredient,'open')
+        setIngredient(selectedIngredient)
+        setModalOpen(true)
+    }
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     return (
         <div ref={containerRef} style={{'height': height}}
@@ -34,16 +43,16 @@ export const IngredientsGroup: React.FC<IngredientsGroupProps> = ({bunRef, sauce
             <div ref={bunRef}
                  className={classNames(styles['group-name'], 'text', 'text_type_main-medium')}>{ingredientsTypes[0].name}</div>
             <div className={classNames(styles['ingredients-container'])}>
-                {bun ? bun.map((item) => <Ingredient key={item._id} ingredient={item}/>) :
+                {bun ? bun.map((item) => <Ingredient onOpenModal={onOpenModal} key={item._id} ingredient={item}/>) :
                     (
-                        <NoIngredients/>
+                        <NoIngredients />
                     )}
             </div>
 
             <div ref={sauceRef}
                  className={classNames(styles['group-name'], 'text', 'text_type_main-medium')}>{ingredientsTypes[1].name}</div>
             <div className={classNames(styles['ingredients-container'])}>
-                {sauce ? sauce.map((item) => <Ingredient key={item._id} ingredient={item}/>) :
+                {sauce ? sauce.map((item) => <Ingredient onOpenModal={onOpenModal} key={item._id} ingredient={item}/>) :
                     (
                         <NoIngredients/>
                     )}
@@ -53,11 +62,18 @@ export const IngredientsGroup: React.FC<IngredientsGroupProps> = ({bunRef, sauce
             <div ref={mainRef}
                  className={classNames(styles['group-name'], 'text', 'text_type_main-medium')}>{ingredientsTypes[2].name}</div>
             <div className={classNames(styles['ingredients-container'])}>
-                {main ? main.map((item) => <Ingredient key={item._id} ingredient={item}/>) :
+                {main ? main.map((item) => <Ingredient onOpenModal={onOpenModal} key={item._id} ingredient={item}/>) :
                     (
                         <NoIngredients/>
                     )}
             </div>
+            <Modal
+                title="Детали ингредиента"
+                isOpen={isModalOpen}
+                onClose={() => setModalOpen(false)}
+            >
+                <IngredientDetails selectedIngredient={selectedIngredient}/>
+            </Modal>
         </div>
     );
 };
