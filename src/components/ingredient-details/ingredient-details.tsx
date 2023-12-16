@@ -12,7 +12,7 @@ export const IngredientDetails : React.FC<IngredientDetailsProps> = ({selectedIn
     return (
         <div className={classNames(styles['ingredient-details-container'])}>
             <div className={classNames(styles['ingredient-details-image'],'flex-align-justify-center')}>
-                <img src={selectedIngredient.image_large} alt={selectedIngredient.image}/>
+                     <img  loading="lazy" src={selectedIngredient.image_large} alt={selectedIngredient.image}/>
             </div>
             <div className={classNames(styles['ingredient-details-name'],'text', 'text_type_main-medium', 'flex-align-justify-center')}>
                 <span>{selectedIngredient.name}</span>

@@ -16,3 +16,7 @@
     flex-direction: column;
     align-items: center;
 }
+.ingredient-details-image{
+    height: 240px;
+}
+
