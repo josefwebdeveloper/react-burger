@@ -5,18 +5,15 @@ import {AppHeader} from "../app-header/app-header";
 import {Main} from "../main/main";
 import {getIngredients} from "../../services/api.service";
 import {IngredientModel} from "../../models/burger-data.model";
-import Modal from "../modal/modal";
 
 function App() {
     const [ingredientsData, setIngredientsData] = useState<IngredientModel[] >([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
-    const [isModalOpen, setModalOpen] = useState(false);
     useEffect(() => {
         const loadData = async () => {
             try {
                 const result = await getIngredients();
-                console.log(result)
                 setIngredientsData(result.data);
                 setLoading(false);
             } catch (error) {
@@ -35,14 +32,6 @@ function App() {
       <div className={styles.app}>
           <AppHeader/>
           <Main ingredientsData={ingredientsData}/>
-              <Modal
-                  title="smth"
-                  isOpen={isModalOpen}
-                  onClose={() => setModalOpen(false)}
-              >
-                  {/* Содержимое модального окна */}
-                  something
-              </Modal>
       </div>
   );
 }

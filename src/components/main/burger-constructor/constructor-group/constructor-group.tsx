@@ -1,7 +1,6 @@
 import styles from './constructor-group.module.css';
 import classNames from "classnames";
 import React, {useEffect, useRef} from "react";
-import {getHeightFromDivToBottom} from "../../../../utils/utils";
 import {IngredientModel, ingredientsTypes} from "../../../../models/burger-data.model";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 

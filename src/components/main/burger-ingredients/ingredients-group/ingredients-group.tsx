@@ -32,11 +32,9 @@ export const IngredientsGroup: React.FC<IngredientsGroupProps> = ({bunRef, sauce
         }
     }, []);
     const onOpenModal = (selectedIngredient:IngredientModel | null) => {
-        console.log(selectedIngredient,'open')
         setIngredient(selectedIngredient)
         setModalOpen(true)
     }
-    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     return (
         <div ref={containerRef} style={{'height': height}}
              className={classNames(styles['ingredients-group-container'], 'custom-scroll')}>
