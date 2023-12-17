@@ -64,7 +64,7 @@ const ViewMobile = ({ toggleMenu, menuOpen, onActiveMenuChange, menu }: ViewMobi
                 </div>
             </div>
 
-            {menuOpen && <div className={classNames(styles["opened-mobile-menu"])}>
+            {menuOpen && <div className={classNames(styles["opened-mobile-menu"],styles.open)}>
                 {/*<span*/}
                 {/*    className={classNames(styles['menu-item'], 'text', 'text_type_main-default')}>Личный кабинет</span>*/}
                 {/*<span*/}
