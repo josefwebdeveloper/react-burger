@@ -1,7 +1,9 @@
 .ingredient-container{
-    /*border:1px solid #fff;*/
     width: 47%;
     position: relative;
+}
+.ingredient-container:hover{
+    cursor: pointer;
 }
 .ingredient-price{
     display: flex;
