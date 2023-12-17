@@ -5,13 +5,14 @@ import classNames from "classnames";
 import {ConstructorGroup} from "./constructor-group/constructor-group";
 import {ConstructorFooter} from "./constructor-footer/constructor-footer";
 import {Spinner} from "../../spinner/Spinner";
-import Modal from "../../modal/modal";
 import {OrderDetails} from "../../order-details/order-details";
+import {Modal} from "../../modal/modal";
+import {useModal} from "../../../hooks/use-modal.hook";
 
 
 export const BurgerConstructor: React.FC<IngredientsProps> = ({ingredientsData}) => {
     const [burgerData, setBurgerData] = React.useState<IngredientModel[]>([]);
-    const [isModalOpen, setModalOpen] = useState(false);
+    const { isModalOpen, openModal, closeModal } = useModal();
     const [orderNumber, setOrderNumber] = useState(34536);
     const rearangeIngriduentData = (data:IngredientModel[]) => {
         let firstBun!: IngredientModel;
@@ -47,13 +48,10 @@ export const BurgerConstructor: React.FC<IngredientsProps> = ({ingredientsData})
     }, 0);
     const onSubmitOrder = () => {
         setOrderNumber(34563)
-        onOpenModal()
+        openModal()
     }
-    const onOpenModal = () => {
-        setModalOpen(true)
-    }
-    const handleDataFromModal = (data: any) => {
-    }
+
+
 
     return (
         <section className={classNames(styles['burger-constructor'])}>
@@ -65,14 +63,14 @@ export const BurgerConstructor: React.FC<IngredientsProps> = ({ingredientsData})
             ) : (
                 <div><Spinner/></div>
             )}
-            <Modal
-                title=''
-                isOpen={isModalOpen}
-                onClose={() => setModalOpen(false)}
-                onDataReceive={handleDataFromModal}
-            >
-                <OrderDetails orderNumber={orderNumber} />
-            </Modal>
+
+            {isModalOpen && (
+                <Modal
+                    title=""
+                    onClose={closeModal}>
+                    <OrderDetails orderNumber={orderNumber} />
+                </Modal>
+            )}
 
         </section>
     );
