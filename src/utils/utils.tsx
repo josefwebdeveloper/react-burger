@@ -18,3 +18,20 @@ export const getImageNameFromUrl=(url: string): string =>{
 
   return imageName;
 }
+export const isMobile = () => {
+  // Regular expressions to test for different types of mobile devices
+  const toMatch = [
+    /Android/i,
+    /webOS/i,
+    /iPhone/i,
+    /iPad/i,
+    /iPod/i,
+    /BlackBerry/i,
+    /Windows Phone/i
+  ];
+
+  // Check if the navigator.userAgent matches with any of the mobile devices
+  return toMatch.some((toMatchItem) => {
+    return navigator.userAgent.match(toMatchItem);
+  });
+};
