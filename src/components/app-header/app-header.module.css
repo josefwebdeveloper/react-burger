@@ -30,4 +30,9 @@
 .navbar-menu.profile{
     justify-content: flex-end;
 }
+/* Mobile styles */
+@media (max-width: 768px) {
+
+
+}
 
