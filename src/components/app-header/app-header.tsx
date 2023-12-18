@@ -26,7 +26,7 @@ export const AppHeader = () => {
                                                  className={`${styles['navbar__item']} ${el.active ? null : 'text_color_inactive'} text text_type_main-default mr-7`}>
                             <span className={`mr-2`}>
                              {i === 0 && <BurgerIcon type={el.active ? 'primary' : 'secondary'}/>}
-                                {i === 1 && menuData[0] && <ListIcon type={el.active ? 'primary' : 'secondary'}/>}
+                                {i === 1  && <ListIcon type={el.active ? 'primary' : 'secondary'}/>}
                             </span>
                             {el.name}{el.active}
                         </li>)}
