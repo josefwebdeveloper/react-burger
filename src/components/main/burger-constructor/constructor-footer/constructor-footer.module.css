@@ -1,0 +1,19 @@
+.constructor-footer {
+    padding: 40px 16px 24px 16px;
+    height: calc(100vh - 760px);
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+
+}
+.content{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.amount{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 40px;
+}

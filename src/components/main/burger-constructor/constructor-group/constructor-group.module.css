@@ -1,0 +1,24 @@
+.constructor-group-container {
+    display: flex;
+    width: 100%;
+    padding: 0 16px;
+}
+.ingredient-element {
+   display: flex;
+    align-items: center;
+}
+.ingredient-element-container{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.scroll-container {
+    overflow-y: auto;
+    height: 370px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.bun{
+    margin-left: 34px;
+}

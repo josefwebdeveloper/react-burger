@@ -1,0 +1,16 @@
+
+.burger-ingredients {
+    flex: 1;
+    /*border: 1px solid #ddd;*/
+
+}
+.burger-tabs{
+    display: flex;
+    margin: 0 0 40px 0;
+}
+
+.burger-ingredients-header {
+    text-align: left;
+    margin: 40px 0 20px 0;
+
+}

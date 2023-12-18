@@ -1,0 +1,17 @@
+.ingredients-group-container {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+.ingredients-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 32px 24px;
+    padding: 0 16px;
+    margin-bottom: 40px;
+}
+.group-name{
+    text-align: left;
+    margin-bottom: 24px;
+}

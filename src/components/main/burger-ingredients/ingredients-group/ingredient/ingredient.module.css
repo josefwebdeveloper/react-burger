@@ -1,0 +1,15 @@
+.ingredient-container{
+    width: 47%;
+    position: relative;
+}
+.ingredient-container:hover{
+    cursor: pointer;
+}
+.ingredient-price{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ingredient-name{
+    min-height: 48px;
+}
