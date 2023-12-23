@@ -3,7 +3,7 @@ import classNames from "classnames";
 import done from '../../images/done.svg'
 
 interface OrderDetailsProps {
-    orderNumber: number
+    orderNumber: number | null;
 }
 
 export const OrderDetails = ({orderNumber}: OrderDetailsProps,) => {

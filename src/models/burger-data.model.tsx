@@ -30,3 +30,15 @@ export const ingredientsTypes = [
     {name: 'Соусы', type: 'sauce'},
     {name: 'Начинки', type: 'main'},
 ]
+
+export interface MakeOrderResponse{
+    success: boolean
+    name: string
+    order: Order
+}
+
+export interface Order {
+    number: number
+}
+
+
