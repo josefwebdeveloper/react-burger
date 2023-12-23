@@ -1,6 +1,6 @@
 import styles from './burger-constructor.module.css';
 import {IngredientModel} from "../../../models/burger-data.model";
-import React, {useContext, useEffect, useReducer} from "react";
+import React, {useContext, useEffect, useReducer, useState} from "react";
 import classNames from "classnames";
 import {ConstructorGroup} from "./constructor-group/constructor-group";
 import {ConstructorFooter} from "./constructor-footer/constructor-footer";
@@ -26,28 +26,21 @@ export const BurgerConstructor: React.FC = () => {
         throw new Error('BurgerConstructor must be used within a ConstructorProvider');
     }
 
-    const { ingredientsData, setIngredientsData, orderNumber, updateOrderNumber } = context;
+    const {ingredientsData, setIngredientsData, orderNumber, updateOrderNumber} = context;
     const [burgerData, setBurgerData] = React.useState<IngredientModel[]>([]);
     const {isModalOpen, openModal, closeModal} = useModal();
     const [amount, dispatch] = useReducer(amountReducer, 0);
+    const [loading, setLoading] = useState<boolean>(false);
     const rearrangeIngredient = (data: IngredientModel[]) => {
-        let firstBun!: IngredientModel;
-        const filteredData: IngredientModel[] = [];
+        const firstBun = data.find(item => item.type === 'bun');
 
-        data.forEach(item => {
-            if (item.type === 'bun') {
-                if (!firstBun) {
-                    filteredData.unshift(item);
-                    firstBun = item;
-                }
-            } else {
-                filteredData.push(item);
-            }
-        });
-        if (firstBun) {
-            filteredData.push(firstBun);
+        if (!firstBun) {
+            return data;
         }
-        return filteredData;
+
+        const filteredData = data.filter(item => item.type !== 'bun');
+
+        return [firstBun, ...filteredData, firstBun];
     }
     useEffect(() => {
         //TODO(remove that later) modify ingredientsData remome all items with type === 'bun', exept first , and add it to the end of array
@@ -62,16 +55,22 @@ export const BurgerConstructor: React.FC = () => {
     }, [ingredientsData])
 
     const onSubmitOrder = () => {
-        // setOrderNumber(34563)
+        setLoading(true);
         const orderData = {
             ingredients: burgerData.map(item => item._id)
         }
         makeOrder(orderData)
+
             .then(data => {
+                setLoading(false);
                 updateOrderNumber(data.order.number);
+                setIngredientsData([]);
                 openModal();
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => {
+                setLoading(false);
+                console.error('Error:', error)
+            });
     }
 
 
@@ -79,12 +78,16 @@ export const BurgerConstructor: React.FC = () => {
         <section className={classNames(styles['burger-constructor'])}>
             {burgerData.length > 0 ? (
                 <>
-                    <ConstructorGroup burgerData={burgerData}/>
-                    <ConstructorFooter amount={amount} onSubmitOrder={onSubmitOrder}/>
+                    {loading?  <Spinner/>: (<>
+                        <ConstructorGroup burgerData={burgerData}/>
+                        <ConstructorFooter amount={amount} onSubmitOrder={onSubmitOrder}/>
+                    </>)}
+
+            
                 </>
-            ) : (
-                <div><Spinner/></div>
-            )}
+            ) :
+                            <NoIngredients />
+            }
 
             {isModalOpen && (
                 <Modal
@@ -97,3 +100,15 @@ export const BurgerConstructor: React.FC = () => {
         </section>
     );
 };
+const NoIngredients = () => {
+    return (
+        <div className={classNames(styles['no-ingredients'])}>
+            <div className={classNames(styles['no-ingredients-text'], 'text', 'text_type_main-medium', 'mb-4')}>
+                Добавьте ингредиенты
+            </div>
+            <div className={classNames(styles['no-ingredients-text'], 'text', 'text_type_main-default', 'text_color_inactive')}>
+                и соберите бургер
+            </div>
+        </div>
+    )
+}
