@@ -1,16 +1,26 @@
 import styles from './burger-ingredients.module.css';
-import {IngredientsProps, ingredientsTypes} from "../../../models/burger-data.model";
-import React, { useRef} from "react";
+import { ingredientsTypes} from "../../../models/burger-data.model";
+import React, {useEffect, useRef} from "react";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/tab";
 import {IngredientsGroup} from "./ingredients-group/ingredients-group";
 import classNames from "classnames";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "../../../state/store";
+import {fetchIngredients} from "../../../state/ingredients/ingredients-api";
+import {Spinner} from "../../spinner/Spinner";
 
 
-export const BurgerIngredients: React.FC<IngredientsProps> = ({ingredientsData}) => {
+export const BurgerIngredients: React.FC = () => {
     const [currentTab, setCurrent] = React.useState(ingredientsTypes[0].type);
     const bunRef = useRef<HTMLDivElement>(null);
     const sauceRef = useRef<HTMLDivElement>(null);
     const mainRef = useRef<HTMLDivElement>(null);
+    const dispatch = useDispatch<AppDispatch>();
+    const { ingredients, loading, error } = useSelector((state: RootState) => state.ingredients);
+
+    useEffect(() => {
+        dispatch(fetchIngredients())
+    }, [dispatch]);
     const onTabClick = (current: string) => {
         setCurrent(current)
         switch (current) {
@@ -34,6 +44,15 @@ export const BurgerIngredients: React.FC<IngredientsProps> = ({ingredientsData})
             });
         }
     }
+    const NoIngredients = () => {
+        return (
+            <div className={classNames(styles['no-ingredients'], 'text', 'text_type_main-medium')}>Нет ингредиентов</div>
+        )
+    }
+    const content = loading ? <Spinner/> : error ? <div>Ошибка</div> :
+        ingredients.length > 0? <IngredientsGroup bunRef={bunRef} sauceRef={sauceRef} mainRef={mainRef}/>
+
+    : <NoIngredients/>;
     return (
         <section className={classNames(styles['burger-ingredients'])}>
 
@@ -44,8 +63,8 @@ export const BurgerIngredients: React.FC<IngredientsProps> = ({ingredientsData})
                          onClick={onTabClick}>{tab.name}</Tab>
                 ))}
 
-            </div>{ ingredientsData &&
-            <IngredientsGroup bunRef={bunRef} sauceRef={sauceRef} mainRef={mainRef} ingredientsData={ingredientsData}/>
+            </div>{ content
+
         }
 
 

@@ -7,24 +7,25 @@ import {Ingredient} from "./ingredient/ingredient";
 import {IngredientDetails} from "../../../ingredient-details/ingredient-details";
 import {useModal} from "../../../../hooks/use-modal.hook";
 import {Modal} from "../../../modal/modal";
+import {useSelector} from "react-redux";
+import {RootState} from "../../../../state/store";
 
 interface IngredientsGroupProps {
     bunRef: React.RefObject<HTMLDivElement>;
     sauceRef: React.RefObject<HTMLDivElement>;
     mainRef: React.RefObject<HTMLDivElement>;
-    ingredientsData: IngredientModel[];
 
 }
 
-export const IngredientsGroup: React.FC<IngredientsGroupProps> = ({bunRef, sauceRef, mainRef, ingredientsData}) => {
+export const IngredientsGroup: React.FC<IngredientsGroupProps> = ({bunRef, sauceRef, mainRef}) => {
     const [height, setHeight] = React.useState(600);
     const containerRef = useRef<HTMLDivElement>(null);
-    const bun = ingredientsData.filter((item) => item.type === ingredientsTypes[0].type);
-    const sauce = ingredientsData.filter((item) => item.type === ingredientsTypes[1].type);
-    const main = ingredientsData.filter((item) => item.type === ingredientsTypes[2].type);
+    const { ingredients, loading, error } = useSelector((state: RootState) => state.ingredients);
+    const bun = ingredients.filter((item) => item.type === ingredientsTypes[0].type);
+    const sauce = ingredients.filter((item) => item.type === ingredientsTypes[1].type);
+    const main = ingredients.filter((item) => item.type === ingredientsTypes[2].type);
     const {isModalOpen, openModal, closeModal} = useModal();
     const [selectedIngredient, setIngredient] = useState<IngredientModel | null>(null);
-
     useEffect(() => {
         if (containerRef.current) {
 
