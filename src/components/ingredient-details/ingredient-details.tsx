@@ -1,11 +1,12 @@
 import styles from './ingredient-details.module.css';
 import classNames from "classnames";
 import React from "react";
-import {IngredientModel} from "../../models/burger-data.model";
-export interface IngredientDetailsProps {
-    selectedIngredient: IngredientModel | null;
-}
-export const IngredientDetails : React.FC<IngredientDetailsProps> = ({selectedIngredient}) => {
+import {useSelector} from "react-redux";
+import {RootState} from "../../state/store";
+
+export const IngredientDetails : React.FC = () => {
+    const {ingredients, loading, error, selectedIngredient} = useSelector((state: RootState) => state.ingredients);
+
     if (!selectedIngredient) {
         return null;
     }

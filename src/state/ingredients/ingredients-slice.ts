@@ -4,12 +4,14 @@ import {fetchIngredients} from "./ingredients-api";
 
 interface IngredientsState {
     ingredients: IngredientModel[];
+    selectedIngredient: IngredientModel | null;
     loading: boolean;
     error: string | null;
 }
 
 const initialState: IngredientsState = {
     ingredients: [],
+    selectedIngredient: null,
     loading: false,
     error: null,
 };
@@ -21,6 +23,12 @@ export const ingredientsSlice = createSlice({
         setIngredients: (state, action: PayloadAction<IngredientModel[]>) => {
             state.ingredients = action.payload;
         },
+        setSelectedIngredient: (state, action: PayloadAction<IngredientModel>) => {
+            state.selectedIngredient = action.payload;
+        },
+        clearSelectedIngredient: (state) => {
+            state.selectedIngredient = null;
+        }
     },
         extraReducers: (builder) => {
             builder
@@ -38,5 +46,5 @@ export const ingredientsSlice = createSlice({
                 });
         },
     });
-
+export const {setIngredients, setSelectedIngredient, clearSelectedIngredient} = ingredientsSlice.actions;
 export default ingredientsSlice.reducer;

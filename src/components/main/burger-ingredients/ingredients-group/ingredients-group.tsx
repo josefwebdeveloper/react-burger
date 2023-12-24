@@ -7,8 +7,9 @@ import {Ingredient} from "./ingredient/ingredient";
 import {IngredientDetails} from "../../../ingredient-details/ingredient-details";
 import {useModal} from "../../../../hooks/use-modal.hook";
 import {Modal} from "../../../modal/modal";
-import {useSelector} from "react-redux";
-import {RootState} from "../../../../state/store";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "../../../../state/store";
+import {clearSelectedIngredient, setSelectedIngredient} from "../../../../state/ingredients/ingredients-slice";
 
 interface IngredientsGroupProps {
     bunRef: React.RefObject<HTMLDivElement>;
@@ -20,12 +21,15 @@ interface IngredientsGroupProps {
 export const IngredientsGroup: React.FC<IngredientsGroupProps> = ({bunRef, sauceRef, mainRef}) => {
     const [height, setHeight] = React.useState(600);
     const containerRef = useRef<HTMLDivElement>(null);
-    const { ingredients, loading, error } = useSelector((state: RootState) => state.ingredients);
+    const {ingredients, loading, error, selectedIngredient} = useSelector((state: RootState) => state.ingredients);
     const bun = ingredients.filter((item) => item.type === ingredientsTypes[0].type);
     const sauce = ingredients.filter((item) => item.type === ingredientsTypes[1].type);
     const main = ingredients.filter((item) => item.type === ingredientsTypes[2].type);
     const {isModalOpen, openModal, closeModal} = useModal();
-    const [selectedIngredient, setIngredient] = useState<IngredientModel | null>(null);
+    const dispatch = useDispatch<AppDispatch>();
+
+
+    // const [selectedIngredient, setIngredient] = useState<IngredientModel | null>(null);
     useEffect(() => {
         if (containerRef.current) {
 
@@ -33,8 +37,14 @@ export const IngredientsGroup: React.FC<IngredientsGroupProps> = ({bunRef, sauce
             setHeight(heightFromDivToBottom);
         }
     }, []);
-    const onOpenModal = (selectedIngredient: IngredientModel | null) => {
-        setIngredient(selectedIngredient)
+    useEffect(() => {
+        if (!isModalOpen && selectedIngredient) {
+            dispatch(clearSelectedIngredient());
+        }
+    }, [dispatch, isModalOpen]);
+    const onOpenModal = (selectedIngredient: IngredientModel) => {
+        dispatch(setSelectedIngredient(selectedIngredient));
+
         openModal()
     }
     return (
@@ -71,7 +81,7 @@ export const IngredientsGroup: React.FC<IngredientsGroupProps> = ({bunRef, sauce
                 <Modal
                     title="Детали ингредиента"
                     onClose={closeModal}>
-                    <IngredientDetails selectedIngredient={selectedIngredient}/>
+                    <IngredientDetails/>
                 </Modal>
             )}
 
