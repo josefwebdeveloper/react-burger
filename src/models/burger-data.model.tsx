@@ -3,7 +3,7 @@ export interface IngredientModel {
     name: string
     type: string
     proteins: number
-    fat: number
+    fat?: number
     carbohydrates: number
     calories: number
     price: number
