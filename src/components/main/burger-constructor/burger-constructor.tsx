@@ -24,19 +24,13 @@ const amountReducer = (state: any, action: { type: any; payload: any[]; }) => {
 };
 
 export const BurgerConstructor: React.FC = () => {
-    // const context = useContext(ConstructorContext);
-    // if (!context) {
-    //     throw new Error('BurgerConstructor must be used within a ConstructorProvider');
-    // }
+
     const dispatch = useDispatch<AppDispatch>();
     const {  loading, error, ingredientsConstructor } = useSelector((state: RootState) => state.constructorData);
     const {ingredients } = useSelector((state: RootState) => state.ingredients);
 
-    // const {ingredientsData, setIngredientsData, orderNumber, updateOrderNumber} = context;
-    // const [burgerData, setBurgerData] = React.useState<IngredientModel[]>([]);
     const {isModalOpen, openModal, closeModal} = useModal();
     const [amount, setAmount] = useState( 0);
-    // const [loading, setLoading] = useState<boolean>(false);
     const rearrangeIngredient = (data: IngredientModel[]) => {
         const firstBun = data.find(item => item.type === 'bun');
 
@@ -54,30 +48,24 @@ export const BurgerConstructor: React.FC = () => {
         const burgerData = rearrangeIngredient(ingredients);
 
 
-        // setBurgerData(burgerData);
         dispatch(setIngredientsConstructor(burgerData));
-        // dispatch({type: 'CALCULATE_AMOUNT', payload: burgerData});
-        setAmount(burgerData.reduce((acc, item) => acc + item.price, 0));
+        setAmount(ingredientsConstructor.reduce((acc, item) => acc + item.price, 0));
 
 
 
     }, [ingredients])
 
     const onSubmitOrder = () => {
-        // setLoading(true);
         const orderData = {
             ingredients: ingredientsConstructor.map(item => item._id)
         }
         makeOrder(orderData)
 
             .then(data => {
-                // setLoading(false);
-                // updateOrderNumber(data.order.number);
-                // setIngredientsData([]);
+
                 openModal();
             })
             .catch(error => {
-                // setLoading(false);
                 console.error('Error:', error)
             });
     }
@@ -102,7 +90,7 @@ export const BurgerConstructor: React.FC = () => {
                 <Modal
                     title=""
                     onClose={closeModal}>
-                    <OrderDetails orderNumber={15}/>
+                    <OrderDetails orderNumber={amount}/>
                 </Modal>
             )}
 
