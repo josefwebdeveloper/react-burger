@@ -3,6 +3,9 @@ import classNames from "classnames";
 import React, {useEffect} from "react";
 import {IngredientModel, ingredientsTypes} from "../../../../models/burger-data.model";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {emptyAllIngredients, emptyBun} from "../../../../utils/constants";
+import {ItemTypes} from "../../burger-ingredients/ingredients-group/ingredient/ingredient";
+import {useDrop} from "react-dnd";
 
 interface ConstructorGroupProps {
     burgerData: IngredientModel[];
@@ -16,34 +19,7 @@ interface ViewProps {
 }
 
 export const ConstructorGroup: React.FC<ConstructorGroupProps> = ({burgerData}) => {
-    const emptyBun = {
-        calories: 0,
-        carbohydrates: 0,
-        fat: 0,
-        image: "",
-        image_large: "",
-        image_mobile: "",
-        name: "Выберите булки",
-        price: 0,
-        proteins: 0,
-        type: "bun",
-        __v: 0,
-        _id: 'empty',
-    }
-    const emptyAllIngredients = {
-        calories: 0,
-        carbohydrates: 0,
-        fat: 0,
-        image: "",
-        image_large: "",
-        image_mobile: "",
-        name: "Выберите начинку",
-        price: 0,
-        proteins: 0,
-        type: "main",
-        __v: 0,
-        _id: "empty",
-    }
+
     const [maxHeight, setMaxHeight] = React.useState(80);
     let allIngredientsData = burgerData.length > 0 ? burgerData.filter((item) => item.type !== ingredientsTypes[0].type) : [emptyAllIngredients];
     const [allIngredients, setAllIngredients] = React.useState<IngredientModel[]>(allIngredientsData);
@@ -77,8 +53,23 @@ const View: React.FC<ViewProps> = ({
                                        maxHeight,
                                        allIngredients, bun
                                    }) => {
+    const [{ canDrop, isOver }, drop] = useDrop(() => ({
+        accept: ItemTypes.BOX,
+        drop: () => ({ name: 'Dustbin' }),
+        collect: (monitor) => ({
+            isOver: monitor.isOver(),
+            canDrop: monitor.canDrop(),
+        }),
+    }))
+    const isActive = canDrop && isOver
+    let backgroundColor = '#222'
+    if (isActive) {
+        backgroundColor = 'darkgreen'
+    } else if (canDrop) {
+        backgroundColor = 'darkkhaki'
+    }
     return (
-        <div className={classNames(styles['ingredient-element-container'])}>
+        <div ref={drop} data-testid="dustbin" className={classNames(styles['ingredient-element-container'])}>
 
             <div
                 className={classNames((bun[0]._id === 'empty' ? 'empty' : ''), styles["ingredient-element"], styles["bun"])}>

@@ -1,0 +1,28 @@
+export const emptyBun = {
+    calories: 0,
+    carbohydrates: 0,
+    fat: 0,
+    image: "",
+    image_large: "",
+    image_mobile: "",
+    name: "Выберите булки",
+    price: 0,
+    proteins: 0,
+    type: "bun",
+    __v: 0,
+    _id: 'empty',
+}
+export const emptyAllIngredients = {
+    calories: 0,
+    carbohydrates: 0,
+    fat: 0,
+    image: "",
+    image_large: "",
+    image_mobile: "",
+    name: "Выберите начинку",
+    price: 0,
+    proteins: 0,
+    type: "main",
+    __v: 0,
+    _id: "empty",
+}

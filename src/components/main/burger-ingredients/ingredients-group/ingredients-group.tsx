@@ -1,5 +1,5 @@
 import styles from './ingredients-group.module.css';
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect} from "react";
 import {IngredientModel, ingredientsTypes} from "../../../../models/burger-data.model";
 import classNames from "classnames";
 import {getHeightFromDivToBottom} from "../../../../utils/utils";
