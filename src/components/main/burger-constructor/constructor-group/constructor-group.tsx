@@ -3,7 +3,6 @@ import classNames from "classnames";
 import React, {useEffect} from "react";
 import {IngredientModel, ingredientsTypes} from "../../../../models/burger-data.model";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {setIngredients} from "../../../../state/ingredients/ingredients-slice";
 
 interface ConstructorGroupProps {
     burgerData: IngredientModel[];

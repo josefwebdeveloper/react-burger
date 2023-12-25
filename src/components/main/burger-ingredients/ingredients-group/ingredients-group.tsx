@@ -12,24 +12,40 @@ import {AppDispatch, RootState} from "../../../../state/store";
 import {clearSelectedIngredient, setSelectedIngredient} from "../../../../state/ingredients/ingredients-slice";
 
 interface IngredientsGroupProps {
-    bunRef: React.RefObject<HTMLDivElement>;
-    sauceRef: React.RefObject<HTMLDivElement>;
-    mainRef: React.RefObject<HTMLDivElement>;
-
+    bunRef: React.RefObject<HTMLDivElement>,
+    sauceRef: React.RefObject<HTMLDivElement>,
+    mainRef: React.RefObject<HTMLDivElement>,
+    containerRef: React.RefObject<HTMLDivElement>,
+    handleScroll: () => void
 }
 
-export const IngredientsGroup: React.FC<IngredientsGroupProps> = ({bunRef, sauceRef, mainRef}) => {
+export const IngredientsGroup: React.FC<IngredientsGroupProps> = ({
+                                                                      bunRef,
+                                                                      sauceRef,
+                                                                      mainRef,
+                                                                      containerRef,
+                                                                      handleScroll
+                                                                  }) => {
     const [height, setHeight] = React.useState(600);
-    const containerRef = useRef<HTMLDivElement>(null);
+
     const {ingredients, loading, error, selectedIngredient} = useSelector((state: RootState) => state.ingredients);
     const bun = ingredients.filter((item) => item.type === ingredientsTypes[0].type);
     const sauce = ingredients.filter((item) => item.type === ingredientsTypes[1].type);
     const main = ingredients.filter((item) => item.type === ingredientsTypes[2].type);
     const {isModalOpen, openModal, closeModal} = useModal();
     const dispatch = useDispatch<AppDispatch>();
+    useEffect(() => {
+        const container = containerRef.current;
+        if (container) {
+            container.addEventListener('scroll', handleScroll);
+        }
+        return () => {
+            if (container) {
+                container.removeEventListener('scroll', handleScroll);
+            }
+        };
+    }, []);
 
-
-    // const [selectedIngredient, setIngredient] = useState<IngredientModel | null>(null);
     useEffect(() => {
         if (containerRef.current) {
 
