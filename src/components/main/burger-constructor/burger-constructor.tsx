@@ -10,6 +10,9 @@ import {Modal} from "../../modal/modal";
 import {useModal} from "../../../hooks/use-modal.hook";
 import {ConstructorContext} from "../../../services/constructor-context";
 import {makeOrder} from "../../../services/api.service";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "../../../state/store";
+import {setIngredientsConstructor} from "../../../state/constructor-data/constructor-slice";
 
 const amountReducer = (state: any, action: { type: any; payload: any[]; }) => {
     switch (action.type) {
@@ -21,16 +24,19 @@ const amountReducer = (state: any, action: { type: any; payload: any[]; }) => {
 };
 
 export const BurgerConstructor: React.FC = () => {
-    const context = useContext(ConstructorContext);
-    if (!context) {
-        throw new Error('BurgerConstructor must be used within a ConstructorProvider');
-    }
+    // const context = useContext(ConstructorContext);
+    // if (!context) {
+    //     throw new Error('BurgerConstructor must be used within a ConstructorProvider');
+    // }
+    const dispatch = useDispatch<AppDispatch>();
+    const {  loading, error, ingredientsConstructor } = useSelector((state: RootState) => state.constructorData);
+    const {ingredients } = useSelector((state: RootState) => state.ingredients);
 
-    const {ingredientsData, setIngredientsData, orderNumber, updateOrderNumber} = context;
-    const [burgerData, setBurgerData] = React.useState<IngredientModel[]>([]);
+    // const {ingredientsData, setIngredientsData, orderNumber, updateOrderNumber} = context;
+    // const [burgerData, setBurgerData] = React.useState<IngredientModel[]>([]);
     const {isModalOpen, openModal, closeModal} = useModal();
-    const [amount, dispatch] = useReducer(amountReducer, 0);
-    const [loading, setLoading] = useState<boolean>(false);
+    const [amount, setAmount] = useState( 0);
+    // const [loading, setLoading] = useState<boolean>(false);
     const rearrangeIngredient = (data: IngredientModel[]) => {
         const firstBun = data.find(item => item.type === 'bun');
 
@@ -45,30 +51,33 @@ export const BurgerConstructor: React.FC = () => {
     useEffect(() => {
         //TODO(remove that later) modify ingredientsData remome all items with type === 'bun', exept first , and add it to the end of array
 
-        const burgerData = rearrangeIngredient(ingredientsData);
+        const burgerData = rearrangeIngredient(ingredients);
 
 
-        setBurgerData(burgerData);
-        dispatch({type: 'CALCULATE_AMOUNT', payload: burgerData});
+        // setBurgerData(burgerData);
+        dispatch(setIngredientsConstructor(burgerData));
+        // dispatch({type: 'CALCULATE_AMOUNT', payload: burgerData});
+        setAmount(burgerData.reduce((acc, item) => acc + item.price, 0));
 
 
-    }, [ingredientsData])
+
+    }, [ingredients])
 
     const onSubmitOrder = () => {
-        setLoading(true);
+        // setLoading(true);
         const orderData = {
-            ingredients: burgerData.map(item => item._id)
+            ingredients: ingredientsConstructor.map(item => item._id)
         }
         makeOrder(orderData)
 
             .then(data => {
-                setLoading(false);
-                updateOrderNumber(data.order.number);
-                setIngredientsData([]);
+                // setLoading(false);
+                // updateOrderNumber(data.order.number);
+                // setIngredientsData([]);
                 openModal();
             })
             .catch(error => {
-                setLoading(false);
+                // setLoading(false);
                 console.error('Error:', error)
             });
     }
@@ -76,10 +85,10 @@ export const BurgerConstructor: React.FC = () => {
 
     return (
         <section className={classNames(styles['burger-constructor'])}>
-            {burgerData.length > 0 ? (
+            {ingredientsConstructor.length > 0 ? (
                 <>
                     {loading?  <Spinner/>: (<>
-                        <ConstructorGroup burgerData={burgerData}/>
+                        <ConstructorGroup burgerData={ingredientsConstructor}/>
                         <ConstructorFooter amount={amount} onSubmitOrder={onSubmitOrder}/>
                     </>)}
 
@@ -93,7 +102,7 @@ export const BurgerConstructor: React.FC = () => {
                 <Modal
                     title=""
                     onClose={closeModal}>
-                    <OrderDetails orderNumber={orderNumber}/>
+                    <OrderDetails orderNumber={15}/>
                 </Modal>
             )}
 
