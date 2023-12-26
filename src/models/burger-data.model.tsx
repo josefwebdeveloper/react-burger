@@ -11,6 +11,7 @@ export interface IngredientModel {
     image: string
     image_mobile: string
     image_large: string
+    count: number
     __v: number
 }
 export interface getIngredientsResponse  {

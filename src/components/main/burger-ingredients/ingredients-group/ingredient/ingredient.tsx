@@ -7,7 +7,7 @@ import {useDrag} from "react-dnd";
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "../../../../../state/store";
 import {addIngredient, setBun} from "../../../../../state/constructor-data/constructor-slice";
-import { v4 as uuidv4 } from 'uuid';
+import {incrementCount} from "../../../../../state/ingredients/ingredients-slice";
 export const ItemTypes = {
     BOX: 'box',
 }
@@ -36,9 +36,11 @@ export const Ingredient: React.FC<IngredientProps> = ({ingredient,onOpenModal}) 
                 console.log(item)
                 console.log(dropResult)
                 if (item.type === 'bun'){
-                    dispatch(setBun({...item,unId:uuidv4()}))
+                    dispatch(incrementCount(item))
+                    dispatch(setBun(item));
                 } else {
-                    dispatch(addIngredient({...item,unId:uuidv4()}))
+                    dispatch(incrementCount(item))
+                    dispatch(addIngredient(item))
                 }
             }
         },
@@ -50,8 +52,9 @@ export const Ingredient: React.FC<IngredientProps> = ({ingredient,onOpenModal}) 
     const opacity = isDragging ? 0.4 : 1
     return (
         <div ref={drag}  data-testid={`box`}
-             onClick={()=>onOpenModal(ingredient)} className={classNames(styles['ingredient-container'],)}>
-            <Counter count={1} size="default" extraClass="m-1" />
+             onClick={()=>onOpenModal(ingredient)} className={classNames(styles['ingredient-container'])}>
+            {/*{(ingredient.count && ingredient.count>0)? <Counter count={ingredient.count} size="default" extraClass="m-1" />:null}*/}
+           <Counter count={ingredient.count} size="default" extraClass="m-1" />
             <div className={classNames(styles['ingredient-image'],'ml-4','mr-4','mb-1')}>
                 <img src={ingredient.image} alt={ingredient.image}/>
             </div>
