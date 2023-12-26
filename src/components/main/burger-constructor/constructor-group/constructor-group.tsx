@@ -4,11 +4,12 @@ import React, {useEffect} from "react";
 import {IngredientModel} from "../../../../models/burger-data.model";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {ItemTypes} from "../../burger-ingredients/ingredients-group/ingredient/ingredient";
-import {useDrop} from "react-dnd";
+import {DndProvider, useDrop} from "react-dnd";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../../../../state/store";
 import {deleteIngredient} from "../../../../state/constructor-data/constructor-slice";
 import {decrementCount} from "../../../../state/ingredients/ingredients-slice";
+import {HTML5Backend} from "react-dnd-html5-backend";
 interface ViewProps {
     bun: IngredientModel | null,
     maxHeight: number,
@@ -30,14 +31,15 @@ export const ConstructorGroup: React.FC = () => {
     useEffect(() => {
         setMaxHeight(window.innerHeight - 540);
     }, [ingredientsConstructor]);
-    const content =
-        <View removeIngredient={removeIngredient} maxHeight={maxHeight} ingredientsConstr={ingredientsConstructor}
-              bun={bun}/>
+
+
     return (
         <section
             className={classNames(styles['constructor-group-container'])}>
-
-            {content}
+            <DndProvider backend={HTML5Backend}>
+            <View removeIngredient={removeIngredient} maxHeight={maxHeight} ingredientsConstr={ingredientsConstructor}
+                  bun={bun}/>
+            </DndProvider>
         </section>
     );
 };
@@ -48,23 +50,9 @@ const View: React.FC<ViewProps> = ({
                                        bun,
                                        ingredientsConstr
                                    }) => {
-    const [{canDrop, isOver}, drop] = useDrop(() => ({
-        accept: ItemTypes.BOX,
-        drop: () => ({name: 'Dustbin'}),
-        collect: (monitor) => ({
-            isOver: monitor.isOver(),
-            canDrop: monitor.canDrop(),
-        }),
-    }))
-    const isActive = canDrop && isOver
-    let backgroundColor = '#222'
-    if (isActive) {
-        backgroundColor = 'darkgreen'
-    } else if (canDrop) {
-        backgroundColor = 'darkkhaki'
-    }
+
     return (
-        <div ref={drop} data-testid="dustbin" className={classNames(styles['ingredient-element-container'])}>
+        <div  className={classNames(styles['ingredient-element-container'])}>
 
             {bun ? <div
                 className={classNames(styles["ingredient-element"], styles["bun"])}>
@@ -81,19 +69,7 @@ const View: React.FC<ViewProps> = ({
                  className={classNames(styles['scroll-container'], 'custom-scroll')}>
                 {ingredientsConstr.length > 0 ? ingredientsConstr.map((ingredient: IngredientModel, index: React.Key | null | undefined) => {
                         return (
-
-                            <div key={ingredient.unId} className={classNames(styles["ingredient-element"])}>
-                            <span className={classNames('flex-align-center', 'mr-2')}><DragIcon type="primary"/></span>
-                                <ConstructorElement
-                                    isLocked={false}
-                                    text={ingredient.name}
-                                    price={ingredient.price}
-                                    thumbnail={ingredient.image}
-                                    handleClose={() => removeIngredient(ingredient)}
-
-                                />
-                            </div>
-
+                            <IngredientCard key={ingredient.unId} ingredient={ingredient} removeIngredient={removeIngredient}/>
                         )
                     }) :
                     (
@@ -114,10 +90,32 @@ const View: React.FC<ViewProps> = ({
         </div>
     )
 }
+
+export interface IngredientCardProps {
+    ingredient: IngredientModel,
+    removeIngredient: (ingredient: IngredientModel) => void
+}
+
+const IngredientCard: React.FC<IngredientCardProps>=({ingredient,removeIngredient}) => {
+    return (
+        <div key={ingredient.unId} className={classNames(styles["ingredient-element"])}>
+            <span className={classNames('flex-align-center', 'mr-2')}><DragIcon type="primary"/></span>
+            <ConstructorElement
+                isLocked={false}
+                text={ingredient.name}
+                price={ingredient.price}
+                thumbnail={ingredient.image}
+                handleClose={() => removeIngredient(ingredient)}
+
+            />
+        </div>
+    )
+}
 const NoIngredients = () => {
     return (
-        <div className={classNames('empty','flex-align-center')}>
-            <span style={{visibility:'hidden'}} className={classNames('flex-align-center', 'mr-2')}><DragIcon type="primary"/></span>
+        <div className={classNames('empty', 'flex-align-center')}>
+            <span style={{visibility: 'hidden'}} className={classNames('flex-align-center', 'mr-2')}><DragIcon
+                type="primary"/></span>
             <ConstructorElement
                 isLocked={true}
                 text={"Выберите начинку"}
