@@ -1,9 +1,8 @@
 import styles from './constructor-group.module.css';
 import classNames from "classnames";
 import React, {useEffect} from "react";
-import {IngredientModel, ingredientsTypes} from "../../../../models/burger-data.model";
+import {IngredientModel} from "../../../../models/burger-data.model";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {emptyAllIngredients} from "../../../../utils/constants";
 import {ItemTypes} from "../../burger-ingredients/ingredients-group/ingredient/ingredient";
 import {useDrop} from "react-dnd";
 import {useDispatch, useSelector} from "react-redux";
@@ -25,14 +24,9 @@ export const ConstructorGroup: React.FC<ConstructorGroupProps> = ({burgerData}) 
     const dispatch = useDispatch<AppDispatch>();
 
     const {
-        loading,
         ingredientsConstructor, bun
     } = useSelector((state: RootState) => state.constructorData);
     const [maxHeight, setMaxHeight] = React.useState(80);
-    // let allIngredientsData = burgerData.length > 0 ? burgerData.filter((item) => item.type !== ingredientsTypes[0].type) : [emptyAllIngredients];
-    // const [allIngredients, setAllIngredients] = React.useState<IngredientModel[]>(allIngredientsData);
-
-    // const bun = burgerData.length > 0 ? burgerData.filter((item) => item.type === ingredientsTypes[0].type) : [emptyBun];
     const removeIngredient = (ingredient: IngredientModel) => {
 
         dispatch(deleteIngredient(ingredient))
