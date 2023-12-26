@@ -1,6 +1,8 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {IngredientModel} from "../../models/burger-data.model";
 import {makeOrder} from "./constructor-api";
+import {v4 as uuidv4} from 'uuid';
+
 
 interface ConstructorState {
     ingredientsConstructor: IngredientModel[];
@@ -35,7 +37,7 @@ export const constructorSlice = createSlice({
             } );
         },
         addIngredient: (state, action: PayloadAction<IngredientModel>) => {
-            state.ingredientsConstructor = [...state.ingredientsConstructor, action.payload];
+            state.ingredientsConstructor = [...state.ingredientsConstructor, {...action.payload, unId: uuidv4()}];
         },
         clearOrderNumber: (state) => {
             state.orderNumber = null;

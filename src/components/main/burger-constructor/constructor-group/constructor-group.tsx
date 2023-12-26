@@ -8,6 +8,7 @@ import {useDrop} from "react-dnd";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../../../../state/store";
 import {deleteIngredient} from "../../../../state/constructor-data/constructor-slice";
+import {decrementCount} from "../../../../state/ingredients/ingredients-slice";
 interface ViewProps {
     bun: IngredientModel | null,
     maxHeight: number,
@@ -24,6 +25,7 @@ export const ConstructorGroup: React.FC = () => {
     const [maxHeight, setMaxHeight] = React.useState(80);
     const removeIngredient = (ingredient: IngredientModel) => {
         dispatch(deleteIngredient(ingredient))
+        dispatch(decrementCount(ingredient))
     }
     useEffect(() => {
         setMaxHeight(window.innerHeight - 540);

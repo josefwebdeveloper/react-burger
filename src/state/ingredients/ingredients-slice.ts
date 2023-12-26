@@ -48,7 +48,7 @@ export const ingredientsSlice = createSlice({
                         return item.count === 2 ? item : {...item, count: 2}
                     }
                     return {...item, count: item.count + 1};
-                } else if (item.type === 'bun') {
+                } else if (item.type === 'bun' && action.payload.type === 'bun') {
                     return {...item, count: 0}
                 }
                 return item;
@@ -65,8 +65,8 @@ export const ingredientsSlice = createSlice({
             })
             .addCase(fetchIngredients.fulfilled, (state, action: PayloadAction<IngredientModel[]>) => {
                 state.ingredients = action.payload.map((item) => {
-                    const unId = item.unId ? item.unId : uuidv4()
-                    return {...item, unId: unId, count: 0};
+                    // const unId = item.unId ? item.unId : uuidv4()
+                    return {...item,  count: 0};
                 });
                 state.loading = false;
             })
