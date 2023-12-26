@@ -27,27 +27,15 @@ export const BurgerConstructor: React.FC = () => {
     }, [ingredientsConstructor, bun])
 
     const onSubmitOrder = () => {
-
         const ingredientsIds = ingredientsConstructor.map(item => item._id)
         dispatch(makeOrder(ingredientsIds))
-        // makeOrder(orderData)
-        //
-        //     .then(data => {
-        //
         openModal();
-        //     })
-        //     .catch(error => {
-        //         console.error('Error:', error)
-        //     });
     }
 
     return (
         <section className={classNames(styles['burger-constructor'])}>
-
-
             <ConstructorGroup burgerData={ingredientsConstructor}/>
             <ConstructorFooter amount={amount} onSubmitOrder={onSubmitOrder}/>
-
             {loading ? <Spinner/> : (<>
                 {isModalOpen && orderNumber && (
                     <Modal
