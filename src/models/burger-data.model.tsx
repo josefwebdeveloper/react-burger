@@ -1,5 +1,6 @@
 export interface IngredientModel {
     _id: string
+    unId?: string
     name: string
     type: string
     proteins: number

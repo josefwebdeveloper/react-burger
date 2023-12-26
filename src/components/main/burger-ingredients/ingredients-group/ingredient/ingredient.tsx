@@ -1,15 +1,18 @@
 import styles from './ingredient.module.css';
 import classNames from 'classnames';
-import { IngredientProps} from "../../../../../models/burger-data.model";
+import {IngredientModel, IngredientProps} from "../../../../../models/burger-data.model";
 import React, {CSSProperties} from "react";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDrag} from "react-dnd";
-// import { ItemTypes } from './ItemTypes'
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "../../../../../state/store";
+import {addIngredient, setBun} from "../../../../../state/constructor-data/constructor-slice";
+import { v4 as uuidv4 } from 'uuid';
 export const ItemTypes = {
     BOX: 'box',
 }
 interface DropResult {
-    name: string
+    ingredient: IngredientModel
 }
 const style: CSSProperties = {
     border: '1px dashed gray',
@@ -22,14 +25,21 @@ const style: CSSProperties = {
 }
 
 export const Ingredient: React.FC<IngredientProps> = ({ingredient,onOpenModal}) => {
+    const dispatch = useDispatch<AppDispatch>();
     const [{ isDragging }, drag] = useDrag(() => ({
         type: ItemTypes.BOX,
-        // eslint-disable-next-line no-restricted-globals
-        item: { name },
+        item: ()=>{return  ingredient },
         end: (item, monitor) => {
             const dropResult = monitor.getDropResult<DropResult>()
             if (item && dropResult) {
-                alert(`You dropped ${item.name} into ${dropResult.name}!`)
+                // alert(`You dropped ${item.name} into ${dropResult.ingredient.name}!`)
+                console.log(item)
+                console.log(dropResult)
+                if (item.type === 'bun'){
+                    dispatch(setBun({...item,unId:uuidv4()}))
+                } else {
+                    dispatch(addIngredient({...item,unId:uuidv4()}))
+                }
             }
         },
         collect: (monitor) => ({

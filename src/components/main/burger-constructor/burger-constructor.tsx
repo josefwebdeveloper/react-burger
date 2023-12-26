@@ -12,7 +12,7 @@ import {ConstructorContext} from "../../../services/constructor-context";
 import {makeOrder} from "../../../services/api.service";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../../../state/store";
-import {setIngredientsConstructor} from "../../../state/constructor-data/constructor-slice";
+import {setIngredientsConstr, setIngredientsConstructor} from "../../../state/constructor-data/constructor-slice";
 
 const amountReducer = (state: any, action: { type: any; payload: any[]; }) => {
     switch (action.type) {
@@ -26,7 +26,8 @@ const amountReducer = (state: any, action: { type: any; payload: any[]; }) => {
 export const BurgerConstructor: React.FC = () => {
 
     const dispatch = useDispatch<AppDispatch>();
-    const {  loading, error, ingredientsConstructor } = useSelector((state: RootState) => state.constructorData);
+    const {  loading ,
+        ingredientsConstructor, bun} = useSelector((state: RootState) => state.constructorData);
     const {ingredients } = useSelector((state: RootState) => state.ingredients);
 
     const {isModalOpen, openModal, closeModal} = useModal();
@@ -45,11 +46,11 @@ export const BurgerConstructor: React.FC = () => {
     useEffect(() => {
         //TODO(remove that later) modify ingredientsData remome all items with type === 'bun', exept first , and add it to the end of array
 
-        const burgerData = rearrangeIngredient(ingredients);
+        // const burgerData = rearrangeIngredient(ingredients);
 
 
-        dispatch(setIngredientsConstructor(burgerData));
-        setAmount(ingredientsConstructor.reduce((acc, item) => acc + item.price, 0));
+        // dispatch(setIngredientsConstructor(burgerData));
+        // setAmount(ingredientsConstructor.reduce((acc, item) => acc + item.price, 0));
 
 
 
@@ -73,18 +74,14 @@ export const BurgerConstructor: React.FC = () => {
 
     return (
         <section className={classNames(styles['burger-constructor'])}>
-            {ingredientsConstructor.length > 0 ? (
-                <>
+
                     {loading?  <Spinner/>: (<>
                         <ConstructorGroup burgerData={ingredientsConstructor}/>
                         <ConstructorFooter amount={amount} onSubmitOrder={onSubmitOrder}/>
                     </>)}
 
             
-                </>
-            ) :
-                            <NoIngredients />
-            }
+
 
             {isModalOpen && (
                 <Modal

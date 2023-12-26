@@ -44,6 +44,12 @@ ul, li {
 .empty .constructor-element__action {
     visibility: hidden;
 }
+.empty .constructor-element{
+    min-width: 536px;
+}
+.empty .constructor-element__text {
+   justify-content: center;
+}
 
 @media screen and (max-width: 768px) {
     .container {
