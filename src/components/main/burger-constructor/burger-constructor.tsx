@@ -13,6 +13,7 @@ import {makeOrder} from "../../../state/constructor-data/constructor-api";
 import {useDrop} from "react-dnd";
 import {ItemTypes} from "../burger-ingredients/ingredients-group/ingredient/ingredient";
 import {clearCountIngredients} from "../../../state/ingredients/ingredients-slice";
+import {IngredientModel} from "../../../models/burger-data.model";
 
 export const BurgerConstructor: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -36,20 +37,25 @@ export const BurgerConstructor: React.FC = () => {
         dispatch(clearCountIngredients())
         openModal();
     }
-
+    const [droppedItem, setDroppedItem] = useState<IngredientModel | null>(null);
     const [{canDrop, isOver}, drop] = useDrop(() => ({
         accept: ItemTypes.BOX,
-        drop: () => ({name: 'burger'}),
+        drop: (item:IngredientModel,monitor) => {
+           return {name: 'burger',item,monitor}
+        },
+        hover: (item, monitor) => {
+
+            setDroppedItem(item);
+        },
         collect: (monitor) => ({
             isOver: monitor.isOver(),
             canDrop: monitor.canDrop(),
         }),
     }))
     const isActive = canDrop && isOver
-    // TODO: add isActive
     return (
         <section ref={drop} data-testid="burger" className={classNames(styles['burger-constructor'])}>
-            <ConstructorGroup />
+            <ConstructorGroup isActive={isActive} droppedItem={droppedItem}/>
             <ConstructorFooter amount={amount} onSubmitOrder={onSubmitOrder}/>
             {loading ? <Spinner/> : (<>
                 {isModalOpen && orderNumber && (

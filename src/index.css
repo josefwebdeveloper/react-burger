@@ -50,6 +50,9 @@ ul, li {
 .empty .constructor-element__text {
    justify-content: center;
 }
+.move .constructor-element{
+    border:1px dashed;
+}
 
 @media screen and (max-width: 768px) {
     .container {

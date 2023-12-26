@@ -8,15 +8,23 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../../../../state/store";
 import {deleteIngredient, moveIngredient} from "../../../../state/constructor-data/constructor-slice";
 import {decrementCount} from "../../../../state/ingredients/ingredients-slice";
-import type { Identifier, XYCoord } from 'dnd-core'
+import type {Identifier, XYCoord} from 'dnd-core'
+
 interface ViewProps {
     bun: IngredientModel | null,
     maxHeight: number,
     removeIngredient: (ingredient: IngredientModel) => void,
-    ingredientsConstructor: IngredientModel[]
+    ingredientsConstructor: IngredientModel[],
+    isActive: boolean,
+    droppedItem: IngredientModel | null
 }
 
-export const ConstructorGroup: React.FC = () => {
+interface ConstructorGroupProps {
+    isActive: boolean,
+    droppedItem: IngredientModel | null
+}
+
+export const ConstructorGroup: React.FC<ConstructorGroupProps> = ({isActive, droppedItem}: ConstructorGroupProps) => {
     const dispatch = useDispatch<AppDispatch>();
 
     const {
@@ -35,7 +43,8 @@ export const ConstructorGroup: React.FC = () => {
     return (
         <section
             className={classNames(styles['constructor-group-container'])}>
-            <View removeIngredient={removeIngredient} maxHeight={maxHeight} ingredientsConstructor={ingredientsConstructor}
+            <View isActive={isActive} droppedItem={droppedItem} removeIngredient={removeIngredient}
+                  maxHeight={maxHeight} ingredientsConstructor={ingredientsConstructor}
                   bun={bun}/>
         </section>
     );
@@ -45,14 +54,16 @@ const View: React.FC<ViewProps> = ({
                                        removeIngredient,
                                        maxHeight,
                                        bun,
-                                       ingredientsConstructor
+                                       ingredientsConstructor,
+                                       isActive,
+                                       droppedItem
                                    }) => {
 
     return (
-        <div  className={classNames(styles['ingredient-element-container'])}>
+        <div className={classNames(styles['ingredient-element-container'])}>
 
             {bun ? <div
-                className={classNames(styles["ingredient-element"], styles["bun"])}>
+                        className={classNames(styles["ingredient-element"], styles["bun"])}>
                 <ConstructorElement
                     type={'top'}
                     isLocked={true}
@@ -60,17 +71,18 @@ const View: React.FC<ViewProps> = ({
                     price={bun.price}
                     thumbnail={bun.image}
                 />
-            </div> : <EmptyBun isBottom={false}/>
+            </div> : <EmptyBun isActive={isActive} droppedItem={droppedItem} isBottom={false}/>
             }
             <div style={{'maxHeight': maxHeight}}
                  className={classNames(styles['scroll-container'], 'custom-scroll')}>
                 {ingredientsConstructor.length > 0 ? ingredientsConstructor.map((ingredient: IngredientModel, index: React.Key | null | undefined) => {
                         return (
-                            <IngredientCard key={ingredient.unId} index={index}  ingredient={ingredient} removeIngredient={removeIngredient}/>
+                            <IngredientCard key={ingredient.unId} index={index} ingredient={ingredient}
+                                            removeIngredient={removeIngredient}/>
                         )
                     }) :
                     (
-                        <NoIngredients/>
+                        <NoIngredients isActive={isActive} droppedItem={droppedItem}/>
                     )}
             </div>
             {bun ? <div
@@ -82,7 +94,7 @@ const View: React.FC<ViewProps> = ({
                     price={bun.price}
                     thumbnail={bun.image}
                 />
-            </div> : <EmptyBun isBottom={true}/>
+            </div> : <EmptyBun isActive={isActive} droppedItem={droppedItem} isBottom={true}/>
             }
         </div>
     )
@@ -93,30 +105,33 @@ export interface IngredientCardProps {
     removeIngredient: (ingredient: IngredientModel) => void,
     index: React.Key | null | undefined
 }
+
 const style = {
     cursor: 'move',
 
 }
-export const moveCard=(list: any, from: any, to: any)=>{
+export const moveCard = (list: any, from: any, to: any) => {
     const listClone = [...list];
     const item = listClone.splice(from, 1)[0];
     listClone.splice(to, 0, item);
     return listClone;
 }
+
 export interface DragItem {
     index: number
     id: string
     type: string
 }
-const IngredientCard: React.FC<IngredientCardProps>=({
-                                                         ingredient,
-                                                         removeIngredient,
-                                                         index
-                                                     }) => {
+
+const IngredientCard: React.FC<IngredientCardProps> = ({
+                                                           ingredient,
+                                                           removeIngredient,
+                                                           index
+                                                       }) => {
     const dispatch = useDispatch<AppDispatch>();
 
     const ref = useRef(null)
-    const [{ handlerId }, drop] = useDrop<
+    const [{handlerId}, drop] = useDrop<
         DragItem,
         void,
         { handlerId: Identifier | null }
@@ -140,7 +155,7 @@ const IngredientCard: React.FC<IngredientCardProps>=({
             }
 
             // Determine rectangle on screen
-            const hoverBoundingRect =(ref.current as HTMLElement).getBoundingClientRect()
+            const hoverBoundingRect = (ref.current as HTMLElement).getBoundingClientRect()
 
             // Get vertical middle
             const hoverMiddleY =
@@ -159,7 +174,7 @@ const IngredientCard: React.FC<IngredientCardProps>=({
                 return
             }
 
-            dispatch(moveIngredient({dragIndex,hoverIndex:hoverIndex as number}))
+            dispatch(moveIngredient({dragIndex, hoverIndex: hoverIndex as number}))
 
 
             if (typeof hoverIndex === "number") {
@@ -168,19 +183,20 @@ const IngredientCard: React.FC<IngredientCardProps>=({
         },
     })
 
-  const [{isDragging},drag]=useDrag({
-      type:'card',
-      item:()=>{
-         return {unId:ingredient.unId,index}
-      },
-      collect: (monitor) => ({
-          isDragging: monitor.isDragging(),
-      }),
-  })
+    const [{isDragging}, drag] = useDrag({
+        type: 'card',
+        item: () => {
+            return {unId: ingredient.unId, index}
+        },
+        collect: (monitor) => ({
+            isDragging: monitor.isDragging(),
+        }),
+    })
     const opacity = isDragging ? 0 : 1
     drag(drop(ref))
     return (
-        <div ref={ref} style={{...style,opacity}} data-handler-id={handlerId} key={ingredient.unId} className={classNames(styles["ingredient-element"])}>
+        <div ref={ref} style={{...style, opacity}} data-handler-id={handlerId} key={ingredient.unId}
+             className={classNames(styles["ingredient-element"])}>
             <span className={classNames('flex-align-center', 'mr-2')}><DragIcon type="primary"/></span>
             <ConstructorElement
                 isLocked={false}
@@ -193,9 +209,15 @@ const IngredientCard: React.FC<IngredientCardProps>=({
         </div>
     )
 }
-const NoIngredients = () => {
+
+interface NoIngredientsProps {
+    isActive: boolean,
+    droppedItem: IngredientModel | null
+}
+
+const NoIngredients = ({ isActive, droppedItem }: NoIngredientsProps) => {
     return (
-        <div className={classNames('empty', 'flex-align-center')}>
+        <div className={classNames(isActive && droppedItem?.type !=='bun' && 'move', 'empty', 'flex-align-center')}>
             <span style={{visibility: 'hidden'}} className={classNames('flex-align-center', 'mr-2')}><DragIcon
                 type="primary"/></span>
             <ConstructorElement
@@ -209,13 +231,16 @@ const NoIngredients = () => {
 }
 
 export interface EmptyBunInterface {
-    isBottom: boolean;
+    isBottom: boolean,
+    isActive: boolean,
+    droppedItem: IngredientModel | null
 }
 
-const EmptyBun: React.FC<EmptyBunInterface> = ({isBottom}) => {
+const EmptyBun: React.FC<EmptyBunInterface> = ({ isBottom, isActive, droppedItem }) => {
     return (
         <div
-            className={classNames('empty', styles["ingredient-element"], styles["bun"])}>
+            className={classNames(isActive && droppedItem?.type ==='bun' && 'move'
+                ,'empty', styles["ingredient-element"], styles["bun"])}>
             <ConstructorElement
                 type={isBottom ? 'bottom' : 'top'}
                 isLocked={true}
