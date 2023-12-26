@@ -19,7 +19,7 @@ export const ConstructorGroup: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
 
     const {
-        ingredientsConstructor, bunz
+        ingredientsConstructor, bun
     } = useSelector((state: RootState) => state.constructorData);
     const [maxHeight, setMaxHeight] = React.useState(80);
     const removeIngredient = (ingredient: IngredientModel) => {
