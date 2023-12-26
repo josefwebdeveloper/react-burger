@@ -1,11 +1,13 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {IngredientModel} from "../../models/burger-data.model";
+import {makeOrder} from "./constructor-api";
 
 interface ConstructorState {
     ingredientsConstructor: IngredientModel[];
     bun: IngredientModel | null
     loading: boolean;
-    error: string | null;
+    error: any;
+    orderNumber: number | null;
 }
 
 const initialState: ConstructorState = {
@@ -13,6 +15,7 @@ const initialState: ConstructorState = {
     bun: null,
     loading: false,
     error: null,
+    orderNumber: null
 };
 
 export const constructorSlice = createSlice({
@@ -34,10 +37,29 @@ export const constructorSlice = createSlice({
         addIngredient: (state, action: PayloadAction<IngredientModel>) => {
             state.ingredientsConstructor = [...state.ingredientsConstructor, action.payload];
         },
+        clearOrderNumber: (state) => {
+            state.orderNumber = null;
+        }
 
     },
+    extraReducers: (builder) => {
+        builder
+            .addCase(makeOrder.pending, (state) => {
+            state.loading = true;
+            })
+            .addCase(makeOrder.fulfilled, (state, action) => {
+                state.loading = false;
+                state.ingredientsConstructor = [];
+                state.bun = null;
+                state.orderNumber = action.payload.order.number;
+            })
+            .addCase(makeOrder.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            });
+    }
 
 });
-export const {setIngredientsConstructor,addIngredient,
+export const {setIngredientsConstructor,addIngredient,clearOrderNumber,
     setBun ,deleteIngredient} = constructorSlice.actions;
 export default constructorSlice.reducer;
