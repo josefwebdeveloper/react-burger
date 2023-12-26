@@ -12,6 +12,7 @@ import {AppDispatch, RootState} from "../../../state/store";
 import {makeOrder} from "../../../state/constructor-data/constructor-api";
 import {useDrop} from "react-dnd";
 import {ItemTypes} from "../burger-ingredients/ingredients-group/ingredient/ingredient";
+import {clearCountIngredients} from "../../../state/ingredients/ingredients-slice";
 
 export const BurgerConstructor: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -29,28 +30,25 @@ export const BurgerConstructor: React.FC = () => {
     }, [ingredientsConstructor, bun])
 
     const onSubmitOrder = () => {
+        if(!bun || ingredientsConstructor.length===0) return;
         const ingredientsIds = ingredientsConstructor.map(item => item._id)
         dispatch(makeOrder(ingredientsIds))
+        dispatch(clearCountIngredients())
         openModal();
     }
 
     const [{canDrop, isOver}, drop] = useDrop(() => ({
         accept: ItemTypes.BOX,
-        drop: () => ({name: 'Dustbin'}),
+        drop: () => ({name: 'burger'}),
         collect: (monitor) => ({
             isOver: monitor.isOver(),
             canDrop: monitor.canDrop(),
         }),
     }))
     const isActive = canDrop && isOver
-    let backgroundColor = '#222'
-    if (isActive) {
-        backgroundColor = 'darkgreen'
-    } else if (canDrop) {
-        backgroundColor = 'darkkhaki'
-    }
+    // TODO: add isActive
     return (
-        <section ref={drop} data-testid="dustbin" className={classNames(styles['burger-constructor'])}>
+        <section ref={drop} data-testid="burger" className={classNames(styles['burger-constructor'])}>
             <ConstructorGroup />
             <ConstructorFooter amount={amount} onSubmitOrder={onSubmitOrder}/>
             {loading ? <Spinner/> : (<>

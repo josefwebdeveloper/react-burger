@@ -29,6 +29,11 @@ export const ingredientsSlice = createSlice({
         clearSelectedIngredient: (state) => {
             state.selectedIngredient = null;
         },
+        clearCountIngredients: (state) => {
+            state.ingredients = state.ingredients.map((item) => {
+                    return {...item, count: 0}
+            });
+        },
         decrementCount: (state, action: PayloadAction<IngredientModel>) => {
             state.ingredients = state.ingredients.map((item) => {
                 if (item._id === action.payload._id) {
@@ -75,7 +80,7 @@ export const ingredientsSlice = createSlice({
             });
     },
 });
-export const {
+export const {clearCountIngredients,
     setIngredients, setSelectedIngredient, incrementCount,decrementCount
     , clearSelectedIngredient
 } = ingredientsSlice.actions;
