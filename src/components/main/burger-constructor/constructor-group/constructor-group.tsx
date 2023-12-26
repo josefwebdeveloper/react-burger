@@ -8,11 +8,6 @@ import {useDrop} from "react-dnd";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../../../../state/store";
 import {deleteIngredient} from "../../../../state/constructor-data/constructor-slice";
-
-interface ConstructorGroupProps {
-    burgerData: IngredientModel[];
-}
-
 interface ViewProps {
     bun: IngredientModel | null,
     maxHeight: number,
@@ -20,7 +15,7 @@ interface ViewProps {
     ingredientsConstr: any
 }
 
-export const ConstructorGroup: React.FC<ConstructorGroupProps> = ({burgerData}) => {
+export const ConstructorGroup: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
 
     const {
@@ -86,11 +81,8 @@ const View: React.FC<ViewProps> = ({
                 {ingredientsConstr.length > 0 ? ingredientsConstr.map((ingredient: IngredientModel, index: React.Key | null | undefined) => {
                         return (
 
-                            <div key={ingredient.unId}
-                                 className={classNames((!ingredient.unId && 'empty'), styles["ingredient-element"])}>
-                            <span style={!ingredient.unId ? {visibility: "hidden"} : {visibility: "visible"}}
-                                  className={classNames('flex-align-center', 'mr-2')}><DragIcon type="primary"/>
-                            </span>
+                            <div key={ingredient.unId} className={classNames(styles["ingredient-element"])}>
+                            <span className={classNames('flex-align-center', 'mr-2')}><DragIcon type="primary"/></span>
                                 <ConstructorElement
                                     isLocked={false}
                                     text={ingredient.name}
@@ -121,9 +113,11 @@ const View: React.FC<ViewProps> = ({
         </div>
     )
 }
+// style={{visibility:'hidden'}}
 const NoIngredients = () => {
     return (
-        <div className={'empty'}>
+        <div className={classNames('empty','flex-align-center')}>
+            <span  className={classNames('flex-align-center', 'mr-2')}><DragIcon type="primary"/></span>
             <ConstructorElement
                 isLocked={true}
                 text={"Выберите начинку"}
@@ -134,11 +128,11 @@ const NoIngredients = () => {
     );
 }
 
-export interface EmptyBun {
+export interface EmptyBunInterface {
     isBottom: boolean;
 }
 
-const EmptyBun: React.FC<EmptyBun> = ({isBottom}) => {
+const EmptyBun: React.FC<EmptyBunInterface> = ({isBottom}) => {
     return (
         <div
             className={classNames('empty', styles["ingredient-element"], styles["bun"])}>

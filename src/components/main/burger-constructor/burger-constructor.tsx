@@ -34,7 +34,7 @@ export const BurgerConstructor: React.FC = () => {
 
     return (
         <section className={classNames(styles['burger-constructor'])}>
-            <ConstructorGroup burgerData={ingredientsConstructor}/>
+            <ConstructorGroup />
             <ConstructorFooter amount={amount} onSubmitOrder={onSubmitOrder}/>
             {loading ? <Spinner/> : (<>
                 {isModalOpen && orderNumber && (
