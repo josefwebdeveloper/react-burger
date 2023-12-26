@@ -113,11 +113,10 @@ const View: React.FC<ViewProps> = ({
         </div>
     )
 }
-// style={{visibility:'hidden'}}
 const NoIngredients = () => {
     return (
         <div className={classNames('empty','flex-align-center')}>
-            <span  className={classNames('flex-align-center', 'mr-2')}><DragIcon type="primary"/></span>
+            <span style={{visibility:'hidden'}} className={classNames('flex-align-center', 'mr-2')}><DragIcon type="primary"/></span>
             <ConstructorElement
                 isLocked={true}
                 text={"Выберите начинку"}
