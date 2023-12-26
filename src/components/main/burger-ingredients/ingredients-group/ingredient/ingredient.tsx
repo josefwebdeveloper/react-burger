@@ -15,13 +15,7 @@ interface DropResult {
     ingredient: IngredientModel
 }
 const style: CSSProperties = {
-    border: '1px dashed gray',
-    backgroundColor: 'white',
-    padding: '0.5rem 1rem',
-    marginRight: '1.5rem',
-    marginBottom: '1.5rem',
     cursor: 'move',
-    float: 'left',
 }
 
 export const Ingredient: React.FC<IngredientProps> = ({ingredient,onOpenModal}) => {
@@ -32,9 +26,7 @@ export const Ingredient: React.FC<IngredientProps> = ({ingredient,onOpenModal}) 
         end: (item, monitor) => {
             const dropResult = monitor.getDropResult<DropResult>()
             if (item && dropResult) {
-                // alert(`You dropped ${item.name} into ${dropResult.ingredient.name}!`)
-                console.log(item)
-                console.log(dropResult)
+
                 if (item.type === 'bun'){
                     dispatch(incrementCount(item))
                     dispatch(setBun(item));
@@ -49,9 +41,9 @@ export const Ingredient: React.FC<IngredientProps> = ({ingredient,onOpenModal}) 
             handlerId: monitor.getHandlerId(),
         }),
     }))
-    const opacity = isDragging ? 0.4 : 1
+    const opacity = isDragging ? 0 : 1
     return (
-        <div ref={drag}  data-testid={`box`}
+        <div ref={drag} style={{...style,opacity:opacity}} data-testid={`box`}
              onClick={()=>onOpenModal(ingredient)} className={classNames(styles['ingredient-container'])}>
             {/*{(ingredient.count && ingredient.count>0)? <Counter count={ingredient.count} size="default" extraClass="m-1" />:null}*/}
            <Counter count={ingredient.count} size="default" extraClass="m-1" />

@@ -1,7 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {IngredientModel} from "../../models/burger-data.model";
 import {fetchIngredients} from "./ingredients-api";
-import {v4 as uuidv4} from 'uuid';
 
 interface IngredientsState {
     ingredients: IngredientModel[];

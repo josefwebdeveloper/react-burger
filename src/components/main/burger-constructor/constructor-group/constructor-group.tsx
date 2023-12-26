@@ -1,20 +1,19 @@
 import styles from './constructor-group.module.css';
 import classNames from "classnames";
-import React, {useEffect} from "react";
+import React, {useEffect, useRef} from "react";
 import {IngredientModel} from "../../../../models/burger-data.model";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {ItemTypes} from "../../burger-ingredients/ingredients-group/ingredient/ingredient";
-import {DndProvider, useDrop} from "react-dnd";
+import {useDrag, useDrop} from "react-dnd";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../../../../state/store";
-import {deleteIngredient} from "../../../../state/constructor-data/constructor-slice";
+import {deleteIngredient, moveIngredient} from "../../../../state/constructor-data/constructor-slice";
 import {decrementCount} from "../../../../state/ingredients/ingredients-slice";
-import {HTML5Backend} from "react-dnd-html5-backend";
+import type { Identifier, XYCoord } from 'dnd-core'
 interface ViewProps {
     bun: IngredientModel | null,
     maxHeight: number,
     removeIngredient: (ingredient: IngredientModel) => void,
-    ingredientsConstr: any
+    ingredientsConstructor: IngredientModel[]
 }
 
 export const ConstructorGroup: React.FC = () => {
@@ -36,10 +35,8 @@ export const ConstructorGroup: React.FC = () => {
     return (
         <section
             className={classNames(styles['constructor-group-container'])}>
-            <DndProvider backend={HTML5Backend}>
-            <View removeIngredient={removeIngredient} maxHeight={maxHeight} ingredientsConstr={ingredientsConstructor}
+            <View removeIngredient={removeIngredient} maxHeight={maxHeight} ingredientsConstructor={ingredientsConstructor}
                   bun={bun}/>
-            </DndProvider>
         </section>
     );
 };
@@ -48,7 +45,7 @@ const View: React.FC<ViewProps> = ({
                                        removeIngredient,
                                        maxHeight,
                                        bun,
-                                       ingredientsConstr
+                                       ingredientsConstructor
                                    }) => {
 
     return (
@@ -67,9 +64,9 @@ const View: React.FC<ViewProps> = ({
             }
             <div style={{'maxHeight': maxHeight}}
                  className={classNames(styles['scroll-container'], 'custom-scroll')}>
-                {ingredientsConstr.length > 0 ? ingredientsConstr.map((ingredient: IngredientModel, index: React.Key | null | undefined) => {
+                {ingredientsConstructor.length > 0 ? ingredientsConstructor.map((ingredient: IngredientModel, index: React.Key | null | undefined) => {
                         return (
-                            <IngredientCard key={ingredient.unId} ingredient={ingredient} removeIngredient={removeIngredient}/>
+                            <IngredientCard key={ingredient.unId} index={index}  ingredient={ingredient} removeIngredient={removeIngredient}/>
                         )
                     }) :
                     (
@@ -93,12 +90,97 @@ const View: React.FC<ViewProps> = ({
 
 export interface IngredientCardProps {
     ingredient: IngredientModel,
-    removeIngredient: (ingredient: IngredientModel) => void
+    removeIngredient: (ingredient: IngredientModel) => void,
+    index: React.Key | null | undefined
 }
+const style = {
+    cursor: 'move',
 
-const IngredientCard: React.FC<IngredientCardProps>=({ingredient,removeIngredient}) => {
+}
+export const moveCard=(list: any, from: any, to: any)=>{
+    const listClone = [...list];
+    const item = listClone.splice(from, 1)[0];
+    listClone.splice(to, 0, item);
+    return listClone;
+}
+export interface DragItem {
+    index: number
+    id: string
+    type: string
+}
+const IngredientCard: React.FC<IngredientCardProps>=({
+                                                         ingredient,
+                                                         removeIngredient,
+                                                         index
+                                                     }) => {
+    const dispatch = useDispatch<AppDispatch>();
+
+    const ref = useRef(null)
+    const [{ handlerId }, drop] = useDrop<
+        DragItem,
+        void,
+        { handlerId: Identifier | null }
+    >({
+        accept: 'card',
+        collect(monitor) {
+            return {
+                handlerId: monitor.getHandlerId(),
+            }
+        },
+        hover(item: DragItem, monitor) {
+            if (!ref.current) {
+                return
+            }
+            const dragIndex = item.index
+            const hoverIndex = index
+
+            // Don't replace items with themselves
+            if (dragIndex === hoverIndex) {
+                return
+            }
+
+            // Determine rectangle on screen
+            const hoverBoundingRect =(ref.current as HTMLElement).getBoundingClientRect()
+
+            // Get vertical middle
+            const hoverMiddleY =
+                (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
+
+            // Determine mouse position
+            const clientOffset = monitor.getClientOffset()
+
+            const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top
+
+            if (dragIndex < hoverIndex! && hoverClientY < hoverMiddleY) {
+                return
+            }
+
+            if (dragIndex > hoverIndex! && hoverClientY > hoverMiddleY) {
+                return
+            }
+
+            dispatch(moveIngredient({dragIndex,hoverIndex:hoverIndex as number}))
+
+
+            if (typeof hoverIndex === "number") {
+                item.index = hoverIndex
+            }
+        },
+    })
+
+  const [{isDragging},drag]=useDrag({
+      type:'card',
+      item:()=>{
+         return {unId:ingredient.unId,index}
+      },
+      collect: (monitor) => ({
+          isDragging: monitor.isDragging(),
+      }),
+  })
+    const opacity = isDragging ? 0 : 1
+    drag(drop(ref))
     return (
-        <div key={ingredient.unId} className={classNames(styles["ingredient-element"])}>
+        <div ref={ref} style={{...style,opacity}} data-handler-id={handlerId} key={ingredient.unId} className={classNames(styles["ingredient-element"])}>
             <span className={classNames('flex-align-center', 'mr-2')}><DragIcon type="primary"/></span>
             <ConstructorElement
                 isLocked={false}

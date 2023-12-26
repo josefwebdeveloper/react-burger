@@ -41,7 +41,13 @@ export const constructorSlice = createSlice({
         },
         clearOrderNumber: (state) => {
             state.orderNumber = null;
+        },
+        moveIngredient: (state, action: PayloadAction<{ dragIndex: number, hoverIndex: number }>) => {
+            const dragCard = state.ingredientsConstructor[action.payload.dragIndex];
+            state.ingredientsConstructor.splice(action.payload.dragIndex, 1);
+            state.ingredientsConstructor.splice(action.payload.hoverIndex, 0, dragCard);
         }
+
 
     },
     extraReducers: (builder) => {
@@ -62,6 +68,6 @@ export const constructorSlice = createSlice({
     }
 
 });
-export const {setIngredientsConstructor,addIngredient,clearOrderNumber,
+export const {setIngredientsConstructor,moveIngredient,addIngredient,clearOrderNumber,
     setBun ,deleteIngredient} = constructorSlice.actions;
 export default constructorSlice.reducer;
