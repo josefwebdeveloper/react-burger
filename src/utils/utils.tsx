@@ -18,3 +18,19 @@ export const getImageNameFromUrl=(url: string): string =>{
 
   return imageName;
 }
+export const request = async (url: string, options?: RequestInit): Promise<any> => {
+    try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+        const error: Error = new Error(`Network response was not ok: ${response.status}`);
+        throw error;
+        }
+        return await response.json();
+    } catch (error) {
+        if (error instanceof Error) {
+        throw error;
+        } else {
+        throw new Error('An unknown error occurred');
+        }
+    }
+}

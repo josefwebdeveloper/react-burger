@@ -7,11 +7,10 @@ import {Main} from "../main/main";
 
 function App() {
 
-    const content = <Main/>;
     return (
         <div className={styles.app}>
             <AppHeader/>
-            {content}
+            <Main/>
         </div>
     );
 }
