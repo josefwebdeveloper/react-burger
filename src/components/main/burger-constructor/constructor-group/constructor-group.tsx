@@ -4,11 +4,10 @@ import React, {useEffect, useRef} from "react";
 import {IngredientModel} from "../../../../models/burger-data.model";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDrag, useDrop} from "react-dnd";
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../../../state/store";
 import {deleteIngredient, moveIngredient} from "../../../../state/constructor-data/constructor-slice";
 import {decrementCount} from "../../../../state/ingredients/ingredients-slice";
 import type {Identifier, XYCoord} from 'dnd-core'
+import {useDispatch, useSelector} from "../../../../hooks/redux-hooks";
 
 interface ViewProps {
     bun: IngredientModel | null,
@@ -25,11 +24,11 @@ interface ConstructorGroupProps {
 }
 
 export const ConstructorGroup: React.FC<ConstructorGroupProps> = ({isActive, droppedItem}: ConstructorGroupProps) => {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useDispatch();
 
     const {
         ingredientsConstructor, bun
-    } = useSelector((state: RootState) => state.constructorData);
+    } = useSelector((state) => state.constructorData);
     const [maxHeight, setMaxHeight] = React.useState(80);
     const removeIngredient = (ingredient: IngredientModel) => {
         dispatch(deleteIngredient(ingredient))
@@ -128,7 +127,7 @@ const IngredientCard: React.FC<IngredientCardProps> = ({
                                                            removeIngredient,
                                                            index
                                                        }) => {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useDispatch();
 
     const ref = useRef(null)
     const [{handlerId}, drop] = useDrop<

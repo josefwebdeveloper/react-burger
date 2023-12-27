@@ -7,9 +7,8 @@ import {Ingredient} from "./ingredient/ingredient";
 import {IngredientDetails} from "../../../ingredient-details/ingredient-details";
 import {useModal} from "../../../../hooks/use-modal.hook";
 import {Modal} from "../../../modal/modal";
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../../../state/store";
 import {clearSelectedIngredient, setSelectedIngredient} from "../../../../state/ingredients/ingredients-slice";
+import {useDispatch, useSelector} from "../../../../hooks/redux-hooks";
 
 interface IngredientsGroupProps {
     bunRef: React.RefObject<HTMLDivElement>,
@@ -28,12 +27,12 @@ export const IngredientsGroup: React.FC<IngredientsGroupProps> = ({
                                                                   }) => {
     const [height, setHeight] = React.useState(600);
 
-    const {ingredients, loading, error, selectedIngredient} = useSelector((state: RootState) => state.ingredients);
+    const {ingredients, loading, error, selectedIngredient} = useSelector((state) => state.ingredients);
     const bun = ingredients.filter((item) => item.type === ingredientsTypes[0].type);
     const sauce = ingredients.filter((item) => item.type === ingredientsTypes[1].type);
     const main = ingredients.filter((item) => item.type === ingredientsTypes[2].type);
     const {isModalOpen, openModal, closeModal} = useModal();
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useDispatch();
     useEffect(() => {
         const container = containerRef.current;
         if (container) {

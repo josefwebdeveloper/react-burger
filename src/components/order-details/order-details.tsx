@@ -1,13 +1,12 @@
 import styles from './order-details.module.css';
 import classNames from "classnames";
 import done from '../../images/done.svg'
-import {useSelector} from "react-redux";
-import {RootState} from "../../state/store";
+import {useSelector} from "../../hooks/redux-hooks";
 
 
 
 export const OrderDetails = () => {
-    const { orderNumber} = useSelector((state: RootState) => state.constructorData);
+    const { orderNumber} = useSelector((state) => state.constructorData);
     return (
         <div className={classNames(styles['order-details'])}>
             <div className={classNames(styles['order-details-title'], 'text', 'text_type_digits-large', 'mb-8')}>

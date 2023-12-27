@@ -2,8 +2,7 @@ import styles from './constructor-footer.module.css';
 import classNames from "classnames";
 import React from "react";
 import {Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import {useSelector} from "react-redux";
-import {RootState} from "../../../../state/store";
+import {useSelector} from "../../../../hooks/redux-hooks";
 
 export interface ConstructorFooterProps {
     amount: number;
@@ -13,7 +12,7 @@ export interface ConstructorFooterProps {
 export const ConstructorFooter: React.FC<ConstructorFooterProps> = ({amount, onSubmitOrder}) => {
     const {
         ingredientsConstructor, bun
-    } = useSelector((state: RootState) => state.constructorData);
+    } = useSelector((state) => state.constructorData);
     return (
         <section className={classNames(styles['constructor-footer'])}>
             <div className={classNames(styles["content"])}>

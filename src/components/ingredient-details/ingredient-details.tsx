@@ -1,11 +1,10 @@
 import styles from './ingredient-details.module.css';
 import classNames from "classnames";
 import React from "react";
-import {useSelector} from "react-redux";
-import {RootState} from "../../state/store";
+import {useSelector} from "../../hooks/redux-hooks";
 
 export const IngredientDetails : React.FC = () => {
-    const {ingredients, loading, error, selectedIngredient} = useSelector((state: RootState) => state.ingredients);
+    const {ingredients, loading, error, selectedIngredient} = useSelector((state) => state.ingredients);
 
     if (!selectedIngredient) {
         return null;

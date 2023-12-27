@@ -7,20 +7,19 @@ import {Spinner} from "../../spinner/Spinner";
 import {OrderDetails} from "../../order-details/order-details";
 import {Modal} from "../../modal/modal";
 import {useModal} from "../../../hooks/use-modal.hook";
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../../state/store";
 import {makeOrder} from "../../../state/constructor-data/constructor-api";
 import {useDrop} from "react-dnd";
 import {ItemTypes} from "../burger-ingredients/ingredients-group/ingredient/ingredient";
 import {clearCountIngredients} from "../../../state/ingredients/ingredients-slice";
 import {IngredientModel} from "../../../models/burger-data.model";
+import {useDispatch, useSelector} from "../../../hooks/redux-hooks";
 
 export const BurgerConstructor: React.FC = () => {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useDispatch();
     const {
         loading, orderNumber,
         ingredientsConstructor, bun
-    } = useSelector((state: RootState) => state.constructorData);
+    } = useSelector((state) => state.constructorData);
 
     const {isModalOpen, openModal, closeModal} = useModal();
     const [amount, setAmount] = useState(0);

@@ -4,10 +4,9 @@ import React, {useEffect, useRef} from "react";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/tab";
 import {IngredientsGroup} from "./ingredients-group/ingredients-group";
 import classNames from "classnames";
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../../state/store";
 import {fetchIngredients} from "../../../state/ingredients/ingredients-api";
 import {Spinner} from "../../spinner/Spinner";
+import {useDispatch, useSelector} from "../../../hooks/redux-hooks";
 
 
 export const BurgerIngredients: React.FC = () => {
@@ -17,8 +16,8 @@ export const BurgerIngredients: React.FC = () => {
     const bunRef = useRef<HTMLDivElement>(null);
     const sauceRef = useRef<HTMLDivElement>(null);
     const mainRef = useRef<HTMLDivElement>(null);
-    const dispatch = useDispatch<AppDispatch>();
-    const {ingredients, loading, error, selectedIngredient} = useSelector((state: RootState) => state.ingredients);
+    const dispatch = useDispatch();
+    const {ingredients, loading, error, selectedIngredient} = useSelector((state) => state.ingredients);
 
     useEffect(() => {
         dispatch(fetchIngredients())
