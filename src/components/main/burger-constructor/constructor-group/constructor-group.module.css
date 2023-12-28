@@ -14,7 +14,7 @@
 }
 .scroll-container {
     overflow-y: auto;
-    height: 370px;
+    min-height: 80px;
     display: flex;
     flex-direction: column;
     gap: 16px;

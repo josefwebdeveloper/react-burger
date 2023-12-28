@@ -1,12 +1,12 @@
 import styles from './order-details.module.css';
 import classNames from "classnames";
 import done from '../../images/done.svg'
+import {useSelector} from "../../hooks/redux-hooks";
 
-interface OrderDetailsProps {
-    orderNumber: number
-}
 
-export const OrderDetails = ({orderNumber}: OrderDetailsProps,) => {
+
+export const OrderDetails = () => {
+    const { orderNumber} = useSelector((state) => state.constructorData);
     return (
         <div className={classNames(styles['order-details'])}>
             <div className={classNames(styles['order-details-title'], 'text', 'text_type_digits-large', 'mb-8')}>

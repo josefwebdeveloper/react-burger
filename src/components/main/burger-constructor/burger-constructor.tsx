@@ -1,5 +1,4 @@
 import styles from './burger-constructor.module.css';
-import {IngredientModel, IngredientsProps} from "../../../models/burger-data.model";
 import React, {useEffect, useState} from "react";
 import classNames from "classnames";
 import {ConstructorGroup} from "./constructor-group/constructor-group";
@@ -8,70 +7,64 @@ import {Spinner} from "../../spinner/Spinner";
 import {OrderDetails} from "../../order-details/order-details";
 import {Modal} from "../../modal/modal";
 import {useModal} from "../../../hooks/use-modal.hook";
+import {makeOrder} from "../../../state/constructor-data/constructor-api";
+import {useDrop} from "react-dnd";
+import {ItemTypes} from "../burger-ingredients/ingredients-group/ingredient/ingredient";
+import {clearCountIngredients} from "../../../state/ingredients/ingredients-slice";
+import {IngredientModel} from "../../../models/burger-data.model";
+import {useDispatch, useSelector} from "../../../hooks/redux-hooks";
 
+export const BurgerConstructor: React.FC = () => {
+    const dispatch = useDispatch();
+    const {
+        loading, orderNumber,
+        ingredientsConstructor, bun
+    } = useSelector((state) => state.constructorData);
 
-export const BurgerConstructor: React.FC<IngredientsProps> = ({ingredientsData}) => {
-    const [burgerData, setBurgerData] = React.useState<IngredientModel[]>([]);
-    const { isModalOpen, openModal, closeModal } = useModal();
-    const [orderNumber, setOrderNumber] = useState(34536);
-    const rearangeIngriduentData = (data:IngredientModel[]) => {
-        let firstBun!: IngredientModel;
-        const filteredData: IngredientModel[] = [];
-
-        data.forEach(item => {
-            if (item.type === 'bun') {
-                if (!firstBun) {
-                    filteredData.push(item);
-                    firstBun = item;
-                }
-            } else {
-                filteredData.push(item);
-            }
-        });
-        if (firstBun) {
-            filteredData.push(firstBun);
-        }
-
-        return filteredData;
-    }
+    const {isModalOpen, openModal, closeModal} = useModal();
+    const [amount, setAmount] = useState(0);
     useEffect(() => {
-        //TODO(remove that later) modify ingredientsData remome all items with type === 'bun', exept first , and add it to the end of array
+        let amount = ingredientsConstructor.reduce((acc, item) => acc + item.price, 0);
+        setAmount(bun ? amount += bun.price * 2 : amount);
 
-        const burgerData = rearangeIngriduentData(ingredientsData);
+    }, [ingredientsConstructor, bun])
 
-
-        setBurgerData(burgerData);
-
-    }, [ingredientsData])
-    const amount = burgerData.reduce((acc, item) => {
-        return acc + item.price;
-    }, 0);
     const onSubmitOrder = () => {
-        setOrderNumber(34563)
-        openModal()
+        if(!bun || ingredientsConstructor.length===0) return;
+        const ingredientsIds = ingredientsConstructor.map(item => item._id)
+        dispatch(makeOrder(ingredientsIds))
+        dispatch(clearCountIngredients())
+        openModal();
     }
+    const [droppedItem, setDroppedItem] = useState<IngredientModel | null>(null);
+    const [{canDrop, isOver}, drop] = useDrop(() => ({
+        accept: ItemTypes.BOX,
+        drop: (item:IngredientModel,monitor) => {
+           return {name: 'burger',item,monitor}
+        },
+        hover: (item, monitor) => {
 
-
-
+            setDroppedItem(item);
+        },
+        collect: (monitor) => ({
+            isOver: monitor.isOver(),
+            canDrop: monitor.canDrop(),
+        }),
+    }))
+    const isActive = canDrop && isOver
     return (
-        <section className={classNames(styles['burger-constructor'])}>
-            {burgerData.length > 0 ? (
-                <>
-                    <ConstructorGroup burgerData={burgerData}/>
-                    <ConstructorFooter amount={amount} onSubmitOrder={onSubmitOrder}/>
-                </>
-            ) : (
-                <div><Spinner/></div>
-            )}
-
-            {isModalOpen && (
-                <Modal
-                    title=""
-                    onClose={closeModal}>
-                    <OrderDetails orderNumber={orderNumber} />
-                </Modal>
-            )}
-
+        <section ref={drop} data-testid="burger" className={classNames(styles['burger-constructor'])}>
+            <ConstructorGroup isActive={isActive} droppedItem={droppedItem}/>
+            <ConstructorFooter amount={amount} onSubmitOrder={onSubmitOrder}/>
+            {loading ? <Spinner/> : (<>
+                {isModalOpen && orderNumber && (
+                    <Modal
+                        title=""
+                        onClose={closeModal}>
+                        <OrderDetails/>
+                    </Modal>
+                )}
+            </>)}
         </section>
     );
 };

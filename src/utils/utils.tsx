@@ -18,20 +18,19 @@ export const getImageNameFromUrl=(url: string): string =>{
 
   return imageName;
 }
-export const isMobile = () => {
-  // Regular expressions to test for different types of mobile devices
-  const toMatch = [
-    /Android/i,
-    /webOS/i,
-    /iPhone/i,
-    /iPad/i,
-    /iPod/i,
-    /BlackBerry/i,
-    /Windows Phone/i
-  ];
-
-  // Check if the navigator.userAgent matches with any of the mobile devices
-  return toMatch.some((toMatchItem) => {
-    return navigator.userAgent.match(toMatchItem);
-  });
-};
+export const request = async (url: string, options?: RequestInit): Promise<any> => {
+    try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+        const error: Error = new Error(`Network response was not ok: ${response.status}`);
+        throw error;
+        }
+        return await response.json();
+    } catch (error) {
+        if (error instanceof Error) {
+        throw error;
+        } else {
+        throw new Error('An unknown error occurred');
+        }
+    }
+}

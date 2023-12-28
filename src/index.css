@@ -12,28 +12,49 @@ body {
     font-size: 16px;
 
 }
+
 ul, li {
     margin: 0;
     padding: 0;
     list-style: none;
 }
+
 .container {
     width: 100%;
     max-width: var(--container-width);
     margin: 0 auto;
 }
-.constructor-element{
+
+.constructor-element {
     flex-grow: 0 !important;
 }
+
 .flex-align-justify-center {
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 .flex-align-center {
     display: flex;
     align-items: center;
 }
+
+.empty .constructor-element__image,
+.empty .constructor-element__price,
+.empty .constructor-element__action {
+    visibility: hidden;
+}
+.empty .constructor-element{
+    min-width: 536px;
+}
+.empty .constructor-element__text {
+   justify-content: center;
+}
+.move .constructor-element{
+    border:1px dashed;
+}
+
 @media screen and (max-width: 768px) {
     html,
     body {
