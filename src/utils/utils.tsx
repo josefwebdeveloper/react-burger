@@ -34,3 +34,7 @@ export const request = async (url: string, options?: RequestInit): Promise<any> 
         }
     }
 }
+export const isMobile = () => {
+    // Check for mobile user agent patterns
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+};
