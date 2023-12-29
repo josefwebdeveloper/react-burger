@@ -33,6 +33,7 @@ export const IngredientsGroup: React.FC<IngredientsGroupProps> = ({
     const main = ingredients.filter((item) => item.type === ingredientsTypes[2].type);
     const {isModalOpen, openModal, closeModal} = useModal();
     const dispatch = useDispatch();
+  
     useEffect(() => {
         const container = containerRef.current;
         if (container) {
@@ -63,7 +64,7 @@ export const IngredientsGroup: React.FC<IngredientsGroupProps> = ({
         openModal()
     }
     return (
-        <div ref={containerRef} style={{'height': height}}
+        <div ref={containerRef}
              className={classNames(styles['ingredients-group-container'], 'custom-scroll')}>
             <div ref={bunRef}
                  className={classNames(styles['group-name'], 'text', 'text_type_main-medium')}>{ingredientsTypes[0].name}</div>
