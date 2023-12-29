@@ -1,12 +1,14 @@
 import styles from './burger-ingredients.module.css';
 import {ingredientsTypes} from "../../../models/burger-data.model";
-import React, {useEffect, useRef} from "react";
+import React, {FC, useEffect, useRef} from "react";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/tab";
 import {IngredientsGroup} from "./ingredients-group/ingredients-group";
 import classNames from "classnames";
 import {fetchIngredients} from "../../../state/ingredients/ingredients-api";
 import {Spinner} from "../../spinner/Spinner";
 import {useDispatch, useSelector} from "../../../hooks/redux-hooks";
+import ErrorMessage from "../../errorMessage/ErrorMessage";
+import {useComponentViewState} from "../../../hooks/state-view.hook";
 
 
 export const BurgerIngredients: React.FC = () => {
@@ -63,16 +65,8 @@ export const BurgerIngredients: React.FC = () => {
             });
         }
     }
-    const NoIngredients = () => {
-        return (
-            <div className={classNames(styles['no-ingredients'], 'text', 'text_type_main-medium')}>Нет
-                ингредиентов</div>
-        )
-    }
-    const content = loading ? <Spinner/> : error ? <div>Ошибка</div> :
-        ingredients.length > 0 ? <IngredientsGroup handleScroll={handleScroll} containerRef={containerRef}
-                                                   bunRef={bunRef} sauceRef={sauceRef} mainRef={mainRef}/>
-            : <NoIngredients/>;
+
+
     return (
         <section className={classNames(styles['burger-ingredients'])}>
 
@@ -85,7 +79,44 @@ export const BurgerIngredients: React.FC = () => {
                          onClick={onTabClick}>{tab.name}</Tab>
                 ))}
             </div>
-            {content}
+            <View loading={loading} error={error} ingredients={ingredients} bunRef={bunRef} containerRef={containerRef} handleScroll={handleScroll} mainRef={mainRef} sauceRef={sauceRef}/>
         </section>
     );
 };
+interface ViewProps {
+    loading: any,
+    error: any,
+    ingredients: any,
+    handleScroll: () => void,
+    containerRef: React.RefObject<HTMLDivElement>,
+    bunRef: React.RefObject<HTMLDivElement>,
+    sauceRef: React.RefObject<HTMLDivElement>,
+    mainRef: React.RefObject<HTMLDivElement>
+}
+
+const View:FC<ViewProps>=({ loading, error, ingredients, handleScroll, containerRef, bunRef, sauceRef, mainRef }: ViewProps)=>{
+    const state = useComponentViewState(loading,error, ingredients);
+    return (
+        <>
+            {
+                state === 'loading' && <Spinner/>
+            }
+            {
+                state === 'error' && <ErrorMessage/>
+            }
+            {
+                state === 'empty' && <NoIngredients/>
+            }
+            {
+                state === 'data' && <IngredientsGroup handleScroll={handleScroll} containerRef={containerRef}
+                                                      bunRef={bunRef} sauceRef={sauceRef} mainRef={mainRef}/>
+            }
+        </>
+    )
+}
+const NoIngredients = () => {
+    return (
+        <div className={classNames(styles['no-ingredients'], 'text', 'text_type_main-medium')}>Нет
+            ингредиентов</div>
+    )
+}
