@@ -36,8 +36,13 @@ export const constructorSlice = createSlice({
                 return item.unId !== action.payload.unId
             } );
         },
-        addIngredient: (state, action: PayloadAction<IngredientModel>) => {
-            state.ingredientsConstructor = [...state.ingredientsConstructor, {...action.payload, unId: uuidv4()}];
+        addIngredient: {
+            reducer: (state, action: PayloadAction<IngredientModel>) => {
+                state.ingredientsConstructor.push(action.payload);
+            },
+            prepare: (ingredient: IngredientModel) => ({
+                payload: { ...ingredient, unId: uuidv4() }
+            })
         },
         clearOrderNumber: (state) => {
             state.orderNumber = null;

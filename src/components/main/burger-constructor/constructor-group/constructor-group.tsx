@@ -23,7 +23,7 @@ interface ConstructorGroupProps {
     droppedItem: IngredientModel | null
 }
 
-export const ConstructorGroup: React.FC<ConstructorGroupProps> = ({isActive, droppedItem}: ConstructorGroupProps) => {
+export const ConstructorGroup: React.FC<ConstructorGroupProps> = ({isActive, droppedItem}) => {
     const dispatch = useDispatch();
 
     const {
