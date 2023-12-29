@@ -45,7 +45,6 @@ export const Ingredient: React.FC<IngredientProps> = ({ingredient,onOpenModal}) 
     return (
         <div ref={drag} style={{...style,opacity:opacity}} data-testid={`box`}
              onClick={()=>onOpenModal(ingredient)} className={classNames(styles['ingredient-container'])}>
-            {/*{(ingredient.count && ingredient.count>0)? <Counter count={ingredient.count} size="default" extraClass="m-1" />:null}*/}
            <Counter count={ingredient.count} size="default" extraClass="m-1" />
             <div className={classNames(styles['ingredient-image'],'ml-4','mr-4','mb-1')}>
                 <img src={ingredient.image} alt={ingredient.image}/>
