@@ -1,5 +1,5 @@
 import styles from './burger-constructor.module.css';
-import React, {useEffect, useState} from "react";
+import React, { useMemo, useState} from "react";
 import classNames from "classnames";
 import {ConstructorGroup} from "./constructor-group/constructor-group";
 import {ConstructorFooter} from "./constructor-footer/constructor-footer";
@@ -22,12 +22,11 @@ export const BurgerConstructor: React.FC = () => {
     } = useSelector((state) => state.constructorData);
 
     const {isModalOpen, openModal, closeModal} = useModal();
-    const [amount, setAmount] = useState(0);
-    useEffect(() => {
-        let amount = ingredientsConstructor.reduce((acc, item) => acc + item.price, 0);
-        setAmount(bun ? amount += bun.price * 2 : amount);
 
-    }, [ingredientsConstructor, bun])
+    const amount = useMemo(() => {
+        let totalAmount = ingredientsConstructor.reduce((acc, item) => acc + item.price, 0);
+        return bun ? totalAmount += bun.price * 2 : totalAmount;
+    }, [ingredientsConstructor, bun]);
 
     const onSubmitOrder = () => {
         if(!bun || ingredientsConstructor.length===0) return;
