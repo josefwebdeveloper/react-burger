@@ -109,12 +109,7 @@ const style = {
     cursor: 'move',
 
 }
-export const moveCard = (list: any, from: any, to: any) => {
-    const listClone = [...list];
-    const item = listClone.splice(from, 1)[0];
-    listClone.splice(to, 0, item);
-    return listClone;
-}
+
 
 export interface DragItem {
     index: number
