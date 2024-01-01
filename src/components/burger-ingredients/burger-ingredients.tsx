@@ -1,14 +1,14 @@
 import styles from './burger-ingredients.module.css';
-import {ingredientsTypes} from "../../../models/burger-data.model";
+import {ingredientsTypes} from "../../models/burger-data.model";
 import React, {FC, useEffect, useRef} from "react";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/tab";
-import {IngredientsGroup} from "./ingredients-group/ingredients-group";
 import classNames from "classnames";
-import {fetchIngredients} from "../../../state/ingredients/ingredients-api";
-import {Spinner} from "../../spinner/Spinner";
-import {useDispatch, useSelector} from "../../../hooks/redux-hooks";
-import ErrorMessage from "../../errorMessage/ErrorMessage";
-import {useComponentViewState} from "../../../hooks/state-view.hook";
+import {fetchIngredients} from "../../state/ingredients/ingredients-api";
+import {Spinner} from "../spinner/Spinner";
+import {useDispatch, useSelector} from "../../hooks/redux-hooks";
+import ErrorMessage from "../errorMessage/ErrorMessage";
+import {useComponentViewState} from "../../hooks/state-view.hook";
+import {IngredientsGroup} from "./ingredients-group/ingredients-group";
 
 
 export const BurgerIngredients: React.FC = () => {

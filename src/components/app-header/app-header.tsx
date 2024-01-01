@@ -1,37 +1,39 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styles from './app-header.module.css';
 import {BurgerIcon, ListIcon, Logo, ProfileIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {NavLink, useLocation} from "react-router-dom";
 
 export const AppHeader = () => {
+    const location = useLocation(); // Get the current location
     const menuData = [
-        {name: 'Конструктор', active: true},
-        {name: 'Лента заказов', active: false},
-    ]
-    const [menu, setActiveMenu] = useState(menuData)
-    const onActiveMenuChange = (activeMenu: React.SetStateAction<{ name: string; active: boolean; }>) => {
-        const newMenu = menu.map((item) => {
-            item.active = item.name === activeMenu.name;
-            return item
-        })
-        setActiveMenu(newMenu)
-    }
+        {name: 'Конструктор', path: '/', IconComponent: BurgerIcon},
+        {name: 'Лента заказов', path: '/order-feed', IconComponent: ListIcon},
+    ];
+
 
     return (
         <header className={styles['burger-header-container']}>
             <nav className={styles['burger-header'] + ' container'}>
                 <div className={styles['navbar-menu']}>
                     <ul className={styles['navbar-menu']}>
-                        {menu.map((el, i) => <li key={i}
-                                                 onClick={() => onActiveMenuChange(el)}
-                                                 className={`${styles['navbar__item']}
-                                                  ${el.active ? null : 'text_color_inactive'}
-                                                   text text_type_main-default mr-7`}>
-                            <span className={`mr-2`}>
-                             {i === 0 && <BurgerIcon type={el.active ? 'primary' : 'secondary'}/>}
-                                {i === 1  && <ListIcon type={el.active ? 'primary' : 'secondary'}/>}
-                            </span>
-                            {el.name}{el.active}
-                        </li>)}
+                        {menuData.map((el, i) => (
+                            <li key={i} className={styles['navbar__item']}>
+                                <NavLink
+                                    to={el.path}
+                                    className={({isActive}) =>
+                                        isActive
+                                            ? `${styles['navbar__item']}  active-link text text_type_main-default mr-7`
+                                            : `text text_type_main-default mr-7 text_color_inactive ${styles['navbar__item']}`
+                                    }
+                                >
+                                    <span className={`mr-2`}>
+                                        <el.IconComponent
+                                            type={location.pathname === el.path ? 'primary' : 'secondary'}/>
+                                    </span>
+                                    {el.name}
+                                </NavLink>
+                            </li>
+                        ))}
 
                     </ul>
                 </div>

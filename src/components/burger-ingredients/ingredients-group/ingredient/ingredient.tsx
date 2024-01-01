@@ -1,13 +1,13 @@
 import styles from './ingredient.module.css';
 import classNames from 'classnames';
-import {IngredientModel, IngredientProps} from "../../../../../models/burger-data.model";
+import {IngredientModel, IngredientProps} from "../../../../models/burger-data.model";
 import React, {CSSProperties} from "react";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDrag} from "react-dnd";
 import {useDispatch} from "react-redux";
-import {AppDispatch} from "../../../../../state/store";
-import {addIngredient, setBun} from "../../../../../state/constructor-data/constructor-slice";
-import {incrementCount} from "../../../../../state/ingredients/ingredients-slice";
+import {AppDispatch} from "../../../../state/store";
+import {addIngredient, setBun} from "../../../../state/constructor-data/constructor-slice";
+import {incrementCount} from "../../../../state/ingredients/ingredients-slice";
 export const ItemTypes = {
     BOX: 'box',
 }

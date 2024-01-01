@@ -2,7 +2,7 @@ import styles from './constructor-footer.module.css';
 import classNames from "classnames";
 import React from "react";
 import {Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import {useSelector} from "../../../../hooks/redux-hooks";
+import {useSelector} from "../../../hooks/redux-hooks";
 
 export interface ConstructorFooterProps {
     amount: number;

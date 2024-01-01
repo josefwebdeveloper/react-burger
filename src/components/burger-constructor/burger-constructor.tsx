@@ -1,18 +1,18 @@
 import styles from './burger-constructor.module.css';
 import React, { useMemo, useState} from "react";
 import classNames from "classnames";
+import {Spinner} from "../spinner/Spinner";
+import {OrderDetails} from "../order-details/order-details";
+import {Modal} from "../modal/modal";
+import {useModal} from "../../hooks/use-modal.hook";
+import {makeOrder} from "../../state/constructor-data/constructor-api";
+import {useDrop} from "react-dnd";
+import {clearCountIngredients} from "../../state/ingredients/ingredients-slice";
+import {IngredientModel} from "../../models/burger-data.model";
+import {useDispatch, useSelector} from "../../hooks/redux-hooks";
 import {ConstructorGroup} from "./constructor-group/constructor-group";
 import {ConstructorFooter} from "./constructor-footer/constructor-footer";
-import {Spinner} from "../../spinner/Spinner";
-import {OrderDetails} from "../../order-details/order-details";
-import {Modal} from "../../modal/modal";
-import {useModal} from "../../../hooks/use-modal.hook";
-import {makeOrder} from "../../../state/constructor-data/constructor-api";
-import {useDrop} from "react-dnd";
 import {ItemTypes} from "../burger-ingredients/ingredients-group/ingredient/ingredient";
-import {clearCountIngredients} from "../../../state/ingredients/ingredients-slice";
-import {IngredientModel} from "../../../models/burger-data.model";
-import {useDispatch, useSelector} from "../../../hooks/redux-hooks";
 
 export const BurgerConstructor: React.FC = () => {
     const dispatch = useDispatch();

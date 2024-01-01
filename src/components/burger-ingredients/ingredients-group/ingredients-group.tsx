@@ -1,14 +1,14 @@
 import styles from './ingredients-group.module.css';
 import React, {useEffect} from "react";
-import {IngredientModel, ingredientsTypes} from "../../../../models/burger-data.model";
+import {IngredientModel, ingredientsTypes} from "../../../models/burger-data.model";
 import classNames from "classnames";
-import {getHeightFromDivToBottom} from "../../../../utils/utils";
+import {getHeightFromDivToBottom} from "../../../utils/utils";
+import {IngredientDetails} from "../../ingredient-details/ingredient-details";
+import {useModal} from "../../../hooks/use-modal.hook";
+import {Modal} from "../../modal/modal";
+import {clearSelectedIngredient, setSelectedIngredient} from "../../../state/ingredients/ingredients-slice";
+import {useDispatch, useSelector} from "../../../hooks/redux-hooks";
 import {Ingredient} from "./ingredient/ingredient";
-import {IngredientDetails} from "../../../ingredient-details/ingredient-details";
-import {useModal} from "../../../../hooks/use-modal.hook";
-import {Modal} from "../../../modal/modal";
-import {clearSelectedIngredient, setSelectedIngredient} from "../../../../state/ingredients/ingredients-slice";
-import {useDispatch, useSelector} from "../../../../hooks/redux-hooks";
 
 interface IngredientsGroupProps {
     bunRef: React.RefObject<HTMLDivElement>,
