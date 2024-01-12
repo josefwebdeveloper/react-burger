@@ -1,3 +1,4 @@
+import styles from './order-feed.module.css';
 export const OrderFeed = () => {
     return (
         <>
