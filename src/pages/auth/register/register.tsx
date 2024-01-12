@@ -2,7 +2,6 @@ import styles from './register.module.css';
 import cls from "classnames";
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import React, {useState} from "react";
-import {TICons} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons";
 import {Link} from "react-router-dom";
 
 
@@ -41,11 +40,12 @@ export const Register = () => {
                 <Button disabled={!checkIsValid()} htmlType="submit" type="primary" size="medium" extraClass='mb-20'>
                     Зарегистрироваться
                 </Button>
+            </form>
                 <div className={cls(styles.footer)}>
                     <span className={ 'text text_type_main-default text_color_inactive'}>Уже зарегистрированы? </span>
                     <span className={cls(styles.link,'text text_type_main-default')}><Link to={'/login'}> Войти</Link></span>
                 </div>
-            </form>
+
         </section>
     );
 };
