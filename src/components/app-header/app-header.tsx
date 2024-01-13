@@ -1,7 +1,8 @@
 import React from 'react';
 import styles from './app-header.module.css';
 import {BurgerIcon, ListIcon, Logo, ProfileIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {NavLink, useLocation} from "react-router-dom";
+import {Link, NavLink, useLocation} from "react-router-dom";
+import classNames from "classnames";
 
 export const AppHeader = () => {
     const location = useLocation(); // Get the current location
@@ -9,7 +10,6 @@ export const AppHeader = () => {
         {name: 'Конструктор', path: '/', IconComponent: BurgerIcon},
         {name: 'Лента заказов', path: '/order-feed', IconComponent: ListIcon},
     ];
-
 
     return (
         <header className={styles['burger-header-container']}>
@@ -22,7 +22,7 @@ export const AppHeader = () => {
                                     to={el.path}
                                     className={({isActive}) =>
                                         isActive
-                                            ? `${styles['navbar__item']}  active-link text text_type_main-default mr-7`
+                                            ? `${styles['navbar__item']} white active-link text text_type_main-default mr-7`
                                             : `text text_type_main-default mr-7 text_color_inactive ${styles['navbar__item']}`
                                     }
                                 >
@@ -40,12 +40,12 @@ export const AppHeader = () => {
                 <div className={`${styles['navbar-menu']} ${styles.logo}`}>
                     <Logo/>
                 </div>
-                <div className={`${styles['navbar-menu']} ${styles.profile}`}>
-                    <ProfileIcon type="secondary"/>
-                    <span className={`${styles['navbar__item']} text_color_inactive text text_type_main-default ml-2`}>
+                 <Link className={`${styles['navbar-menu']} ${styles.profile}`} to={'/profile'}>
+                    <ProfileIcon type={location.pathname === '/profile'?  'primary' : 'secondary' }/>
+                    <span className={classNames(styles['navbar__item'], location.pathname === '/profile'?'white':'text_color_inactive', 'text', 'text_type_main-default',' ml-2')}>
                         Личный кабинет
                     </span>
-                </div>
+                </Link>
             </nav>
         </header>
     );

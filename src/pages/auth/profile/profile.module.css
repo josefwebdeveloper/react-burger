@@ -1,0 +1,35 @@
+.container {
+    display: flex;
+    margin: 120px auto 0 auto;
+    max-width: var(--container-width);
+    width: 100%;
+
+}
+
+.profile {
+    margin-right: 75px;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.link {
+    height: 64px;
+    display: flex;
+    align-items: center;
+
+}
+.info {
+    color: var(--text-dark-grey-secondary-text);
+    text-align: left;
+}
+.button-group-container{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+}
+.cancel{
+    color: var(--interface-accent);
+}
