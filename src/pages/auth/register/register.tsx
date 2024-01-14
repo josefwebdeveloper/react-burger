@@ -3,10 +3,13 @@ import cls from "classnames";
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
+import {useDispatch} from "../../../hooks/redux-hooks";
+import {register} from "../../../state/auth/auth-slice";
 
 
 
 export const Register = () => {
+    const dispatch = useDispatch();
     const [user, setUser] = useState({name: '', email: '', password: ''});
     const handleChangeUser = (e: { target: { name: any; value: any; }; }) => {
         setUser({...user, [e.target.name]: e.target.value});
@@ -25,6 +28,13 @@ export const Register = () => {
 
         if(checkIsValid()) {
             console.log(user, 'valid')
+            dispatch(
+                register({
+                    name: user.name,
+                    email:user.email,
+                    password:user.password,
+                })
+            )
         }
         console.log(user,'not valid')
     }
@@ -37,7 +47,7 @@ export const Register = () => {
                 <PasswordInput value={user.password} name={'password'} extraClass="mb-6"
                        onChange={handleChangeUser}  minLength={6}
                        placeholder="Пароль"/>
-                <Button disabled={!checkIsValid()} htmlType="submit" type="primary" size="medium" extraClass='mb-20'>
+                <Button disabled={!checkIsValid()}  onClick={onSubmit} htmlType="button" type="primary" size="medium" extraClass='mb-20'>
                     Зарегистрироваться
                 </Button>
             </form>

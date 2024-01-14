@@ -3,8 +3,12 @@ import React, {useState} from "react";
 import cls from "classnames";
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link} from "react-router-dom";
+import {useDispatch} from "../../../hooks/redux-hooks";
+import {login} from "../../../state/auth/auth-slice";
 
 export const Login = () => {
+    const dispatch = useDispatch();
+
     const [user, setUser] = useState({email: '', password: ''});
     const handleChangeUser = (e: { target: { name: any; value: any; }; }) => {
         setUser({...user, [e.target.name]: e.target.value});
@@ -22,6 +26,12 @@ export const Login = () => {
 
         if (checkIsValid()) {
             console.log(user, 'valid')
+            dispatch(
+                login({
+                   email: user.email,
+                    password: user.password,
+                })
+            );
         }
         console.log(user, 'not valid')
     }
@@ -34,7 +44,7 @@ export const Login = () => {
                 <PasswordInput value={user.password} name={'password'} extraClass="mb-6"
                                onChange={handleChangeUser} minLength={6}
                                placeholder="Пароль"/>
-                <Button disabled={!checkIsValid()} htmlType="submit" type="primary" size="medium" extraClass='mb-20'>
+                <Button disabled={!checkIsValid()}  onClick={onSubmit} htmlType="button" type="primary" size="medium" extraClass='mb-20'>
                     Войти
                 </Button>
             </form>
