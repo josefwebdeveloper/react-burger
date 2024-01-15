@@ -11,6 +11,8 @@ import {ForgotPassword} from "../../pages/auth/forgot-password/forgot-password";
 import {ResetPassword} from "../../pages/auth/reset-password/reset-password";
 import {Profile} from "../../pages/auth/profile/profile";
 import {IngredientPage} from "../../pages/auth/ingredient-page/ingredient-page";
+import DefaultLayout from "../../layouts/default-layout";
+import ProtectedLayout from "../../layouts/protected-layout";
 
 
 function App() {
@@ -22,12 +24,17 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Main/>}/>
                     <Route path="/order-feed" element={<OrderFeed/>}/>
-                    <Route path="/register" element={<Register/>}/>
-                    <Route path="/login" element={<Login/>}/>
-                    <Route path="/forgot-password" element={<ForgotPassword/>}/>
-                    <Route path="/reset-password" element={<ResetPassword/>}/>
-                    <Route path="/profile" element={<Profile/>}/>
-                    <Route path="/ingredients/:id" element={<IngredientPage/>}/>
+                    <Route element={<DefaultLayout/>}>
+                        <Route path="/register" element={<Register/>}/>
+                        <Route path="/login" element={<Login/>}/>
+                    </Route>
+                    <Route element={<ProtectedLayout/>}>
+                        <Route path="/forgot-password" element={<ForgotPassword/>}/>
+                        <Route path="/reset-password" element={<ResetPassword/>}/>
+                        <Route path="/profile" element={<Profile/>}/>
+                        <Route path="/ingredients/:id" element={<IngredientPage/>}/>
+                    </Route>
+
                 </Routes>
             </div>
         </Router>

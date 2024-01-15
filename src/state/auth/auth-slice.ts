@@ -52,7 +52,7 @@ export const updateUser = createAsyncThunk(
             });
             const resData = response.data;
             localStorage.setItem("userInfo", JSON.stringify(resData.user));
-          
+
 
             return resData;
         } catch (error) {
@@ -216,26 +216,7 @@ const authSlice = createSlice({
                     state.error = action.error.message || "Login failed";
                 }
             })
-            // .addCase(updateUser.pending, (state) => {
-            //     state.status = "loading";
-            //     state.error = null;
-            // })
-            // .addCase(
-            //     updateUser.fulfilled,
-            //     (state, action: PayloadAction<UserResponse>) => {
-            //         state.status = "idle";
-            //         state.basicUserInfo = action.payload.user;
-            //     }
-            // )
-            // .addCase(updateUser.rejected, (state, action) => {
-            //     state.status = "failed";
-            //     if (action.payload) {
-            //         state.error =
-            //             (action.payload as ErrorResponse).message || "Login failed";
-            //     } else {
-            //         state.error = action.error.message || "Login failed";
-            //     }
-            // })
+
             .addCase(getUser.pending, (state) => {
                 state.status = "loading";
                 state.error = null;
