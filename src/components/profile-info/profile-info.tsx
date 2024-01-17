@@ -59,7 +59,6 @@ export const ProfileInfo = () => {
             // dispatch(updateUser(updatedFields));
             return updatedFields
         } else {
-            console.log("No changes to update");
             return null
         }
     };
@@ -107,7 +106,8 @@ export const ProfileInfo = () => {
             return newState;
         });
     };
-    const onSubmit = () => {
+    const onSubmit = (e: React.SyntheticEvent<Element, Event>) => {
+        e.preventDefault();
         const newUser = checkForm();
         if (newUser) {
             dispatch(updateUser(newUser))
@@ -142,7 +142,7 @@ export const ProfileInfo = () => {
                         checkForm() && (
                             <div className={classNames(styles['button-group-container'])}>
                                 <span className={classNames('text', 'text_type_main-default', styles.cancel, 'mr-4')}>Отмена</span>
-                                <Button  onClick={onSubmit} htmlType="button" type="primary" size="medium">
+                                <Button  htmlType="submit" type="primary" size="medium">
                                     Сохранить
                                 </Button>
                             </div>

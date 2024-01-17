@@ -40,6 +40,45 @@ export const login = createAsyncThunk(
         }
     }
 );
+export const forgetPassword = createAsyncThunk(
+    "forgetPassword",
+    async (data: {email:string}, {rejectWithValue}) => {
+        try {
+            const response = await axiosInstance.post("/password-reset", data);
+            const resData = response.data;
+            console.log()
+            localStorage.setItem("forgetPassword", JSON.stringify(resData.success));
+            return resData;
+        } catch (error) {
+            if (error instanceof AxiosError && error.response) {
+                const errorResponse = error.response.data;
+
+                return rejectWithValue(errorResponse);
+            }
+
+            throw error;
+        }
+    }
+);
+export const resetPassword = createAsyncThunk(
+    "resetPassword",
+    async (data: {password:string, token:string}, {rejectWithValue}) => {
+        try {
+            const response = await axiosInstance.post("/password-reset/reset", data);
+            const resData = response.data;
+            localStorage.removeItem("forgetPassword");
+            return resData;
+        } catch (error) {
+            if (error instanceof AxiosError && error.response) {
+                const errorResponse = error.response.data;
+
+                return rejectWithValue(errorResponse);
+            }
+
+            throw error;
+        }
+    }
+);
 export const updateUser = createAsyncThunk(
     "updateUser",
     async (data: Partial<User>, thunkAPI) => {

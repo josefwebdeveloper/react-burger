@@ -1,20 +1,10 @@
 import styles from './profile.module.css';
 import classNames from "classnames";
-import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Link, NavLink, Outlet, useLocation} from "react-router-dom";
-import {TICons} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons";
 import {useDispatch} from "../../../hooks/redux-hooks";
-import {getUser, logout, updateUser} from "../../../state/auth/auth-slice";
-import {useSelector} from "react-redux";
-import {RootState} from "../../../state/store";
-import {User} from "../../../models/auth.model";
-// interface Fields {
-//     name?: string;
-//     email?: string;
-//     password?: string;
-//     icon: keyof TICons;
-// }
+import { logout} from "../../../state/auth/auth-slice";
+
 export const Profile = () => {
     const dispatch = useDispatch();
 

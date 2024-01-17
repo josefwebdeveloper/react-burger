@@ -2,9 +2,14 @@ import styles from './forgot-password.module.css';
 import React, {useState} from "react";
 import cls from "classnames";
 import {Button, EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {useDispatch} from "../../../hooks/redux-hooks";
+import {forgetPassword} from "../../../state/auth/auth-slice";
 export const ForgotPassword = () => {
     const [email, setEmail] = useState('');
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const handleChangeUser = (e: { target: { name: any; value: any; }; }) => {
         setEmail( e.target.value);
     };
@@ -16,9 +21,16 @@ export const ForgotPassword = () => {
         );
     }
 
-    const onSubmit = () => {
+    const onSubmit = async (e: React.SyntheticEvent<Element, Event>) => {
 
+        e.preventDefault();
         if (checkIsValid()) {
+            try {
+                await dispatch(forgetPassword({email: email})).unwrap();
+                navigate('/reset-password');
+            } catch (err) {
+                console.log(err);
+            }
         }
     }
     return (

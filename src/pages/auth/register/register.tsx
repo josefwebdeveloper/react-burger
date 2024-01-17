@@ -24,10 +24,9 @@ export const Register = () => {
         );
     }
 
-    const onSubmit=()=>{
-
+    const onSubmit=(e: React.SyntheticEvent<Element, Event>)=>{
+        e.preventDefault();
         if(checkIsValid()) {
-            console.log(user, 'valid')
             dispatch(
                 register({
                     name: user.name,
@@ -36,7 +35,6 @@ export const Register = () => {
                 })
             )
         }
-        console.log(user,'not valid')
     }
     return (
         <section className={cls(styles.container)}>
@@ -47,7 +45,7 @@ export const Register = () => {
                 <PasswordInput value={user.password} name={'password'} extraClass="mb-6"
                        onChange={handleChangeUser}  minLength={6}
                        placeholder="Пароль"/>
-                <Button disabled={!checkIsValid()}  onClick={onSubmit} htmlType="button" type="primary" size="medium" extraClass='mb-20'>
+                <Button disabled={!checkIsValid()}   htmlType="submit" type="primary" size="medium" extraClass='mb-20'>
                     Зарегистрироваться
                 </Button>
             </form>

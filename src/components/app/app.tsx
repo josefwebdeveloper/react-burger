@@ -10,7 +10,7 @@ import {Register} from "../../pages/auth/register/register";
 import {ForgotPassword} from "../../pages/auth/forgot-password/forgot-password";
 import {ResetPassword} from "../../pages/auth/reset-password/reset-password";
 import {Profile} from "../../pages/auth/profile/profile";
-import {IngredientPage} from "../../pages/auth/ingredient-page/ingredient-page";
+import {IngredientPage} from "../../pages/ingredient-page/ingredient-page";
 import DefaultLayout from "../../layouts/default-layout";
 import ProtectedLayout from "../../layouts/protected-layout";
 import {ProfileInfo} from "../profile-info/profile-info";
@@ -30,10 +30,11 @@ function App() {
                 <Route element={<DefaultLayout/>}>
                     <Route path="/register" element={<Register/>}/>
                     <Route path="/login" element={<Login/>}/>
-                </Route>
-                <Route element={<ProtectedLayout/>}>
                     <Route path="/forgot-password" element={<ForgotPassword/>}/>
                     <Route path="/reset-password" element={<ResetPassword/>}/>
+                </Route>
+                <Route element={<ProtectedLayout/>}>
+
                     <Route path="/profile" element={<Profile/>}>
                         <Route index element={<ProfileInfo/>}/>
                         <Route path="orders" element={<OrderHistory/>}/>
