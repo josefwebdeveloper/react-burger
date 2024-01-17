@@ -1,27 +1,28 @@
-import React from "react";
-import {  Outlet } from "react-router-dom";
-import { Navigate } from "react-router-dom";
+import React, {useEffect} from "react";
+import {Outlet} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 
 import {useSelector} from "react-redux";
 import {RootState} from "../state/store";
-
+import {getUser} from "../state/auth/auth-slice";
+import {useDispatch} from "../hooks/redux-hooks";
 
 
 const ProtectedLayout = () => {
+    const dispatch = useDispatch();
     const userData = useSelector((state: RootState) => state.auth.basicUserInfo);
+    if (!userData && !localStorage.getItem('accessToken')) {
+        return <Navigate replace to={"/login"}/>;
+    } else if (!userData && localStorage.getItem('accessToken')) {
+        dispatch(getUser());
+    }
 
 
-    if (!userData) {
-    return <Navigate replace to={"/login"} />;
-  }
-
-
-
-  return (
-    <>
-      <Outlet />
-    </>
-  );
+    return (
+        <>
+            <Outlet/>
+        </>
+    );
 };
 
 export default ProtectedLayout;

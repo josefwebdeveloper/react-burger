@@ -13,31 +13,37 @@ import {Profile} from "../../pages/auth/profile/profile";
 import {IngredientPage} from "../../pages/auth/ingredient-page/ingredient-page";
 import DefaultLayout from "../../layouts/default-layout";
 import ProtectedLayout from "../../layouts/protected-layout";
+import {ProfileInfo} from "../profile-info/profile-info";
+import {OrderHistory} from "../order-history/order-history";
 
 
 function App() {
 
     return (
-        <Router>
-            <div className={styles.app}>
-                <AppHeader/>
-                <Routes>
-                    <Route path="/" element={<Main/>}/>
-                    <Route path="/order-feed" element={<OrderFeed/>}/>
-                    <Route element={<DefaultLayout/>}>
-                        <Route path="/register" element={<Register/>}/>
-                        <Route path="/login" element={<Login/>}/>
-                    </Route>
-                    <Route element={<ProtectedLayout/>}>
-                        <Route path="/forgot-password" element={<ForgotPassword/>}/>
-                        <Route path="/reset-password" element={<ResetPassword/>}/>
-                        <Route path="/profile" element={<Profile/>}/>
-                        <Route path="/ingredients/:id" element={<IngredientPage/>}/>
-                    </Route>
+        <div className={styles.app}>
+            <AppHeader/>
+            <Routes>
 
-                </Routes>
-            </div>
-        </Router>
+                <Route index element={<Main/>}/>
+                <Route path="/" element={<Main/>}/>
+                <Route path="/order-feed" element={<OrderFeed/>}/>
+                <Route element={<DefaultLayout/>}>
+                    <Route path="/register" element={<Register/>}/>
+                    <Route path="/login" element={<Login/>}/>
+                </Route>
+                <Route element={<ProtectedLayout/>}>
+                    <Route path="/forgot-password" element={<ForgotPassword/>}/>
+                    <Route path="/reset-password" element={<ResetPassword/>}/>
+                    <Route path="/profile" element={<Profile/>}>
+                        <Route index element={<ProfileInfo/>}/>
+                        <Route path="orders" element={<OrderHistory/>}/>
+                        <Route path="*" element={<ProfileInfo/>}/>
+                    </Route>
+                    <Route path="/ingredients/:id" element={<IngredientPage/>}/>
+                </Route>
+                <Route path="*" element={<Main/>}/>
+            </Routes>
+        </div>
     );
 }
 
