@@ -3,7 +3,7 @@ import React from 'react';
 import './app.module.css';
 import {AppHeader} from "../app-header/app-header";
 import {Main} from "../../pages/main/main";
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import {OrderFeed} from "../../pages/orders/order-feed";
 import {Login} from "../../pages/auth/login/login";
 import {Register} from "../../pages/auth/register/register";
@@ -15,14 +15,26 @@ import DefaultLayout from "../../layouts/default-layout";
 import ProtectedLayout from "../../layouts/protected-layout";
 import {ProfileInfo} from "../profile-info/profile-info";
 import {OrderHistory} from "../order-history/order-history";
+import {Modal} from "../modal/modal";
+import {OrderDetails} from "../order-details/order-details";
+import {useModal} from "../../hooks/use-modal.hook";
+import {IngredientDetails} from "../ingredient-details/ingredient-details";
 
 
 function App() {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const backgroundLocation = location.state?.background;
+    console.log(backgroundLocation)
+    const onClose = () => {
 
+
+        navigate( '/', {replace: true});
+    }
     return (
         <div className={styles.app}>
             <AppHeader/>
-            <Routes>
+            <Routes location={backgroundLocation || location}>
 
                 <Route index element={<Main/>}/>
                 <Route path="/" element={<Main/>}/>
@@ -33,17 +45,27 @@ function App() {
                     <Route path="/forgot-password" element={<ForgotPassword/>}/>
                     <Route path="/reset-password" element={<ResetPassword/>}/>
                 </Route>
-                <Route element={<ProtectedLayout/>}>
+                <Route element={<ProtectedLayout />}>
 
                     <Route path="/profile" element={<Profile/>}>
                         <Route index element={<ProfileInfo/>}/>
                         <Route path="orders" element={<OrderHistory/>}/>
                         <Route path="*" element={<ProfileInfo/>}/>
                     </Route>
-                    <Route path="/ingredients/:id" element={<IngredientPage/>}/>
+
                 </Route>
+                <Route path='ingredients/:id' element={<IngredientDetails />}/>
                 <Route path="*" element={<Main/>}/>
             </Routes>
+            {backgroundLocation && <Routes>
+                <Route path='/order' element={<Modal onClose={onClose} title=''>
+                    <OrderDetails />
+                </Modal>}/>
+                <Route path='/ingredients/:id' element={<Modal onClose={onClose} title={'Детали ингредиента'}>
+                    <IngredientDetails />
+                </Modal>}/>
+            </Routes>
+            }
         </div>
     );
 }

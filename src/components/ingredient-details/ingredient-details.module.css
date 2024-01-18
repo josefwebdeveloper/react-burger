@@ -1,5 +1,8 @@
 .ingredient-details-container {
+    margin: 120px auto 0 auto;
     width: 100%;
+    max-width: 640px;
+    max-height: 575px;
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -9,6 +9,7 @@ import {Modal} from "../../modal/modal";
 import {clearSelectedIngredient, setSelectedIngredient} from "../../../state/ingredients/ingredients-slice";
 import {useDispatch, useSelector} from "../../../hooks/redux-hooks";
 import {Ingredient} from "./ingredient/ingredient";
+import {useLocation, useNavigate} from "react-router-dom";
 
 interface IngredientsGroupProps {
     bunRef: React.RefObject<HTMLDivElement>,
@@ -26,14 +27,15 @@ export const IngredientsGroup: React.FC<IngredientsGroupProps> = ({
                                                                       handleScroll
                                                                   }) => {
     const [height, setHeight] = React.useState(600);
-
+    const location = useLocation();
     const {ingredients, loading, error, selectedIngredient} = useSelector((state) => state.ingredients);
     const bun = ingredients.filter((item) => item.type === ingredientsTypes[0].type);
     const sauce = ingredients.filter((item) => item.type === ingredientsTypes[1].type);
     const main = ingredients.filter((item) => item.type === ingredientsTypes[2].type);
     const {isModalOpen, openModal, closeModal} = useModal();
     const dispatch = useDispatch();
-  
+    const navigate = useNavigate();
+
     useEffect(() => {
         const container = containerRef.current;
         if (container) {
@@ -60,8 +62,7 @@ export const IngredientsGroup: React.FC<IngredientsGroupProps> = ({
     }, [dispatch, isModalOpen]);
     const onOpenModal = (selectedIngredient: IngredientModel) => {
         dispatch(setSelectedIngredient(selectedIngredient));
-
-        openModal()
+        navigate('/ingredients/' + selectedIngredient._id, {state: {background: location}});
     }
     return (
         <div ref={containerRef}
@@ -93,13 +94,7 @@ export const IngredientsGroup: React.FC<IngredientsGroupProps> = ({
                         <NoIngredients/>
                     )}
             </div>
-            {isModalOpen && (
-                <Modal
-                    title="Детали ингредиента"
-                    onClose={closeModal}>
-                    <IngredientDetails/>
-                </Modal>
-            )}
+
 
         </div>
     );

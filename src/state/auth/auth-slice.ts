@@ -2,7 +2,8 @@ import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AxiosError} from "axios";
 import axiosInstance from "../../services/axiosInstance";
 import {ErrorResponse} from "../../constants";
-import {User, UserRequest, UserResponse} from "../../models/auth.model";
+import {User, UserResponse} from "../../models/auth.model";
+import {makeOrder} from "../constructor-data/constructor-api";
 
 export interface AuthApiState {
     basicUserInfo: any;
@@ -115,7 +116,7 @@ export const updateUser = createAsyncThunk(
 
 export const refreshToken = createAsyncThunk(
     "refreshToken",
-    async (data: { dispatchAction: 'getUser' | 'updateUser', userData?: Partial<User> },
+    async (data: { dispatchAction: 'getUser' | 'updateUser' | 'makeOrder', userData?: any },
            thunkAPI) => {
         try {
             const response = await axiosInstance.post("/auth/token", {
@@ -134,6 +135,11 @@ export const refreshToken = createAsyncThunk(
                 case 'updateUser':
                     if (data.userData) {
                         thunkAPI.dispatch(updateUser(data.userData));
+                    }
+                    break;
+                case 'makeOrder':
+                    if (data.userData) {
+                        thunkAPI.dispatch(makeOrder(data.userData));
                     }
                     break;
                 default:

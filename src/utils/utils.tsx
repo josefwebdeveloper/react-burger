@@ -22,11 +22,13 @@ export const request = async (url: string, options?: RequestInit): Promise<any> 
     try {
         const response = await fetch(url, options);
         if (!response.ok) {
+            console.log(response)
         const error: Error = new Error(`Network response was not ok: ${response.status}`);
         throw error;
         }
         return await response.json();
     } catch (error) {
+        console.log(error)
         if (error instanceof Error) {
         throw error;
         } else {

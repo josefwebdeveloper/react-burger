@@ -10,7 +10,7 @@ export const OrderDetails = () => {
     return (
         <div className={classNames(styles['order-details'])}>
             <div className={classNames(styles['order-details-title'], 'text', 'text_type_digits-large', 'mb-8')}>
-                {orderNumber}</div>
+                {orderNumber? orderNumber: <span>Loading...</span>}</div>
             <div className={classNames(styles['order-details-subtitle'], 'text', 'text_type_main-medium', 'mb-15')}>
                 идентификатор заказа
             </div>

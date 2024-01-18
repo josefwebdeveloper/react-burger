@@ -3,9 +3,12 @@ import styles from './app-header.module.css';
 import {BurgerIcon, ListIcon, Logo, ProfileIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, NavLink, useLocation} from "react-router-dom";
 import classNames from "classnames";
+import {useSelector} from "../../hooks/redux-hooks";
+import {RootState} from "../../state/store";
 
 export const AppHeader = () => {
-    const location = useLocation(); // Get the current location
+    const userData = useSelector((state: RootState) => state.auth.basicUserInfo);
+    const location = useLocation();
     const menuData = [
         {name: 'Конструктор', path: '/', IconComponent: BurgerIcon},
         {name: 'Лента заказов', path: '/order-feed', IconComponent: ListIcon},
@@ -43,7 +46,7 @@ export const AppHeader = () => {
                  <Link className={`${styles['navbar-menu']} ${styles.profile}`} to={'/profile'}>
                     <ProfileIcon type={location.pathname === '/profile'?  'primary' : 'secondary' }/>
                     <span className={classNames(styles['navbar__item'], location.pathname === '/profile'?'white':'text_color_inactive', 'text', 'text_type_main-default',' ml-2')}>
-                        Личный кабинет
+                        { userData? userData.name:'Личный кабинет'}
                     </span>
                 </Link>
             </nav>

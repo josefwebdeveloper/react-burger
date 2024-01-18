@@ -1,13 +1,16 @@
 import styles from './profile.module.css';
 import classNames from "classnames";
 import React from 'react';
-import {Link, NavLink, Outlet, useLocation} from "react-router-dom";
+import {Link, Navigate, NavLink, Outlet, useLocation} from "react-router-dom";
 import {useDispatch} from "../../../hooks/redux-hooks";
-import { logout} from "../../../state/auth/auth-slice";
+import {getUser, logout} from "../../../state/auth/auth-slice";
+import {useSelector} from "react-redux";
+import {RootState} from "../../../state/store";
 
 export const Profile = () => {
     const dispatch = useDispatch();
 
+        // dispatch(getUser());
     const location = useLocation(); // Get the current location
 
     return (

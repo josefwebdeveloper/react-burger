@@ -1,11 +1,19 @@
 import styles from './ingredient-details.module.css';
 import classNames from "classnames";
 import React from "react";
-import {useSelector} from "../../hooks/redux-hooks";
+import {useDispatch, useSelector} from "../../hooks/redux-hooks";
+import {useParams} from "react-router-dom";
+import {fetchIngredients} from "../../state/ingredients/ingredients-api";
 
 export const IngredientDetails : React.FC = () => {
-    const {ingredients, loading, error, selectedIngredient} = useSelector((state) => state.ingredients);
+    const {ingredients, loading, error} = useSelector((state) => state.ingredients);
+    const {id} = useParams();
+    const dispatch = useDispatch();
 
+    if(ingredients.length===0) {
+        dispatch(fetchIngredients())
+    }
+    const selectedIngredient = ingredients?.find((el) => el._id === id);
     if (!selectedIngredient) {
         return null;
     }

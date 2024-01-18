@@ -42,21 +42,19 @@ export const ProfileInfo = () => {
 
         const updatedFields:Partial<User>  = {};
 
-        // Check each field and add to updatedFields if it has been changed
         if (user[0].name && userData.name !== user[0].name && user[0].name.trim().length > 6) {
             updatedFields.name = user[0].name;
         }
         if (user[1].email && userData.email !== user[1].email && user[1].email.match(emailRegex)) {
             updatedFields.email = user[1].email;
         }
-        // Assuming you want to allow password update even if it's the same
+
         if (user[2].password) {
             updatedFields.password = user[2].password;
         }
 
-        // Check if there's anything to update
+
         if (Object.keys(updatedFields).length > 0) {
-            // dispatch(updateUser(updatedFields));
             return updatedFields
         } else {
             return null
@@ -75,7 +73,7 @@ export const ProfileInfo = () => {
                 newState[2].password = value;
             }
 
-            // Return the updated state
+
             return newState;
         });
     };
@@ -139,7 +137,7 @@ export const ProfileInfo = () => {
                            onIconClick={() => handleEditClick('password')} name={'password'}
                            onChange={handleChangeUser} placeholder={'Пароль'}/>
                     { // Check if any of the fields is not empty
-                        checkForm() && (
+                        userData && checkForm() && (
                             <div className={classNames(styles['button-group-container'])}>
                                 <span className={classNames('text', 'text_type_main-default', styles.cancel, 'mr-4')}>Отмена</span>
                                 <Button  htmlType="submit" type="primary" size="medium">
