@@ -5,19 +5,18 @@ import {Button, EmailInput} from "@ya.praktikum/react-developer-burger-ui-compon
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch} from "../../../hooks/redux-hooks";
 import {forgetPassword} from "../../../state/auth/auth-slice";
+import useForm from "../../../hooks/use-form.hook";
 export const ForgotPassword = () => {
-    const [email, setEmail] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { values, onChange } = useForm({ email: ""});
 
-    const handleChangeUser = (e: { target: { name: any; value: any; }; }) => {
-        setEmail( e.target.value);
-    };
+
 
     const checkIsValid = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return (
-            email.match(emailRegex)
+            values.email.match(emailRegex)
         );
     }
 
@@ -26,10 +25,9 @@ export const ForgotPassword = () => {
         e.preventDefault();
         if (checkIsValid()) {
             try {
-                await dispatch(forgetPassword({email: email})).unwrap();
+                await dispatch(forgetPassword({email: values.email})).unwrap();
                 navigate('/reset-password');
             } catch (err) {
-                console.log(err);
             }
         }
     }
@@ -37,7 +35,7 @@ export const ForgotPassword = () => {
         <section className={cls(styles.container)}>
             <div className={cls('text text_type_main-medium mb-6')}>Восстановление пароля</div>
             <form onSubmit={onSubmit}>
-                <EmailInput onChange={handleChangeUser} value={email} extraClass="mb-6" name={'email'}
+                <EmailInput onChange={onChange} value={values.email} extraClass="mb-6" name={'email'}
                             placeholder="Укажите e-mail"/>
                 <Button disabled={!checkIsValid()} htmlType="submit" type="primary" size="medium" extraClass='mb-20'>
                     Восстановить

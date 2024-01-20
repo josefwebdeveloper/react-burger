@@ -1,24 +1,22 @@
 import styles from './login.module.css';
-import React, {useState} from "react";
+import React from "react";
 import cls from "classnames";
-import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link} from "react-router-dom";
 import {useDispatch} from "../../../hooks/redux-hooks";
 import {login} from "../../../state/auth/auth-slice";
+import useForm from "../../../hooks/use-form.hook";
 
 export const Login = () => {
     const dispatch = useDispatch();
+    const { values, onChange } = useForm({ email: "", password: "" });
 
-    const [user, setUser] = useState({email: '', password: ''});
-    const handleChangeUser = (e: { target: { name: any; value: any; }; }) => {
-        setUser({...user, [e.target.name]: e.target.value});
-    };
 
     const checkIsValid = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return (
-            user.email.match(emailRegex) &&
-            user.password.length > 0
+            (values.email as string).match(emailRegex) &&
+            (values.password as string).length > 0
         );
     }
 
@@ -27,21 +25,21 @@ export const Login = () => {
         if (checkIsValid()) {
             dispatch(
                 login({
-                   email: user.email,
-                    password: user.password,
+                   email: values.email as string,
+                    password: values.password as string,
                 })
             );
         }
-        console.log(user, 'not valid')
+
     }
     return (
         <section className={cls(styles.container)}>
             <div className={cls('text text_type_main-medium mb-6')}>Вход</div>
             <form onSubmit={onSubmit}>
-                <EmailInput onChange={handleChangeUser} value={user.email} extraClass="mb-6" name={'email'}
+                <EmailInput onChange={onChange} value={values.email as string} extraClass="mb-6" name={'email'}
                             placeholder="E-mail"/>
-                <PasswordInput value={user.password} name={'password'} extraClass="mb-6"
-                               onChange={handleChangeUser} minLength={6}
+                <PasswordInput value={values.password as string} name={'password'} extraClass="mb-6"
+                               onChange={onChange} minLength={6}
                                placeholder="Пароль"/>
                 <Button disabled={!checkIsValid()}  htmlType="submit" type="primary" size="medium" extraClass='mb-20'>
                     Войти

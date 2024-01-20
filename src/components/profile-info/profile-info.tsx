@@ -119,7 +119,6 @@ export const ProfileInfo = () => {
                     console.error('Update failed:', error);
                 });
         } else {
-            console.log('Form data is not valid or incomplete');
         }
     };
     return (

@@ -8,7 +8,6 @@ import axiosInstance from "../../services/axiosInstance";
 export const makeOrder = createAsyncThunk(
     'ingredients/makeOrder',
     async (data:any, thunkAPI) => {
-        console.log(data)
         try {
             const accessToken = JSON.parse(localStorage.getItem("accessToken") as string);
             const response = await axiosInstance.post(`${_baseUrl}orders`,data, {

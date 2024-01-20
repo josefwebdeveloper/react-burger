@@ -10,14 +10,12 @@ import {Register} from "../../pages/auth/register/register";
 import {ForgotPassword} from "../../pages/auth/forgot-password/forgot-password";
 import {ResetPassword} from "../../pages/auth/reset-password/reset-password";
 import {Profile} from "../../pages/auth/profile/profile";
-import {IngredientPage} from "../../pages/ingredient-page/ingredient-page";
 import DefaultLayout from "../../layouts/default-layout";
 import ProtectedLayout from "../../layouts/protected-layout";
 import {ProfileInfo} from "../profile-info/profile-info";
 import {OrderHistory} from "../order-history/order-history";
 import {Modal} from "../modal/modal";
 import {OrderDetails} from "../order-details/order-details";
-import {useModal} from "../../hooks/use-modal.hook";
 import {IngredientDetails} from "../ingredient-details/ingredient-details";
 
 
@@ -25,7 +23,6 @@ function App() {
     const location = useLocation();
     const navigate = useNavigate();
     const backgroundLocation = location.state?.background;
-    console.log(backgroundLocation)
     const onClose = () => {
 
 

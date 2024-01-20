@@ -24,7 +24,6 @@ export const login = createAsyncThunk(
         try {
             const response = await axiosInstance.post("/auth/login", data);
             const resData = response.data;
-            console.log()
             localStorage.setItem("userInfo", JSON.stringify(resData.user));
             localStorage.setItem("accessToken", JSON.stringify(resData.accessToken));
             localStorage.setItem("refreshToken", JSON.stringify(resData.refreshToken));
@@ -47,7 +46,6 @@ export const forgetPassword = createAsyncThunk(
         try {
             const response = await axiosInstance.post("/password-reset", data);
             const resData = response.data;
-            console.log()
             localStorage.setItem("forgetPassword", JSON.stringify(resData.success));
             return resData;
         } catch (error) {
@@ -174,7 +172,6 @@ export const getUser = createAsyncThunk(
         } catch (error) {
             if (error instanceof AxiosError && error.response) {
                 const errorResponse = error.response.data;
-                console.log(errorResponse)
                 if (errorResponse.message === 'jwt expired') {
                     return thunkAPI.dispatch(refreshToken({
                         dispatchAction: 'getUser'
@@ -193,7 +190,9 @@ export const register = createAsyncThunk(
         try {
             const response = await axiosInstance.post("/auth/register", data);
             const resData = response.data;
-
+            localStorage.setItem("userInfo", JSON.stringify(resData.user));
+            localStorage.setItem("accessToken", JSON.stringify(resData.accessToken));
+            localStorage.setItem("refreshToken", JSON.stringify(resData.refreshToken));
 
             return resData;
         } catch (error) {
@@ -248,7 +247,6 @@ const authSlice = createSlice({
                 login.fulfilled,
                 (state, action: PayloadAction<UserResponse>) => {
                     state.status = "idle";
-                    console.log(action.payload.user)
                     state.basicUserInfo = action.payload.user;
                 }
             )
@@ -270,7 +268,6 @@ const authSlice = createSlice({
                 getUser.fulfilled,
                 (state, action: PayloadAction<UserResponse>) => {
                     state.status = "idle";
-                    console.log(action.payload)
                     state.basicUserInfo = action.payload.user;
                 }
             )
@@ -290,9 +287,9 @@ const authSlice = createSlice({
             })
             .addCase(
                 register.fulfilled,
-                (state, action: PayloadAction<User>) => {
+                (state, action: PayloadAction<UserResponse>) => {
                     state.status = "idle";
-                    state.basicUserInfo = action.payload;
+                    state.basicUserInfo = action.payload.user;
                 }
             )
             .addCase(register.rejected, (state, action) => {

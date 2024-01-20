@@ -5,22 +5,21 @@ import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger
 import {Link, Navigate, useNavigate} from "react-router-dom";
 import {forgetPassword, resetPassword} from "../../../state/auth/auth-slice";
 import {useDispatch} from "../../../hooks/redux-hooks";
+import useForm from "../../../hooks/use-form.hook";
 
 export const ResetPassword = () => {
-    const [payload, setPayload] = useState({code: '', password: ''});
+    const { values, onChange } = useForm({ code: '', password: '' });
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     if ( !localStorage.getItem('forgetPassword')) {
-        return <Navigate replace to={"/login"}/>;
+        return <Navigate replace to={"/forgot-password"}/>;
     }
-    const handleChange = (e: { target: { name: any; value: any; }; }) => {
-        setPayload({...payload, [e.target.name]: e.target.value});
-    };
 
     const checkIsValid = () => {
         return (
-            payload.code.length > 0 &&
-            payload.password.length > 0
+            values.code.length > 0 &&
+            values.password.length > 0
         );
     }
 
@@ -28,10 +27,10 @@ export const ResetPassword = () => {
         e.preventDefault();
         if (checkIsValid()) {
             try {
-                await dispatch(resetPassword({password: payload.password, token: payload.code})).unwrap();
+                await dispatch(resetPassword({password: values.password, token: values.code})).unwrap();
                 navigate('/');
             } catch (err) {
-                console.log(err);
+
             }
         }
     }
@@ -40,10 +39,10 @@ export const ResetPassword = () => {
             <div className={cls('text text_type_main-medium mb-6')}>Восстановление пароля</div>
             <form onSubmit={onSubmit}>
 
-                <PasswordInput value={payload.password} name={'password'} extraClass="mb-6"
-                               onChange={handleChange} minLength={6}
+                <PasswordInput value={values.password} name={'password'} extraClass="mb-6"
+                               onChange={onChange} minLength={6}
                                placeholder="Введите новый пароль"/>
-                <Input type={'text'} value={payload.code} name={'code'} onChange={handleChange} extraClass="mb-6"
+                <Input type={'text'} value={values.code} name={'code'} onChange={onChange} extraClass="mb-6"
                        placeholder="Введите код из письма"/>
                 <Button disabled={!checkIsValid()} htmlType="submit" type="primary" size="medium" extraClass='mb-20'>
                     Сохранить

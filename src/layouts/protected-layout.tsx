@@ -15,7 +15,8 @@ const ProtectedLayout = () => {
     const userData = useSelector((state: RootState) => state.auth.basicUserInfo);
     if (!userData && !localStorage.getItem('accessToken')) {
         return <Navigate replace to={"/login"}/>;
-    } else if (!userData && localStorage.getItem('accessToken')) {
+    }
+    if (!userData && localStorage.getItem('accessToken')) {
         dispatch(getUser());
     }
 
