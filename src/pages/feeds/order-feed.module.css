@@ -1,0 +1,10 @@
+main {
+    display: flex;
+    justify-content: center;
+}
+.row {
+    width: 100%;
+    display: flex;
+    gap:40px;
+    height: calc(100vh - 88px)
+}

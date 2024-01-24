@@ -4,7 +4,7 @@ import './app.module.css';
 import {AppHeader} from "../app-header/app-header";
 import {Main} from "../../pages/main/main";
 import { Route, Routes, useLocation, useNavigate} from "react-router-dom";
-import {OrderFeed} from "../../pages/orders/order-feed";
+import {OrderFeed} from "../../pages/feeds/order-feed";
 import {Login} from "../../pages/auth/login/login";
 import {Register} from "../../pages/auth/register/register";
 import {ForgotPassword} from "../../pages/auth/forgot-password/forgot-password";
@@ -13,7 +13,7 @@ import {Profile} from "../../pages/auth/profile/profile";
 import DefaultLayout from "../../layouts/default-layout";
 import ProtectedLayout from "../../layouts/protected-layout";
 import {ProfileInfo} from "../profile-info/profile-info";
-import {OrderHistory} from "../order-history/order-history";
+import {OrdersHistory} from "../order-history/orders-history";
 import {Modal} from "../modal/modal";
 import {OrderDetails} from "../order-details/order-details";
 import {IngredientDetails} from "../ingredient-details/ingredient-details";
@@ -35,7 +35,7 @@ function App() {
 
                 <Route index element={<Main/>}/>
                 <Route path="/" element={<Main/>}/>
-                <Route path="/order-feed" element={<OrderFeed/>}/>
+                <Route path="/feed" element={<OrderFeed/>}/>
                 <Route element={<DefaultLayout/>}>
                     <Route path="/register" element={<Register/>}/>
                     <Route path="/login" element={<Login/>}/>
@@ -46,7 +46,7 @@ function App() {
 
                     <Route path="/profile" element={<Profile/>}>
                         <Route index element={<ProfileInfo/>}/>
-                        <Route path="orders" element={<OrderHistory/>}/>
+                        <Route path="orders" element={<OrdersHistory/>}/>
                         <Route path="*" element={<ProfileInfo/>}/>
                     </Route>
 

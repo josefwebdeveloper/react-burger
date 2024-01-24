@@ -11,7 +11,7 @@ export const AppHeader = () => {
     const location = useLocation();
     const menuData = [
         {name: 'Конструктор', path: '/', IconComponent: BurgerIcon},
-        {name: 'Лента заказов', path: '/order-feed', IconComponent: ListIcon},
+        {name: 'Лента заказов', path: '/feed', IconComponent: ListIcon},
     ];
 
     return (
