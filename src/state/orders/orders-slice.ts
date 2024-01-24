@@ -1,23 +1,28 @@
+// src/features/orders/ordersSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {Order, OrdersState,} from "../../models/orders.model";
+import { RootState } from '../store';
+import { Order, OrdersPayload } from '../../models/orders.model';
+import {wsMessage} from "../middleware";
+
+interface OrdersState {
+    orders: Order[];
+}
 
 const initialState: OrdersState = {
     orders: [],
-    isConnected: false,
 };
 
 const ordersSlice = createSlice({
-    name: 'websocket',
+    name: 'orders',
     initialState,
-    reducers: {
-        setOrders(state, action: PayloadAction<Order[]>) {
-            state.orders = action.payload;
-        },
-        setConnectionStatus(state, action: PayloadAction<boolean>) {
-            state.isConnected = action.payload;
-        },
+    reducers: {},
+    extraReducers: (builder) => {
+        builder.addCase(wsMessage, (state, action: PayloadAction<OrdersPayload>) => {
+            state.orders = action.payload.orders;
+        });
     },
 });
 
-export const { setOrders, setConnectionStatus } = ordersSlice.actions;
+export const selectOrders = (state: RootState) => state.orders.orders;
+
 export default ordersSlice.reducer;

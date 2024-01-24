@@ -1,21 +1,19 @@
+export interface getOrdersResponse {
+    success: boolean
+    orders: Order[]
+    total: number
+    totalToday: number
+}
+
 export interface Order {
-    // Define order properties
-    id: number;
-    title: string;
-    // Add other order properties as needed
+    _id: string
+    ingredients: string[]
+    status: string
+    name: string
+    createdAt: string
+    updatedAt: string
+    number: number
 }
-
-export interface OrdersState {
+export interface OrdersPayload {
     orders: Order[];
-    isConnected: boolean;
-}
-
-export interface SetOrdersAction {
-    type: string;
-    payload: Order[];
-}
-
-export interface SetConnectionStatusAction {
-    type: string;
-    payload: boolean;
 }

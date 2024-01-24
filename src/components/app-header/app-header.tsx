@@ -43,9 +43,10 @@ export const AppHeader = () => {
                 <div className={`${styles['navbar-menu']} ${styles.logo}`}>
                     <Logo/>
                 </div>
+
                  <Link className={`${styles['navbar-menu']} ${styles.profile}`} to={'/profile'}>
-                    <ProfileIcon type={location.pathname === '/profile'?  'primary' : 'secondary' }/>
-                    <span className={classNames(styles['navbar__item'], location.pathname === '/profile'?'white':'text_color_inactive', 'text', 'text_type_main-default',' ml-2')}>
+                    <ProfileIcon type={location.pathname.includes('profile')?  'primary' : 'secondary' }/>
+                    <span className={classNames(styles['navbar__item'], location.pathname.includes('profile')?'white':'text_color_inactive', 'text', 'text_type_main-default',' ml-2')}>
                         { userData? userData.name:'Личный кабинет'}
                     </span>
                 </Link>

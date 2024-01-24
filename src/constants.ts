@@ -1,9 +1,7 @@
 // TODO change name
 export const BACKEND_BASE_URL = "https://norma.nomoreparties.space/api";
-// POST https://norma.nomoreparties.space/api/auth/login - эндпоинт для авторизации.
-//     POST https://norma.nomoreparties.space/api/auth/register - эндпоинт для регистрации пользователя.
-//     POST https://norma. nomoreparties.space/api/auth/logout - эндпоинт для выхода из системы.
-//     POST https://norma.nomoreparties.space/api/auth/token - эндпоинт обновления токена.
+export const GET_ORDERS_BASE_URL='wss://norma.nomoreparties.space/orders'
+
 
 export type ErrorResponse = {
   message: string;
