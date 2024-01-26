@@ -1,13 +1,15 @@
 .container {
+    margin:  0 auto;
+
     display: flex;
-    margin: 120px auto 0 auto;
     max-width: var(--container-width);
     width: 100%;
 
 }
 
 .profile {
-    margin-right: 75px;
+
+    margin:120px 65px 0 0;
     width: 320px;
     display: flex;
     flex-direction: column;
@@ -18,6 +20,7 @@
     height: 64px;
     display: flex;
     align-items: center;
+    width: 320px;
 
 }
 .info {
@@ -32,4 +35,7 @@
 }
 .cancel{
     color: var(--interface-accent);
+}
+.outlet{
+    margin-top: 40px;
 }

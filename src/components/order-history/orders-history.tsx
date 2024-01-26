@@ -29,10 +29,11 @@ export const OrdersHistory = () => {
     }, [dispatch]);
     return (
         <section className={classNames(styles['orders-history'])}>
-            <div className={classNames(styles['orders-history-header'],
+            {location.pathname.includes('feed') && <div className={classNames(styles['orders-history-header'],
                 'text', 'text_type_main-large')}>Лента заказов
             </div>
-            <section className={classNames(styles['orders-feed-container'], 'custom-scroll')}>
+            }
+            <section style={{height:location.pathname.includes('feed')?`calc(100vh - 235px)`:`calc(100vh - 170px)`}} className={classNames(styles['orders-feed-container'], 'custom-scroll')}>
                 <div className={classNames(styles['orders'])}>
                     {orders ? orders.map((item) => <OrderFeed key={item._id} order={item}/>) :
                         (
