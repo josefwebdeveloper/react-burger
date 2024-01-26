@@ -1,8 +1,7 @@
-// src/features/orders/ordersSlice.ts
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../store';
-import { Order, OrdersPayload } from '../../models/orders.model';
-import {wsMessage} from "../middleware";
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {RootState} from '../store';
+import {Order, OrdersPayload} from '../../models/orders.model';
+import {wsDisconnect, wsMessage, wsUserOrdersMessage} from "../middleware";
 
 interface OrdersState {
     orders: Order[];
@@ -17,9 +16,16 @@ const ordersSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(wsMessage, (state, action: PayloadAction<OrdersPayload>) => {
-            state.orders = action.payload.orders;
-        });
+        builder
+            .addCase(wsMessage, (state, action: PayloadAction<OrdersPayload>) => {
+                state.orders = action.payload.orders;
+            })
+            .addCase(wsDisconnect, (state) => {
+                console.log('WebSocket Disconnected manually')
+            })
+            .addCase(wsUserOrdersMessage, (state, action: PayloadAction<OrdersPayload>) => {
+                state.orders = action.payload.orders;
+            });
     },
 });
 

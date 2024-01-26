@@ -1,35 +1,38 @@
-// src/middleware/webSocketMiddleware.ts
 import {MiddlewareAPI, Dispatch, AnyAction, createAction} from '@reduxjs/toolkit';
 import {OrdersPayload} from "../models/orders.model";
+import {GET_ORDERS_BASE_URL} from "../constants";
+import {refreshToken} from "../services/api";
+import {prepareQueryParam} from "../utils/utils";
 
 // Action types for WebSocket events
 const WS_CONNECT = 'ws/connect';
 const WS_DISCONNECT = 'ws/disconnect';
 const WS_MESSAGE = 'ws/message';
 // Action types for fetching user-specific orders
-// const WS_USER_ORDERS_CONNECT = 'ws/userOrdersConnect';
-// const WS_USER_ORDERS_MESSAGE = 'ws/userOrdersMessage';
+const WS_USER_ORDERS_CONNECT = 'ws/userOrdersConnect';
+const WS_USER_ORDERS_MESSAGE = 'ws/userOrdersMessage';
+const WS_USER_ORDERS_DISCONNECT = 'ws/userOrdersDisconnect';
 
 
-// Define a more specific action type if needed
 interface WebSocketAction extends AnyAction {
-    type: typeof WS_CONNECT | typeof WS_DISCONNECT | typeof WS_MESSAGE;
+    type: typeof WS_CONNECT | typeof WS_DISCONNECT | typeof WS_MESSAGE |
+        typeof WS_USER_ORDERS_CONNECT | typeof WS_USER_ORDERS_MESSAGE | typeof WS_USER_ORDERS_DISCONNECT;
     payload?: any;
 }
 
-// WebSocket middleware creator
-const createWebSocketMiddleware = (url: string) => {
+const createWebSocketMiddleware = () => {
     let socket: WebSocket | null = null; // Initialize `socket` here
+    let userOrdersSocket: WebSocket | null = null;
 
     return (store: MiddlewareAPI<Dispatch<AnyAction>, any>) => (next: Dispatch<AnyAction>) => (action: AnyAction) => {
         const wsAction = action as WebSocketAction;
-
+        const {dispatch} = store;
         switch (wsAction.type) {
             case WS_CONNECT:
                 if (socket !== null) {
                     socket.close();
                 }
-                socket = new WebSocket(url);
+                socket = new WebSocket(GET_ORDERS_BASE_URL+'/all');
 
                 socket.onopen = () => {
                     console.log('WebSocket Connected');
@@ -54,6 +57,48 @@ const createWebSocketMiddleware = (url: string) => {
                 }
                 console.log('WebSocket Disconnected manually');
                 break;
+            case WS_USER_ORDERS_CONNECT:
+                let accessToken: string | null| undefined = localStorage.getItem('accessToken');
+
+                if (!accessToken) {
+                    console.error('Access token not found');
+                    return;
+                }
+
+                accessToken = accessToken?.replace("Bearer ", "").trim();
+
+                const userOrdersWsUrl = `${GET_ORDERS_BASE_URL}?token=${prepareQueryParam(accessToken)}`;
+                if (userOrdersSocket !== null) {
+                    userOrdersSocket.close();
+                }
+                userOrdersSocket = new WebSocket(userOrdersWsUrl);
+
+                userOrdersSocket.onopen = () => console.log('User Orders WebSocket Connected');
+                userOrdersSocket.onmessage = (event) => {
+                    const data = JSON.parse(event.data);
+                    if(data.message === 'Invalid or missing token') {
+                        console.log('Invalid or missing token')
+                        refreshToken()
+                            .then(res => {
+
+                                dispatch(wsConnectUserOrders());
+                            })
+                    }
+                    store.dispatch({ type: WS_USER_ORDERS_MESSAGE, payload: data });
+                };
+                userOrdersSocket.onclose = () => {
+                    console.log('User Orders WebSocket Disconnected');
+                    userOrdersSocket = null;
+                };
+
+                break;
+            case WS_USER_ORDERS_DISCONNECT:
+                if (userOrdersSocket !== null) {
+                    userOrdersSocket.close();
+                    userOrdersSocket = null;
+                }
+                console.log('User Orders WebSocket Disconnected manually');
+                break;
 
             default:
                 return next(action);
@@ -62,5 +107,8 @@ const createWebSocketMiddleware = (url: string) => {
 };
 
 export default createWebSocketMiddleware;
-export { WS_CONNECT, WS_DISCONNECT, WS_MESSAGE };
 export const wsMessage = createAction<OrdersPayload>('ws/message');
+export const wsConnectUserOrders = createAction('ws/userOrdersConnect');
+export const wsUserOrdersMessage = createAction<OrdersPayload>('ws/userOrdersMessage');
+export const wsDisconnectUserOrders = createAction('ws/userOrdersDisconnect');
+export const wsDisconnect = createAction('ws/disconnect');

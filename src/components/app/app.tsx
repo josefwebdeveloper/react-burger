@@ -4,7 +4,7 @@ import './app.module.css';
 import {AppHeader} from "../app-header/app-header";
 import {Main} from "../../pages/main/main";
 import { Route, Routes, useLocation, useNavigate} from "react-router-dom";
-import {OrderFeed} from "../../pages/feeds/order-feed";
+import {Feed} from "../../pages/feeds/feed";
 import {Login} from "../../pages/auth/login/login";
 import {Register} from "../../pages/auth/register/register";
 import {ForgotPassword} from "../../pages/auth/forgot-password/forgot-password";
@@ -35,7 +35,7 @@ function App() {
 
                 <Route index element={<Main/>}/>
                 <Route path="/" element={<Main/>}/>
-                <Route path="/feed" element={<OrderFeed/>}/>
+                <Route path="/feed" element={<Feed/>}/>
                 <Route element={<DefaultLayout/>}>
                     <Route path="/register" element={<Register/>}/>
                     <Route path="/login" element={<Login/>}/>

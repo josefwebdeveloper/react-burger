@@ -18,6 +18,10 @@ export const getImageNameFromUrl=(url: string): string =>{
 
   return imageName;
 }
+export function prepareQueryParam(paramValue: string | undefined) {
+    const sanitizedValue = paramValue?.replace(/"/g, '');
+    return sanitizedValue? encodeURIComponent(sanitizedValue):null;
+}
 export const request = async (url: string, options?: RequestInit): Promise<any> => {
     try {
         const response = await fetch(url, options);
