@@ -8,11 +8,12 @@ export const request = (endpoint: string, options?: any) => {
 }
 export const refreshToken = async () => {
     try {
-        const res = await request('auth/token', {
+        const refreshToken = JSON.parse(localStorage.getItem("refreshToken") as string);
+        const res = await request('/auth/token', {
             method: 'POST',
             headers: {'Content-Type': 'application/json', "Accept": 'application/json'},
             body: JSON.stringify({
-                "token": localStorage.getItem('refreshToken')
+                "token": refreshToken
             })
         })
         localStorage.setItem("accessToken", JSON.stringify(res.accessToken));
@@ -20,8 +21,7 @@ export const refreshToken = async () => {
         return res;
     }
     catch(err) {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
+       
         return Promise.reject(err)
     }
 }

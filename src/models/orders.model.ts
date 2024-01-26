@@ -16,4 +16,6 @@ export interface Order {
 }
 export interface OrdersPayload {
     orders: Order[];
+    total: number
+    totalToday: number
 }

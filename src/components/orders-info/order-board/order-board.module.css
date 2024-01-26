@@ -1,0 +1,24 @@
+.orders-board {
+    display: flex;
+    align-items: flex-start;
+    flex: 1;
+    flex-direction: column;
+
+}
+
+.order-ids {
+    width: 100%;
+    display: flex;
+    margin-bottom: 60px;
+}
+
+.chunk-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: flex-start;
+
+}
+.order-id{
+    color: #0CC;
+}

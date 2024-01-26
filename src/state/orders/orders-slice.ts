@@ -5,10 +5,14 @@ import {wsDisconnect, wsMessage, wsUserOrdersMessage} from "../middleware";
 
 interface OrdersState {
     orders: Order[];
+    total: number;
+    totalToday: number;
 }
 
 const initialState: OrdersState = {
     orders: [],
+    total: 0,
+    totalToday: 0,
 };
 
 const ordersSlice = createSlice({
@@ -19,6 +23,8 @@ const ordersSlice = createSlice({
         builder
             .addCase(wsMessage, (state, action: PayloadAction<OrdersPayload>) => {
                 state.orders = action.payload.orders;
+                state.total = action.payload.total;
+                state.totalToday = action.payload.totalToday;
             })
             .addCase(wsDisconnect, (state) => {
                 console.log('WebSocket Disconnected manually')
@@ -30,5 +36,7 @@ const ordersSlice = createSlice({
 });
 
 export const selectOrders = (state: RootState) => state.orders.orders;
+export const selectTotal = (state: RootState) => state.orders.total;
+export const selectTotalToday = (state: RootState) => state.orders.totalToday;
 
 export default ordersSlice.reducer;

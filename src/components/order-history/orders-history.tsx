@@ -21,7 +21,7 @@ export const OrdersHistory = () => {
             dispatch(wsConnectUserOrders());
         }
 
-        console.log(orders)
+
         return () => {
             dispatch(wsDisconnect());
             dispatch(wsDisconnectUserOrders());
