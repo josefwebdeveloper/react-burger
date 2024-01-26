@@ -3,7 +3,7 @@ import React from 'react';
 import './app.module.css';
 import {AppHeader} from "../app-header/app-header";
 import {Main} from "../../pages/main/main";
-import { Route, Routes, useLocation, useNavigate} from "react-router-dom";
+import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import {Feed} from "../../pages/feeds/feed";
 import {Login} from "../../pages/auth/login/login";
 import {Register} from "../../pages/auth/register/register";
@@ -17,6 +17,8 @@ import {OrdersHistory} from "../order-history/orders-history";
 import {Modal} from "../modal/modal";
 import {OrderDetails} from "../order-details/order-details";
 import {IngredientDetails} from "../ingredient-details/ingredient-details";
+import {OrdersInfo} from "../orders-info/orders-info";
+import {OrderInfo} from "../order-info/order-info";
 
 
 function App() {
@@ -24,9 +26,11 @@ function App() {
     const navigate = useNavigate();
     const backgroundLocation = location.state?.background;
     const onClose = () => {
+        if (backgroundLocation) {
+            navigate(backgroundLocation.pathname);
+        } else
 
-
-        navigate( '/', {replace: true});
+            navigate('/', {replace: true});
     }
     return (
         <div className={styles.app}>
@@ -42,25 +46,35 @@ function App() {
                     <Route path="/forgot-password" element={<ForgotPassword/>}/>
                     <Route path="/reset-password" element={<ResetPassword/>}/>
                 </Route>
-                <Route element={<ProtectedLayout />}>
+                <Route element={<ProtectedLayout/>}>
 
                     <Route path="/profile" element={<Profile/>}>
                         <Route index element={<ProfileInfo/>}/>
                         <Route path="orders" element={<OrdersHistory/>}/>
+                        <Route path="orders/:id" element={<OrderInfo/>}/>
                         <Route path="*" element={<ProfileInfo/>}/>
                     </Route>
 
                 </Route>
-                <Route path='ingredients/:id' element={<IngredientDetails />}/>
+                <Route path='ingredients/:id' element={<IngredientDetails/>}/>
+                <Route path='feed/:id' element={<OrderInfo/>}/>
                 <Route path="*" element={<Main/>}/>
             </Routes>
             {backgroundLocation && <Routes>
                 <Route path='/order' element={<Modal onClose={onClose} title=''>
-                    <OrderDetails />
+                    <OrderDetails/>
                 </Modal>}/>
                 <Route path='/ingredients/:id' element={<Modal onClose={onClose} title={'Детали ингредиента'}>
-                    <IngredientDetails />
+                    <IngredientDetails/>
                 </Modal>}/>
+                <Route path='/feed/:id' element={<Modal onClose={onClose} title=''>
+                    <OrderInfo/>
+                </Modal>}/>
+                <Route element={<ProtectedLayout/>}>
+                    <Route path="/profile/orders/:id" element={<Modal onClose={onClose} title=''>
+                        <OrderInfo/>
+                    </Modal>}/>
+                </Route>
             </Routes>
             }
         </div>

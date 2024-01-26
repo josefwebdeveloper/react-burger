@@ -4,13 +4,19 @@ import {selectOrders} from "../../../state/orders/orders-slice";
 import React from "react";
 import {Order} from "../../../models/orders.model";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector} from "../../../hooks/redux-hooks";
+import {useDispatch, useSelector} from "../../../hooks/redux-hooks";
+import {IngredientModel} from "../../../models/burger-data.model";
+import {setSelectedIngredient} from "../../../state/ingredients/ingredients-slice";
+import {useLocation, useNavigate} from "react-router-dom";
 
 interface OrderFeedProps {
     order: Order
 }
 
 export const OrderFeed = ({order}: OrderFeedProps) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
     const orders = useSelector(selectOrders);
     const {ingredients} = useSelector((state) => state.ingredients);
     const imgArr = order.ingredients.map((item) => {
@@ -20,11 +26,18 @@ export const OrderFeed = ({order}: OrderFeedProps) => {
         const foundIngredient = ingredients.find((ingredient) => ingredient._id === item);
         return acc + (foundIngredient?.price ?? 0);
     }, 0);
-
+    const onOpenModal = () => {
+        if(location.pathname.includes('feed')){
+            navigate('/feed/' + order.number, {state: {background: location}});
+        } else {
+            navigate('/profile/orders/' + order.number, {state: {background: location}})
+        }
+        // dispatch(setSelectedIngredient(selectedIngredient));
+    }
 
 
     return (
-        <section className={classNames(styles['order-feed-container'], 'custom-scroll')}>
+        <section onClick={onOpenModal} className={classNames(styles['order-feed-container'], 'custom-scroll')}>
             <div className={classNames(styles.header)}>
                 <span
                     className={classNames(styles["order-number"], 'text', 'text_type_digits-default')}>#{order.number}</span>

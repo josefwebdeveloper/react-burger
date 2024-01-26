@@ -21,7 +21,6 @@ export const refreshToken = async () => {
         return res;
     }
     catch(err) {
-       
         return Promise.reject(err)
     }
 }

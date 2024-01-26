@@ -1,0 +1,12 @@
+.orders-info{
+    flex: 1;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+}
+.order-boards-container{
+    display: flex;
+}
+.all-time-text, .all-time-number{
+    text-align: left;
+}
