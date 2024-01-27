@@ -77,7 +77,6 @@ const createWebSocketMiddleware = () => {
                 userOrdersSocket.onmessage = (event) => {
                     const data = JSON.parse(event.data);
                     if(data.message === 'Invalid or missing token') {
-                        console.log('Invalid or missing token')
                         refreshToken()
                             .then(res => {
 

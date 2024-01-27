@@ -8,7 +8,7 @@ import {Order} from "../../models/orders.model";
 import {fetchIngredients} from "../../state/ingredients/ingredients-api";
 import {wsConnectUserOrders, wsDisconnect, wsDisconnectUserOrders} from "../../state/middleware";
 import {useLocation} from "react-router-dom";
-import {ExtendedIngredientModel, IngredientModel} from "../../models/burger-data.model";
+import {ExtendedIngredientModel} from "../../models/burger-data.model";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 
 export const OrderInfo = () => {
@@ -44,10 +44,7 @@ export const OrderInfo = () => {
 
             if (!isNaN(num)) {
                 setOrder(orders.find((item) => item.number === num) as Order);
-                setTimeout(() => {
-                    console.log('order3', order)
-                    console.log(ingredientsData)
-                }, 3000)
+
                 if (!order.ingredients) return;
                 const ingredientsDataNew = order.ingredients
                     .map(item => ingredients.find(ingredient => ingredient._id === item))
@@ -61,8 +58,7 @@ export const OrderInfo = () => {
                     return arr.findIndex((x) => x._id === item._id) === index;
                 });
                 setIngredientsData(filteredIngredientsData as ExtendedIngredientModel[]);
-                console.log(ingredientsData)
-                console.log(totalPrice)
+
 
             }
 
@@ -103,8 +99,6 @@ export const OrderInfo = () => {
                         </div>
                     })}
                 </div>
-
-
                 <div className={classNames(styles['order-date-sum'])}>
                     <div className={classNames(styles['order-info-date'],
                         'text', 'text_type_main-default', 'text_color_inactive')}>
