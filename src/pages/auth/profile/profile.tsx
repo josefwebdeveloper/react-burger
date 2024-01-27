@@ -10,11 +10,7 @@ import {fetchIngredients} from "../../../state/ingredients/ingredients-api";
 export const Profile = () => {
     const dispatch = useDispatch();
     const {ingredients} = useSelector((state) => state.ingredients);
-    useEffect(() => {
-        if(ingredients.length===0){
-            dispatch(fetchIngredients())
-        }
-    }, [dispatch, ingredients.length]);
+
     const location = useLocation(); // Get the current location
 
     return (

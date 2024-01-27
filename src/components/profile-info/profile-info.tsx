@@ -5,8 +5,7 @@ import {User} from "../../models/auth.model";
 import React, {useEffect, useState} from "react";
 import {TICons} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons";
 import {getUser, updateUser} from "../../state/auth/auth-slice";
-import {useDispatch} from "../../hooks/redux-hooks";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../hooks/redux-hooks";
 import {RootState} from "../../state/store";
 interface Fields {
     name?: string;

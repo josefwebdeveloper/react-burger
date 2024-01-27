@@ -10,9 +10,7 @@ export const IngredientDetails : React.FC = () => {
     const {id} = useParams();
     const dispatch = useDispatch();
 
-    if(ingredients.length===0) {
-        dispatch(fetchIngredients())
-    }
+
     const selectedIngredient = ingredients?.find((el) => el._id === id);
     if (!selectedIngredient) {
         return null;

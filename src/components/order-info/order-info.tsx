@@ -35,9 +35,7 @@ export const OrderInfo = () => {
         };
     }, [dispatch]);
     useEffect(() => {
-        if (ingredients.length === 0) {
-            dispatch(fetchIngredients())
-        }
+
 
         if (number !== undefined && orders.length > 0 && ingredients.length > 0) {
             const num = parseInt(number, 10);

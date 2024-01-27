@@ -21,9 +21,7 @@ export const BurgerIngredients: React.FC = () => {
     const dispatch = useDispatch();
     const {ingredients, loading, error, selectedIngredient} = useSelector((state) => state.ingredients);
 
-    useEffect(() => {
-        dispatch(fetchIngredients())
-    }, [dispatch]);
+
 
     const handleScroll = () => {
         if (!bunRef.current || !sauceRef.current || !mainRef.current) {

@@ -1,9 +1,8 @@
 import styles from './orders-history.module.css';
 import classNames from "classnames";
-import {useDispatch} from "../../hooks/redux-hooks";
+import {useDispatch, useSelector} from "../../hooks/redux-hooks";
 import React, {useEffect} from "react";
 import {wsConnectUserOrders, wsDisconnect, wsDisconnectUserOrders} from "../../state/middleware";
-import {useSelector} from "react-redux";
 import {selectOrders} from "../../state/orders/orders-slice";
 import {RootState} from "../../state/store";
 import {useLocation} from "react-router-dom";

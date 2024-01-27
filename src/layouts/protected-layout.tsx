@@ -1,11 +1,10 @@
 import React from "react";
-import {Outlet, useLocation} from "react-router-dom";
+import {Outlet} from "react-router-dom";
 import {Navigate} from "react-router-dom";
 
-import {useSelector} from "react-redux";
 import {RootState} from "../state/store";
 import {getUser} from "../state/auth/auth-slice";
-import {useDispatch} from "../hooks/redux-hooks";
+import {useDispatch, useSelector} from "../hooks/redux-hooks";
 
 
 

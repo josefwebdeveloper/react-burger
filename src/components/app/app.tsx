@@ -1,5 +1,5 @@
 import styles from './app.module.css';
-import React from 'react';
+import React, {useEffect} from 'react';
 import './app.module.css';
 import {AppHeader} from "../app-header/app-header";
 import {Main} from "../../pages/main/main";
@@ -20,12 +20,18 @@ import {IngredientDetails} from "../ingredient-details/ingredient-details";
 import {OrdersInfo} from "../orders-info/orders-info";
 import {OrderInfo} from "../order-info/order-info";
 import {ProfileOrder} from "../../pages/profile-order/profile-order";
+import {fetchIngredients} from "../../state/ingredients/ingredients-api";
+import {useDispatch} from "../../hooks/redux-hooks";
 
 
 function App() {
+    const dispatch = useDispatch();
     const location = useLocation();
     const navigate = useNavigate();
     const backgroundLocation = location.state?.background;
+    useEffect(() => {
+        dispatch(fetchIngredients())
+    }, [dispatch]);
     const onClose = () => {
         if (backgroundLocation) {
             navigate(backgroundLocation.pathname);
