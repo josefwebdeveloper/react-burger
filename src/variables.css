@@ -4,6 +4,6 @@
     --container-width: 1280px;
     --interface-modal-edge: rgba(76, 76, 255, 0.20);
     --interface-accent: #4C4CFF;
-    --text-dark-grey-secondary-text: #8585AD
-
+    --text-dark-grey-secondary-text: #8585AD;
+    --interface-success: #0CC;
 }

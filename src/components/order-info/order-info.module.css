@@ -10,3 +10,46 @@
 .all-time-text, .all-time-number{
     text-align: left;
 }
+.order-info-status{
+    color: var(--interface-success);
+
+}
+.order-info-ingredients{
+    max-height: 250px;
+    overflow-y: auto;
+}
+.order-info-ingredient{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.order-info-ingredient-name{
+    text-align: left;
+    width: 100%;
+    flex: 1;
+    padding: 0 16px;
+}
+.price-container{
+    display: flex;
+    align-items: center;
+}
+.icon {
+    border-radius: 100px;
+    border: 2px solid  #801AB2;
+    background: #131316;
+    display: flex;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    position: relative;
+}
+.order-date-sum{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.order-info-sum{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}

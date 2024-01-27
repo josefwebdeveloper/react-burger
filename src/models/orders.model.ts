@@ -1,3 +1,5 @@
+import {IngredientModel} from "./burger-data.model";
+
 export interface getOrdersResponse {
     success: boolean
     orders: Order[]

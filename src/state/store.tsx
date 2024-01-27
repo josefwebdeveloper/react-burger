@@ -4,7 +4,6 @@ import constructorReducer from './constructor-data/constructor-slice';
 import authReducer from './auth/auth-slice';
 import ordersReducer from './orders/orders-slice';
 import createWebSocketMiddleware from "./middleware";
-import {GET_ORDERS_BASE_URL} from "../constants";
 
 const webSocketMiddleware = createWebSocketMiddleware();
 export const store = configureStore({

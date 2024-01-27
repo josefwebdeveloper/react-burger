@@ -15,6 +15,9 @@ export interface IngredientModel {
     count: number
     __v: number
 }
+export interface ExtendedIngredientModel extends IngredientModel {
+    repeatCount: number;
+}
 export interface getIngredientsResponse  {
     success: boolean,
     data: IngredientModel[]

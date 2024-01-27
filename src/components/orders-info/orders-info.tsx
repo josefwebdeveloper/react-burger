@@ -12,8 +12,8 @@ export const OrdersInfo = () => {
     const [readyOrders, setReadyOrders] = React.useState<Order[]>([]);
     const [inProgressOrders, setInProgressOrders] = React.useState<Order[]>([]);
     useEffect(() => {
-        setReadyOrders(orders.filter((order,index) => order.status === 'done' && index < 10));
-        setInProgressOrders(orders.filter((order,index) => order.status !== 'done' && index < 10));
+        setReadyOrders(orders.filter((order,index) => order.status === 'done' && index < 20));
+        setInProgressOrders(orders.filter((order,index) => order.status !== 'done' && index < 20));
     }, [orders]);
     return (
         <section className={classNames(styles['orders-info'])}>
@@ -24,7 +24,7 @@ export const OrdersInfo = () => {
             <div className={classNames(styles['all-time-text'],
                 'text', 'text_type_main-medium')}>Выполнено за все время:
             </div>
-            <div className={classNames(styles['all-time-number'], 'text', 'text_type_digits-large','mb-15')}>{total}</div>
+            <div className={classNames(styles['all-time-number'], 'text', 'text_type_digits-large','mb-5')}>{total}</div>
             <div className={classNames(styles['all-time-text'],
                 'text', 'text_type_main-medium')}>Выполнено за сегодня:
             </div>

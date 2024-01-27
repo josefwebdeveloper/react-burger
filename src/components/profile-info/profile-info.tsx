@@ -111,11 +111,9 @@ export const ProfileInfo = () => {
             dispatch(updateUser(newUser))
                 .unwrap()
                 .then(() => {
-                    // After updateUser is successfully fulfilled, dispatch getUser
                     dispatch(getUser());
                 })
                 .catch((error) => {
-                    // Handle any error from updateUser here
                     console.error('Update failed:', error);
                 });
         } else {

@@ -38,3 +38,6 @@ export const request = async (url: string, options?: RequestInit): Promise<any> 
         }
     }
 }
+export function isObjectNotEmpty(obj: object): boolean {
+    return Object.keys(obj).length > 0;
+}

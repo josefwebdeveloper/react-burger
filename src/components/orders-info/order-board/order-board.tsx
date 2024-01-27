@@ -13,11 +13,11 @@ export const OrderBoard = ({ready, readyOrders, inProgressOrders}: OrderBoardPro
     let secondColumnItems: Order[] = [];
 
     if (ready && readyOrders && readyOrders.length > 0) {
-        firstColumnItems = readyOrders.length <= 5 ? readyOrders : readyOrders.slice(0, 5);
-        secondColumnItems = readyOrders.length > 5 ? readyOrders.slice(5, 10) : [];
+        firstColumnItems = readyOrders.length <= 10 ? readyOrders : readyOrders.slice(0, 10);
+        secondColumnItems = readyOrders.length > 10 ? readyOrders.slice(10, 20) : [];
     } else if (!ready && inProgressOrders && inProgressOrders.length > 0) {
-        firstColumnItems = inProgressOrders?.length <= 5 ? inProgressOrders : inProgressOrders?.slice(0, 5);
-        secondColumnItems = inProgressOrders?.length > 5 ? inProgressOrders?.slice(5, 10) : [];
+        firstColumnItems = inProgressOrders?.length <= 10 ? inProgressOrders : inProgressOrders?.slice(0, 10);
+        secondColumnItems = inProgressOrders?.length > 10 ? inProgressOrders?.slice(10, 20) : [];
     }
 
 

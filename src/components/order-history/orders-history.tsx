@@ -33,7 +33,8 @@ export const OrdersHistory = () => {
                 'text', 'text_type_main-large')}>Лента заказов
             </div>
             }
-            <section style={{height:location.pathname.includes('feed')?`calc(100vh - 235px)`:`calc(100vh - 170px)`}} className={classNames(styles['orders-feed-container'], 'custom-scroll')}>
+            <section style={{height:location.pathname.includes('feed')?`calc(100vh - 235px)`:`calc(100vh - 170px)`}}
+                     className={classNames(styles['orders-feed-container'], 'custom-scroll')}>
                 <div className={classNames(styles['orders'])}>
                     {orders ? orders.map((item) => <OrderFeed key={item._id} order={item}/>) :
                         (

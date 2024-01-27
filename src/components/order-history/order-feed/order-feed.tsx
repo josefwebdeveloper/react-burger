@@ -32,7 +32,6 @@ export const OrderFeed = ({order}: OrderFeedProps) => {
         } else {
             navigate('/profile/orders/' + order.number, {state: {background: location}})
         }
-        // dispatch(setSelectedIngredient(selectedIngredient));
     }
 
 

@@ -19,6 +19,7 @@ import {OrderDetails} from "../order-details/order-details";
 import {IngredientDetails} from "../ingredient-details/ingredient-details";
 import {OrdersInfo} from "../orders-info/orders-info";
 import {OrderInfo} from "../order-info/order-info";
+import {ProfileOrder} from "../../pages/profile-order/profile-order";
 
 
 function App() {
@@ -47,17 +48,17 @@ function App() {
                     <Route path="/reset-password" element={<ResetPassword/>}/>
                 </Route>
                 <Route element={<ProtectedLayout/>}>
+                <Route path="/profile/orders/:id" element={<ProfileOrder/>}/>
 
                     <Route path="/profile" element={<Profile/>}>
                         <Route index element={<ProfileInfo/>}/>
                         <Route path="orders" element={<OrdersHistory/>}/>
-                        <Route path="orders/:id" element={<OrderInfo/>}/>
                         <Route path="*" element={<ProfileInfo/>}/>
                     </Route>
 
                 </Route>
                 <Route path='ingredients/:id' element={<IngredientDetails/>}/>
-                <Route path='feed/:id' element={<OrderInfo/>}/>
+                <Route path='feed/:id' element={<ProfileOrder/>}/>
                 <Route path="*" element={<Main/>}/>
             </Routes>
             {backgroundLocation && <Routes>
