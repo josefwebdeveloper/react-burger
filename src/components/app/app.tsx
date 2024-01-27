@@ -17,7 +17,6 @@ import {OrdersHistory} from "../order-history/orders-history";
 import {Modal} from "../modal/modal";
 import {OrderDetails} from "../order-details/order-details";
 import {IngredientDetails} from "../ingredient-details/ingredient-details";
-import {OrdersInfo} from "../orders-info/orders-info";
 import {OrderInfo} from "../order-info/order-info";
 import {ProfileOrder} from "../../pages/profile-order/profile-order";
 import {fetchIngredients} from "../../state/ingredients/ingredients-api";
