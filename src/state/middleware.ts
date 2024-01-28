@@ -1,4 +1,4 @@
-import {MiddlewareAPI, Dispatch, AnyAction, createAction} from '@reduxjs/toolkit';
+import {MiddlewareAPI, Dispatch, Action, createAction} from '@reduxjs/toolkit';
 import {OrdersPayload} from "../models/orders.model";
 import {GET_ORDERS_BASE_URL} from "../constants";
 import {refreshToken} from "../services/api";
@@ -14,7 +14,7 @@ const WS_USER_ORDERS_MESSAGE = 'ws/userOrdersMessage';
 const WS_USER_ORDERS_DISCONNECT = 'ws/userOrdersDisconnect';
 
 
-interface WebSocketAction extends AnyAction {
+interface WebSocketAction extends Action {
     type: typeof WS_CONNECT | typeof WS_DISCONNECT | typeof WS_MESSAGE |
         typeof WS_USER_ORDERS_CONNECT | typeof WS_USER_ORDERS_MESSAGE | typeof WS_USER_ORDERS_DISCONNECT;
     payload?: any;
@@ -24,7 +24,7 @@ const createWebSocketMiddleware = () => {
     let socket: WebSocket | null = null; // Initialize `socket` here
     let userOrdersSocket: WebSocket | null = null;
 
-    return (store: MiddlewareAPI<Dispatch<AnyAction>, any>) => (next: Dispatch<AnyAction>) => (action: AnyAction) => {
+    return (store: MiddlewareAPI<Dispatch<Action>, any>) => (next: Dispatch<Action>) => (action: Action) => {
         const wsAction = action as WebSocketAction;
         const {dispatch} = store;
         switch (wsAction.type) {
@@ -35,7 +35,7 @@ const createWebSocketMiddleware = () => {
                 socket = new WebSocket(GET_ORDERS_BASE_URL+'/all');
 
                 socket.onopen = () => {
-                    console.log('WebSocket Connected');
+
                 };
 
                 socket.onmessage = (event) => {
@@ -44,9 +44,8 @@ const createWebSocketMiddleware = () => {
                 };
 
                 socket.onclose = () => {
-                    console.log('WebSocket Disconnected');
                     socket = null;
-                };
+                }
 
                 break;
 
@@ -55,7 +54,6 @@ const createWebSocketMiddleware = () => {
                     socket.close();
                     socket = null;
                 }
-                console.log('WebSocket Disconnected manually');
                 break;
             case WS_USER_ORDERS_CONNECT:
                 let accessToken: string | null| undefined = localStorage.getItem('accessToken');
@@ -73,7 +71,7 @@ const createWebSocketMiddleware = () => {
                 }
                 userOrdersSocket = new WebSocket(userOrdersWsUrl);
 
-                userOrdersSocket.onopen = () => console.log('User Orders WebSocket Connected');
+                userOrdersSocket.onopen = () => console.log();
                 userOrdersSocket.onmessage = (event) => {
                     const data = JSON.parse(event.data);
                     if(data.message === 'Invalid or missing token') {
@@ -86,7 +84,7 @@ const createWebSocketMiddleware = () => {
                     store.dispatch({ type: WS_USER_ORDERS_MESSAGE, payload: data });
                 };
                 userOrdersSocket.onclose = () => {
-                    console.log('User Orders WebSocket Disconnected');
+
                     userOrdersSocket = null;
                 };
 
@@ -96,7 +94,7 @@ const createWebSocketMiddleware = () => {
                     userOrdersSocket.close();
                     userOrdersSocket = null;
                 }
-                console.log('User Orders WebSocket Disconnected manually');
+
                 break;
 
             default:

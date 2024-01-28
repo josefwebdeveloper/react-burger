@@ -25,21 +25,24 @@ export const OrderBoard = ({ready, readyOrders, inProgressOrders}: OrderBoardPro
         <section className={classNames(styles['orders-board'])}>
             <div className={classNames('text', 'text_type_main-medium', 'mb-6')}>{ready ? 'Готовы:' : 'В работе:'}</div>
             <div className={classNames(styles['order-ids'])}>
-
-                        <div className={classNames(styles['chunk-container'])}>
-                            {firstColumnItems.map((item, index) => (
-                                <div className={classNames(styles['order-id'],
-                                    'text', 'text_type_digits-default')} key={item._id}>{item.number}</div>
-                            ))}
-                        </div>
-                        <div className={classNames(styles['chunk-container'])}>
-                            {secondColumnItems.map((item, index) => (
-                                <div className={classNames(styles['order-id'],
-                                    'text', 'text_type_digits-default')} key={item._id}>{item.number}</div>
-                            ))}
-                        </div>
+                <ul className={classNames(styles['chunk-container'])}>
+                    {firstColumnItems.map((item) => (
+                        <li className={classNames(styles['order-id'], 'text', 'text_type_digits-default')}
+                            key={item._id}>
+                            {item.number}
+                        </li>
+                    ))}
+                </ul>
+                <ul className={classNames(styles['chunk-container'])}>
+                    {secondColumnItems.map((item) => (
+                        <li className={classNames(styles['order-id'], 'text', 'text_type_digits-default')}
+                            key={item._id}>
+                            {item.number}
+                        </li>
+                    ))}
+                </ul>
             </div>
-
         </section>
+
     );
 };

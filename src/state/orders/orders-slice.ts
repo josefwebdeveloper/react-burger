@@ -27,7 +27,7 @@ const ordersSlice = createSlice({
                 state.totalToday = action.payload.totalToday;
             })
             .addCase(wsDisconnect, (state) => {
-                console.log('WebSocket Disconnected manually')
+
             })
             .addCase(wsUserOrdersMessage, (state, action: PayloadAction<OrdersPayload>) => {
                 state.orders = action.payload.orders;

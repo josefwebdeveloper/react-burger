@@ -3,18 +3,17 @@ import classNames from "classnames";
 import {OrderBoard} from "./order-board/order-board";
 import {useSelector} from "../../hooks/redux-hooks";
 import {selectOrders, selectTotal, selectTotalToday} from "../../state/orders/orders-slice";
-import React, {useEffect} from "react";
+import React, {useEffect, useMemo} from "react";
 import {Order} from "../../models/orders.model";
+
 export const OrdersInfo = () => {
     const orders = useSelector(selectOrders);
-    const total=useSelector(selectTotal)
-    const totalToday=useSelector(selectTotalToday)
-    const [readyOrders, setReadyOrders] = React.useState<Order[]>([]);
-    const [inProgressOrders, setInProgressOrders] = React.useState<Order[]>([]);
-    useEffect(() => {
-        setReadyOrders(orders.filter((order,index) => order.status === 'done' && index < 20));
-        setInProgressOrders(orders.filter((order,index) => order.status !== 'done' && index < 20));
-    }, [orders]);
+    const total = useSelector(selectTotal)
+    const totalToday = useSelector(selectTotalToday)
+
+    const firstTwentyOrders = useMemo(() => orders.slice(0, 20), [orders]);
+    const readyOrders = useMemo(() => firstTwentyOrders.filter(order => order.status === 'done'), [firstTwentyOrders]);
+    const inProgressOrders = useMemo(() => firstTwentyOrders.filter(order => order.status !== 'done'), [firstTwentyOrders]);
     return (
         <section className={classNames(styles['orders-info'])}>
             <div className={classNames(styles['order-boards-container'])}>
@@ -24,7 +23,8 @@ export const OrdersInfo = () => {
             <div className={classNames(styles['all-time-text'],
                 'text', 'text_type_main-medium')}>Выполнено за все время:
             </div>
-            <div className={classNames(styles['all-time-number'], 'text', 'text_type_digits-large','mb-5')}>{total}</div>
+            <div
+                className={classNames(styles['all-time-number'], 'text', 'text_type_digits-large', 'mb-5')}>{total}</div>
             <div className={classNames(styles['all-time-text'],
                 'text', 'text_type_main-medium')}>Выполнено за сегодня:
             </div>

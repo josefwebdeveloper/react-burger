@@ -53,7 +53,7 @@ function App() {
                     <Route path="/reset-password" element={<ResetPassword/>}/>
                 </Route>
                 <Route element={<ProtectedLayout/>}>
-                <Route path="/profile/orders/:id" element={<ProfileOrder/>}/>
+                    <Route path="/profile/orders/:id" element={<ProfileOrder/>}/>
 
                     <Route path="/profile" element={<Profile/>}>
                         <Route index element={<ProfileInfo/>}/>
