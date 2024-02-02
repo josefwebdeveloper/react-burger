@@ -12,7 +12,7 @@ interface ConstructorState {
     orderNumber: number | null;
 }
 
-const initialState: ConstructorState = {
+export const initialState: ConstructorState = {
     ingredientsConstructor: [],
     bun: null,
     loading: false,
