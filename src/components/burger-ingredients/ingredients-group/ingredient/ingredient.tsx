@@ -6,7 +6,7 @@ import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-com
 import {useDrag} from "react-dnd";
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "../../../../state/store";
-import {addIngredient, setBun} from "../../../../state/constructor-data/constructor-slice";
+import {addIngredient, setBun} from "../../../../state/constructor-data/constructorSlice";
 import {incrementCount} from "../../../../state/ingredients/ingredients-slice";
 export const ItemTypes = {
     BOX: 'box',

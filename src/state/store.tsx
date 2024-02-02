@@ -1,6 +1,6 @@
 import {configureStore, Middleware} from '@reduxjs/toolkit';
 import ingredientsReducer from './ingredients/ingredients-slice';
-import constructorReducer from './constructor-data/constructor-slice';
+import constructorReducer from './constructor-data/constructorSlice';
 import authReducer from './auth/auth-slice';
 import ordersReducer from './orders/orders-slice';
 import createWebSocketMiddleware from "./middleware";

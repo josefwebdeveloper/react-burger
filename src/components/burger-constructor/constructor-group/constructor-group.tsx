@@ -4,7 +4,7 @@ import React, {useEffect, useRef} from "react";
 import {IngredientModel} from "../../../models/burger-data.model";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDrag, useDrop} from "react-dnd";
-import {deleteIngredient, moveIngredient} from "../../../state/constructor-data/constructor-slice";
+import {deleteIngredient, moveIngredient} from "../../../state/constructor-data/constructorSlice";
 import {decrementCount} from "../../../state/ingredients/ingredients-slice";
 import type {Identifier, XYCoord} from 'dnd-core'
 import {useDispatch, useSelector} from "../../../hooks/redux-hooks";
