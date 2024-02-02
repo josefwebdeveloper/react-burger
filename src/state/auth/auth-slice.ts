@@ -11,7 +11,7 @@ export interface AuthApiState {
     error: any;
 }
 
-const initialState: AuthApiState = {
+export const initialState: AuthApiState = {
     basicUserInfo: localStorage.getItem("userInfo")
         ? JSON.parse(localStorage.getItem("userInfo") as string)
         : null,
