@@ -5,13 +5,9 @@ import ordersReducer, {
 } from './orders-slice';
 import {wsMessage, wsUserOrdersMessage} from "../middleware";
 import {ORDERS_MOCK} from "../../utils/mockData";
+import {initialState} from "./orders-slice";
 describe('orders slice', () => {
-    const initialState = {
-        orders: [],
-        total: 0,
-        totalToday: 0,
 
-    };
     it('should handle initial state', () => {
         expect(ordersReducer(undefined, { type: 'unknown' })).toEqual(initialState);
     });

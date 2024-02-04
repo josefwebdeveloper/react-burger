@@ -5,17 +5,12 @@ import ingredientsReducer, {
     incrementCount,
     decrementCount,
     clearCountIngredients,
-    ingredientsSlice
 } from './ingredients-slice';
 import {fetchIngredients} from "./ingredients-api";
+import {initialState} from "../constructor-data/constructor-slice";
 
 describe('ingredients reducer', () => {
-    const initialState = {
-        ingredients: [],
-        selectedIngredient: null,
-        loading: false,
-        error: null
-    };
+
 
     it('should handle initial state', () => {
         expect(ingredientsReducer(undefined, { type: 'unknown' })).toEqual({
@@ -31,7 +26,6 @@ describe('ingredients reducer', () => {
         expect(actual.ingredients.length).toEqual(1);
     });
 
-    // Add tests for other reducer functions like setSelectedIngredient, clearSelectedIngredient, etc.
 
     // Extra reducers tests
     describe('extra reducers', () => {

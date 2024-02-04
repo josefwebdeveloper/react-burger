@@ -18,12 +18,10 @@ mock.onPost('/auth/register').reply(200, { user: { id: 2, ...registerData }, acc
 
 mock.onPost('/auth/logout').reply(200, logoutResponse);
 
-// Create a store for testing purposes
 const store = configureStore({ reducer: { auth: authReducer } });
 
 describe('authSlice tests', () => {
     beforeEach(() => {
-        // Clear all actions before each test
         store.dispatch({ type: 'unknown' });
     });
 
