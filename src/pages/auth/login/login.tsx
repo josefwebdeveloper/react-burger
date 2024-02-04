@@ -41,7 +41,7 @@ export const Login = () => {
                 <PasswordInput value={values.password as string} name={'password'} extraClass="mb-6"
                                onChange={onChange} minLength={6}
                                placeholder="Пароль"/>
-                <Button disabled={!checkIsValid()}  htmlType="submit" type="primary" size="medium" extraClass='mb-20'>
+                <Button disabled={!checkIsValid()}  htmlType="submit" type="primary" size="medium" extraClass='mb-20' >
                     Войти
                 </Button>
             </form>

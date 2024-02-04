@@ -46,7 +46,7 @@ export const AppHeader = () => {
 
                  <Link className={`${styles['navbar-menu']} ${styles.profile}`} to={'/profile'}>
                     <ProfileIcon type={location.pathname.includes('profile')?  'primary' : 'secondary' }/>
-                    <span className={classNames(styles['navbar__item'], location.pathname.includes('profile')?'white':'text_color_inactive', 'text', 'text_type_main-default',' ml-2')}>
+                    <span className={classNames(styles['navbar__item'], location.pathname.includes('profile')?'white':'text_color_inactive', 'text', 'text_type_main-default',' ml-2')} data-cy="account-entrance">
                         { userData? userData.name:'Личный кабинет'}
                     </span>
                 </Link>

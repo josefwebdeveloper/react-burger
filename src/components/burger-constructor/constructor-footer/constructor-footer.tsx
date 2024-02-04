@@ -19,7 +19,7 @@ export const ConstructorFooter: React.FC<ConstructorFooterProps> = ({amount, onS
                 <span className='text text_type_digits-medium mr-2'>{amount}</span>
                 <span className={classNames(styles['amount'])}><CurrencyIcon type="primary"/></span>
                 <Button disabled={!bun || ingredientsConstructor.length === 0}
-                        onClick={onSubmitOrder} htmlType="button" type="primary" size="large">
+                        onClick={onSubmitOrder} htmlType="button" type="primary" size="large" data-cy="constructor-order">
                     Оформить заказ
                 </Button>
             </div>

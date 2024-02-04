@@ -28,7 +28,7 @@ export const Modal: FC<ModalProps> = ({title, onClose, children}) => {
                 <div  className={classNames(styles.modal)}>
                     <div className={classNames(styles["modal-header"])}>
                         <div className={classNames(styles["modal-title"], 'text', 'text_type_main-large')}>{title}</div>
-                        <span className={styles.close}> <CloseIcon onClick={onClose} type="primary"/></span>
+                        <span className={styles.close} data-cy="close-icon-popup"> <CloseIcon onClick={onClose} type="primary"/></span>
 
                     </div>
                     <div className={classNames(styles["modal-body"])}>

@@ -58,7 +58,7 @@ export const BurgerConstructor: React.FC = () => {
     }))
     const isActive = canDrop && isOver
     return (
-        <section ref={drop} data-testid="burger" className={classNames(styles['burger-constructor'])}>
+        <section ref={drop} data-testid="burger" className={classNames(styles['burger-constructor'])} data-cy="constructor">
             <ConstructorGroup isActive={isActive} droppedItem={droppedItem}/>
             <ConstructorFooter amount={amount} onSubmitOrder={onSubmitOrder}/>
 

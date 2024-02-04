@@ -66,7 +66,7 @@ export const IngredientsGroup: React.FC<IngredientsGroupProps> = ({
     }
     return (
         <div ref={containerRef}
-             className={classNames(styles['ingredients-group-container'], 'custom-scroll')}>
+             className={classNames(styles['ingredients-group-container'], 'custom-scroll')} data-cy="ingredients">
             <div ref={bunRef}
                  className={classNames(styles['group-name'], 'text', 'text_type_main-medium')}>{ingredientsTypes[0].name}</div>
             <div className={classNames(styles['ingredients-container'])}>

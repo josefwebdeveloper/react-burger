@@ -62,7 +62,7 @@ const View: React.FC<ViewProps> = ({
         <div className={classNames(styles['ingredient-element-container'])}>
 
             {bun ? <div
-                        className={classNames(styles["ingredient-element"], styles["bun"])}>
+                        className={classNames(styles["ingredient-element"], styles["bun"])} data-cy="constructor-bun-1">
                 <ConstructorElement
                     type={'top'}
                     isLocked={true}
@@ -73,7 +73,7 @@ const View: React.FC<ViewProps> = ({
             </div> : <EmptyBun isActive={isActive} droppedItem={droppedItem} isBottom={false}/>
             }
             <div style={{'maxHeight': maxHeight}}
-                 className={classNames(styles['scroll-container'], 'custom-scroll')}>
+                 className={classNames(styles['scroll-container'], 'custom-scroll')} data-cy="constructor-element">
                 {ingredientsConstructor.length > 0 ? ingredientsConstructor.map((ingredient: IngredientModel, index: React.Key | null | undefined) => {
                         return (
                             <IngredientCard key={ingredient.unId} index={index} ingredient={ingredient}
@@ -85,7 +85,7 @@ const View: React.FC<ViewProps> = ({
                     )}
             </div>
             {bun ? <div
-                className={classNames(styles["ingredient-element"], styles["bun"])}>
+                className={classNames(styles["ingredient-element"], styles["bun"])} data-cy="constructor-bun-2">
                 <ConstructorElement
                     type={'bottom'}
                     isLocked={true}
